@@ -1,0 +1,132 @@
+{
+  "meta": {
+    "version": "1.0",
+    "standard": "MEB Türkiye direksiyon sınavı uygulama müfredatı",
+    "format": "MP4 H.264, 1280x720, 24fps, sessiz veya hafif arka plan",
+    "camera": "Kuş bakışı 45° veya sabit yan açı; eğitim amaçlı, gerçekçi ama sade",
+    "vehicle": "Beyaz hatchback eğitim aracı, sol direksiyon, Türkiye sağdan trafik",
+    "negative": "Yanlış şerit, sol şerit kullanımı (Türkiye dışı), çarpışma, dramatik kaza, bulanık levha, yanlış park çizgisi ihlali"
+  },
+  "dersler": [
+    {
+      "id": "dr-temel-kumanda",
+      "dosya": "dr-temel-kumanda.mp4",
+      "sureSn": 45,
+      "baslik": "Araç Tanıma ve Temel Kumandalar",
+      "sahne": "Boş eğitim sahası, düz asfalt, şerit çizgileri",
+      "adimlar": [
+        "Sürücü koltuğa oturur, emniyet kemeri takılır",
+        "İç ve dış aynalar ayarlanır",
+        "Debriyaj basılı, 1. vites, el freni indirilir",
+        "Kavrama noktasında yavaş kalkış, düz ilerleme"
+      ],
+      "prompt": "Professional driver education video, top-down 45 degree angle, empty Turkish driving school practice lot, white training car with L plate, driver adjusts mirrors and seat belt, clutch bite point start, smooth forward movement in first gear, clear daylight, instructional clean style, no text overlay, realistic asphalt markings, right-hand traffic Turkey",
+      "kritikKontrol": ["Emniyet kemeri", "Ayna ayarı", "Yumuşak kalkış", "Debriyaj-gaz uyumu"]
+    },
+    {
+      "id": "dr-paralel-park",
+      "dosya": "dr-paralel-park.mp4",
+      "sureSn": 60,
+      "baslik": "Paralel Park",
+      "sahne": "İki gri parklı araç arası boşluk, kaldırım sağda, sarı park çizgisi",
+      "adimlar": [
+        "Öndeki araca paralel hizalanma (~50 cm)",
+        "Geri manevra, sağa tam direksiyon",
+        "45° açıyla boşluğa giriş",
+        "Sola kırarak önü içeri alma, kaldırıma paralel bitiş"
+      ],
+      "prompt": "Driver exam parallel parking tutorial video, bird eye view, white car parks between two gray parked cars beside curb, reverse maneuver step by step, steering wheel turns clearly visible through roof cutaway style OR clear car path overlay, yellow parking lines, maximum 2 maneuver feel, car ends parallel within 50cm of curb, Turkish driving test standard, instructional, no collision, clean sunny day",
+      "kritikKontrol": ["50 cm kaldırım mesafesi", "En fazla 2 hamle", "Dubaya çarpmama", "Paralel bitiş"]
+    },
+    {
+      "id": "dr-l-park",
+      "dosya": "dr-l-park.mp4",
+      "sureSn": 55,
+      "baslik": "L (Dik) Park",
+      "sahne": "Sarı çizgili dik park cebi, turuncu dubalar köşede",
+      "adimlar": [
+        "Cebin yanından paralel ilerleme",
+        "Omuz hizasında durma, geri vites",
+        "Direksiyon cebhe yönüne tam kırılır",
+        "Cebe düzgün giriş, çizgilerle paralel ortalama"
+      ],
+      "prompt": "Driving test perpendicular L parking video, overhead instructional view, white car backs into marked perpendicular parking bay with yellow lines and orange cones, reverse into slot smoothly, wheels stay inside lines, centered in bay, Turkish exam course style, slow controlled movement, educational animation-like clarity",
+      "kritikKontrol": ["Çizgi ihlali yok", "Hamle sınırı", "Cebe ortalı park", "El freni sonrası"]
+    },
+    {
+      "id": "dr-rampa-kalkis",
+      "dosya": "dr-rampa-kalkis.mp4",
+      "sureSn": 40,
+      "baslik": "Rampa (Yokuş) Kalkışı",
+      "sahne": "Eğimli rampa, yol işareti eğim göstergesi",
+      "adimlar": [
+        "Yokuşta duruş, fren ve el freni",
+        "1. vites, debriyaj kavrama noktası",
+        "Hafif gaz, el freni kademeli indirme",
+        "Geri kaçırmadan ileri kalkış"
+      ],
+      "prompt": "Hill start driving lesson video, side angle showing incline ramp, white manual car on slope, handbrake release coordinated with clutch bite and throttle, car moves forward without rolling back more than few centimeters, Turkish driving school ramp, instructional clear demonstration, daylight",
+      "kritikKontrol": ["50 cm geri kaçırma sınırı", "El freni koordinasyonu", "Kavrama noktası", "Stop etmeden kalkış"]
+    },
+    {
+      "id": "dr-u-donusu",
+      "dosya": "dr-u-donusu.mp4",
+      "sureSn": 45,
+      "baslik": "U Dönüşü",
+      "sahne": "Geniş iki yönlü yol, kesikli orta çizgi, görüş açık",
+      "adimlar": [
+        "Sinyal ve ayna kontrolü",
+        "Yavaşlama, sola tam direksiyon",
+        "Karşı şeride güvenli dönüş",
+        "Gerekirse tek geri-ileri düzeltme"
+      ],
+      "prompt": "U-turn driving exam video, wide road with dashed center line, white car signals left, checks mirrors, performs safe U-turn when no oncoming traffic, returns to opposite direction in correct lane, right-hand traffic Turkey, instructional overhead angle, smooth controlled turn",
+      "kritikKontrol": ["Sinyal", "Karşı trafik kontrolü", "Doğru şerit", "Yasak yerde dönmeme"]
+    },
+    {
+      "id": "dr-ani-fren",
+      "dosya": "dr-ani-fren.mp4",
+      "sureSn": 35,
+      "baslik": "Ani (Acil) Fren",
+      "sahne": "Düz yol, önde koni veya yaya silüeti (eğitim)",
+      "adimlar": [
+        "Normal sürüş, ani engel",
+        "Fren pedalına kararlı basış, ABS titreşimi",
+        "Araç kontrollü duruş, direksiyon hâkimiyeti",
+        "Dörtlü flaşör"
+      ],
+      "prompt": "Emergency braking driver training video, car approaches obstacle cone on straight road, firm brake application, ABS activation subtle vibration, car stops in controlled distance, hazard lights on after stop, instructional side-front angle, no crash, Turkish driving school practice",
+      "kritikKontrol": ["ABS'de ayak çekilmez", "Direksiyon kontrolü", "Takip mesafesi", "Dörtlü flaşör"]
+    },
+    {
+      "id": "dr-sinyal-ayna",
+      "dosya": "dr-sinyal-ayna.mp4",
+      "sureSn": 40,
+      "baslik": "Sinyal, Ayna ve Şerit Değiştirme",
+      "sahne": "İki şeritli düz yol",
+      "adimlar": [
+        "Sinyal yakma (3+ saniye)",
+        "İç ve dış ayna kontrolü",
+        "Omuz üstü kör nokta bakışı",
+        "Yumuşak şerit değişimi, sinyal kapatma"
+      ],
+      "prompt": "Lane change driver education video, dual lane road, white car uses turn signal before moving left, mirror check and shoulder check clearly shown with subtle driver head movement, smooth lane change into gap, signal off after merge, bird eye instructional view, Turkey right-hand traffic",
+      "kritikKontrol": ["Sinyal önceliği", "Kör nokta", "Yumuşak geçiş", "Sinyal kapatma"]
+    },
+    {
+      "id": "dr-geri-manevra",
+      "dosya": "dr-geri-manevra.mp4",
+      "sureSn": 45,
+      "baslik": "Geri Manevra",
+      "sahne": "Düz park alanı, arka hedef çizgisi",
+      "adimlar": [
+        "Durma, çevre ve sinyal kontrolü",
+        "Geri vites, omuz üstü bakış",
+        "Çok yavaş geri hareket, düz hat",
+        "Hedefte duruş, boş vites, el freni"
+      ],
+      "prompt": "Reverse driving maneuver training video, white car reverses slowly in straight line on driving school lot, driver looks over shoulder, mirrors as secondary, constant slow speed using clutch control, stops at marked line, handbrake on, instructional overhead angle, no swerving left or right",
+      "kritikKontrol": ["Omuz kontrolü", "Düz hat", "Yavaş hız", "Çevre kontrolü"]
+    }
+  ]
+}

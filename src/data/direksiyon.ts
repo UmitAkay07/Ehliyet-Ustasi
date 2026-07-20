@@ -1,0 +1,199 @@
+import type { DireksiyonDersi } from "@/types";
+
+export const DIREKSIYON_DERSLERI: DireksiyonDersi[] = [
+  {
+    id: "dr-temel-kumanda",
+    baslik: "Araç Tanıma ve Temel Kumandalar",
+    ozet: "Debriyaj, fren, gaz, vites ve ayna kullanımı; kalkış öncesi hazırlık.",
+    ikon: "car-sport-outline",
+    animasyon: "temelKumanda",
+    zorluk: "kolay",
+    adimlar: [
+      { baslik: "Oturuş ve ayarlar", aciklama: "Koltuk ve aynalar ayarlanır, emniyet kemeri takılır. Pedallara rahat ulaşılmalıdır." },
+      { baslik: "Pedalların tanınması", aciklama: "Soldan sağa: debriyaj (kavrama), fren ve gaz. Debriyaj sadece sol ayakla kullanılır." },
+      { baslik: "Kontak ve kalkış", aciklama: "Vites boşta kontağa basılır, debriyaja basılıp 1. vitese geçilir; debriyaj yavaşça bırakılırken hafif gaz verilir." },
+      { baslik: "Ayna kullanımı", aciklama: "Hareket öncesi iç ve dış aynalar ile kör nokta kontrol edilir, sinyal verilir." },
+    ],
+    ipuclari: [
+      "Debriyajı ani bırakmak aracı stop ettirir; kavrama noktasını hisset.",
+      "Kalkışta el frenini kavrama noktasına gelince indir.",
+      "Bakışını uzağa, gitmek istediğin yöne yönlendir.",
+    ],
+    hatalar: [
+      { seviye: "sari", metin: "Kalkış öncesi ayna ve çevre kontrolü yapmamak." },
+      { seviye: "sari", metin: "Emniyet kemerini takmamak." },
+    ],
+  },
+  {
+    id: "dr-paralel-park",
+    baslik: "Paralel Park",
+    ozet: "İki araç arasına geri manevrayla, kaldırıma paralel park etme tekniği.",
+    ikon: "car",
+    animasyon: "paralelPark",
+    zorluk: "zor",
+    adimlar: [
+      { baslik: "Hizalanma", aciklama: "Park edilecek boşluğun önündeki araca yaklaşık 50 cm mesafede, ona paralel şekilde yan yana durulur." },
+      { baslik: "Geri manevraya başlama", aciklama: "Sinyal verilir, çevre kontrol edilir. Yavaşça geri gidilirken, öndeki aracın arka tamponu hizasına gelince direksiyon tam sağa kırılır." },
+      { baslik: "45 derece açı", aciklama: "Araç boşluğa yaklaşık 45 derece açıyla girer. Arka tekerlek kaldırıma yaklaşınca direksiyon düzeltilir." },
+      { baslik: "Toparlama", aciklama: "Aracın arkası boşluğa girince direksiyon bu kez tam sola kırılarak ön kısım içeri alınır ve araç kaldırıma paralel getirilir." },
+      { baslik: "Bitiş", aciklama: "Araç ortalanır, öndeki-arkadaki mesafeler eşitlenir, vites boşa alınıp el freni çekilir." },
+    ],
+    ipuclari: [
+      "Manevrayı olabildiğince yavaş yap; hız kontrolünü debriyajla sağla.",
+      "Referans noktalarını (yan araçların tamponları, aynalar) kullan.",
+      "Kaldırıma 50 cm'den fazla uzak park etme.",
+    ],
+    hatalar: [
+      { seviye: "kirmizi", metin: "Dubalara/konilere veya kaldırıma çarpmak." },
+      { seviye: "kirmizi", metin: "En fazla iki hamlede park edememek." },
+      { seviye: "kirmizi", metin: "Kaldırıma 50 cm'den fazla uzağa park etmek." },
+      { seviye: "sari", metin: "Manevra sırasında ayna/omuz üstü kontrolü yapmamak." },
+    ],
+  },
+  {
+    id: "dr-l-park",
+    baslik: "L (Dik) Park",
+    ozet: "Aracı dik konumdaki park cebine geri manevrayla yerleştirme.",
+    ikon: "grid",
+    animasyon: "lPark",
+    zorluk: "zor",
+    adimlar: [
+      { baslik: "Konumlanma", aciklama: "Park cebine paralel ilerlenir; cebin köşe noktası omuz hizasına gelene kadar geçilir." },
+      { baslik: "Direksiyonu kırma", aciklama: "Sinyal verilip çevre kontrol edildikten sonra geri vitese geçilir, direksiyon park cebine doğru tam kırılır." },
+      { baslik: "Cebe girme", aciklama: "Yavaşça geri gidilir; ayna ve arka camdan cebin çizgileri takip edilerek araç düzgün biçimde cebe alınır." },
+      { baslik: "Düzeltme", aciklama: "Araç çizgilerle paralel hâle geldiğinde direksiyon düzeltilir, gerekirse küçük bir düzeltme hamlesi yapılır." },
+      { baslik: "Bitiş", aciklama: "Araç cebe ortalanır, vites boşa alınır ve el freni çekilir." },
+    ],
+    ipuclari: [
+      "Arka tekerleklerin izini hayal ederek dönüş noktasını belirle.",
+      "Çok yavaş ilerle, direksiyonu araç dururken değil hareket hâlindeyken kır.",
+      "Aynalardan iki yandaki çizgilere eşit mesafeyi kontrol et.",
+    ],
+    hatalar: [
+      { seviye: "kirmizi", metin: "Park çizgilerini/dubaları ihlal etmek, çarpmak." },
+      { seviye: "kirmizi", metin: "Belirlenen hamle sayısını aşmak." },
+      { seviye: "sari", metin: "Park sonrası el frenini çekmemek, vitesi boşa almamak." },
+    ],
+  },
+  {
+    id: "dr-rampa-kalkis",
+    baslik: "Rampa (Yokuş) Kalkışı",
+    ozet: "Eğimli yolda aracı geri kaçırmadan kalkış yapma tekniği.",
+    ikon: "trending-up",
+    animasyon: "rampaKalkis",
+    zorluk: "orta",
+    adimlar: [
+      { baslik: "Durma", aciklama: "Yokuşta araç durdurulur, fren basılı tutulur ve el freni çekilir." },
+      { baslik: "Kavrama noktası", aciklama: "1. vitese geçilir, debriyaj kavrama noktasına kadar yavaşça bırakılır; aracın hafifçe titremesi hissedilir." },
+      { baslik: "Gaz ve el freni", aciklama: "Hafifçe gaz verilirken el freni yavaşça indirilir. Araç ileri hareket etmeye başlar." },
+      { baslik: "İlerleme", aciklama: "Araç geri kaçmadan düzgünce yokuşu çıkar; debriyaj tam bırakılıp gaz artırılır." },
+    ],
+    ipuclari: [
+      "El frenini kavrama noktasını hissetmeden indirme.",
+      "Aracı 50 cm'den fazla geri kaçırmak sınavda kalma sebebidir.",
+      "Debriyaj-gaz-el freni uyumunu yavaşça sağla.",
+    ],
+    hatalar: [
+      { seviye: "kirmizi", metin: "Aracı 50 cm'den fazla geri kaçırmak." },
+      { seviye: "sari", metin: "Kalkışta aracı defalarca stop ettirmek." },
+    ],
+  },
+  {
+    id: "dr-u-donusu",
+    baslik: "U Dönüşü (Geri Dönüş)",
+    ozet: "Yolda güvenli biçimde ters yöne dönme manevrası.",
+    ikon: "return-up-back",
+    animasyon: "uDonusu",
+    zorluk: "orta",
+    adimlar: [
+      { baslik: "Hazırlık", aciklama: "U dönüşünün yasak olmadığı, görüşün açık olduğu bir yer seçilir. Sinyal verilir, ayna ve çevre kontrol edilir." },
+      { baslik: "Yavaşlama", aciklama: "Hız iyice düşürülür, gerekirse sağa yanaşılarak dönüş için alan oluşturulur." },
+      { baslik: "Dönüş", aciklama: "Trafik boşken direksiyon sola tam kırılır ve araç karşı yöne yavaşça döndürülür." },
+      { baslik: "Tamamlama", aciklama: "Gerekirse bir geri-ileri hamlesiyle dönüş tamamlanır, araç yeni yönde şeride yerleşir." },
+    ],
+    ipuclari: [
+      "U dönüşünü yalnızca görüşün açık ve güvenli olduğu yerde yap.",
+      "Karşıdan ve arkadan gelen araçları mutlaka kontrol et.",
+      "Yasak levhası veya kesintisiz çizgi varsa U dönüşü yapma.",
+    ],
+    hatalar: [
+      { seviye: "kirmizi", metin: "Karşı yönden gelen aracı tehlikeye atmak." },
+      { seviye: "sari", metin: "Dönüş öncesi sinyal ve ayna kontrolü yapmamak." },
+    ],
+  },
+  {
+    id: "dr-ani-fren",
+    baslik: "Ani (Acil) Fren",
+    ozet: "Beklenmedik engelde aracı kontrollü ve en kısa mesafede durdurma.",
+    ikon: "alert",
+    animasyon: "aniFren",
+    zorluk: "orta",
+    adimlar: [
+      { baslik: "Tehlikeyi görme", aciklama: "Öndeki ani engel/yaya fark edilir; panik yapılmadan hızlıca tepki verilir." },
+      { baslik: "Fren", aciklama: "Fren pedalına kararlı biçimde basılır. ABS'li araçta pedal sonuna kadar basılı tutulur; ABS titreşimi normaldir." },
+      { baslik: "Yön kontrolü", aciklama: "Frenle birlikte direksiyon hâkimiyeti korunur; ABS sayesinde araç yönlendirilebilir." },
+      { baslik: "Durma sonrası", aciklama: "Araç durunca dörtlü flaşör yakılır, güvenli konum sağlanır." },
+    ],
+    ipuclari: [
+      "ABS'li araçta ani frende ayağını pedaldan çekme, basılı tut.",
+      "Takip mesafesini korursan ani fren ihtiyacı azalır.",
+      "Islak/buzlu yolda fren mesafesi uzar, hızını önceden düşür.",
+    ],
+    hatalar: [
+      { seviye: "mavi", metin: "Gereksiz ve sert fren yaparak arkadaki aracı tehlikeye atmak." },
+      { seviye: "sari", metin: "Frenle birlikte direksiyon hâkimiyetini kaybetmek." },
+    ],
+  },
+  {
+    id: "dr-sinyal-ayna",
+    baslik: "Sinyal, Ayna ve Şerit Değiştirme",
+    ozet: "Doğru sinyal kullanımı, ayna-omuz kontrolü ve güvenli şerit değişimi.",
+    ikon: "swap-horizontal",
+    animasyon: "seritDegistirme",
+    zorluk: "kolay",
+    adimlar: [
+      { baslik: "Niyet ve sinyal", aciklama: "Şerit değiştirmeden önce gitmek istenen yöne sinyal verilir (en az birkaç saniye önce)." },
+      { baslik: "Ayna kontrolü", aciklama: "İç ve ilgili dış ayna kontrol edilir; arkadan gelen araçların hızı ve mesafesi değerlendirilir." },
+      { baslik: "Omuz üstü (kör nokta)", aciklama: "Aynaların görmediği kör nokta, hızlıca omuz üstünden bakılarak kontrol edilir." },
+      { baslik: "Geçiş", aciklama: "Boşluk güvenliyse yumuşak bir hareketle şerit değiştirilir; ardından sinyal kapatılır." },
+    ],
+    ipuclari: [
+      "Sinyal ver, aynaya bak, omuz üstü kontrol et, sonra geç.",
+      "Şerit değişimini ani değil yumuşak yap.",
+      "Kör nokta kontrolünü asla atlama.",
+    ],
+    hatalar: [
+      { seviye: "sari", metin: "Şerit değiştirmeden önce sinyal vermemek." },
+      { seviye: "sari", metin: "Ayna ve kör nokta (omuz üstü) kontrolü yapmamak." },
+    ],
+  },
+  {
+    id: "dr-geri-manevra",
+    baslik: "Geri Manevra",
+    ozet: "Aracı geri viteste güvenli, düzgün ve kontrollü kullanma tekniği.",
+    ikon: "return-down-back",
+    animasyon: "geriManevra",
+    zorluk: "orta",
+    adimlar: [
+      { baslik: "Hazırlık", aciklama: "Araç durdurulur, çevre (arka, yan, kör nokta) kontrol edilir, sinyal verilir ve geri vitese geçilir." },
+      { baslik: "Bakış yönü", aciklama: "Geri giderken asıl bakış arkaya (omuz üzerinden) çevrilir; aynalar yardımcı olarak kullanılır." },
+      { baslik: "Yavaş ilerleme", aciklama: "Debriyaj kavrama noktasında tutulur, araç çok yavaş ve sabit hızla geriye alınır. Gerekirse kısa fren dokunuşlarıyla hız kesilir." },
+      { baslik: "Düzgün hat", aciklama: "Direksiyon küçük hareketlerle düzeltilir; aracın sağa-sola savrulması engellenir." },
+      { baslik: "Bitiş", aciklama: "İstenen noktada fren basılır, vites boşa alınır, el freni çekilir ve sinyal kapatılır." },
+    ],
+    ipuclari: [
+      "Geri manevrada hız her şeydir: ne kadar yavaş, o kadar güvenli.",
+      "Yalnızca aynaya bakmak yetmez; omuz üstü kontrol şarttır.",
+      "Çocuk/yaya olabilecek alanlarda ekstra yavaş ve dikkatli ol.",
+    ],
+    hatalar: [
+      { seviye: "kirmizi", metin: "Geri giderken aracı sağa veya sola kaydırıp hâkimiyeti kaybetmek." },
+      { seviye: "sari", metin: "Geri manevra öncesi/sırasında çevre kontrolü yapmamak." },
+      { seviye: "sari", metin: "Sinyal vermeden geri manevraya başlamak." },
+    ],
+  },
+];
+
+export function direksiyonBul(id: string): DireksiyonDersi | undefined {
+  return DIREKSIYON_DERSLERI.find((d) => d.id === id);
+}

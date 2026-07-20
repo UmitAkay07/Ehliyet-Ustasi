@@ -1,0 +1,1247 @@
+{
+  "_kaynak": "KGM / Wikimedia Commons — scripts/build-full-isaret-catalog.js",
+  "is-08": {
+    "kgm": "TT-1",
+    "file": "Turkey road sign TT-1.svg"
+  },
+  "is-15": {
+    "kgm": "TT-2",
+    "file": "Turkey road sign TT-2.svg"
+  },
+  "kgm-tt-2a": {
+    "kgm": "TT-2a",
+    "file": "Turkey road sign TT-2a.svg"
+  },
+  "is-16": {
+    "kgm": "TT-4",
+    "file": "Turkey road sign TT-4.svg"
+  },
+  "is-09": {
+    "kgm": "TT-5",
+    "file": "Turkey road sign TT-5.svg"
+  },
+  "is-54": {
+    "kgm": "TT-3",
+    "file": "Turkey road sign TT-3.svg"
+  },
+  "is-05": {
+    "kgm": "T-11",
+    "file": "Turkey road sign T-11.svg"
+  },
+  "is-04": {
+    "kgm": "T-12",
+    "file": "Turkey road sign T-12.svg"
+  },
+  "is-31": {
+    "kgm": "T-1a",
+    "file": "Turkey road sign T-1a.svg"
+  },
+  "is-01": {
+    "kgm": "T-1b",
+    "file": "Turkey road sign T-1b.svg"
+  },
+  "is-32": {
+    "kgm": "T-2a",
+    "file": "Turkey road sign T-2a.svg"
+  },
+  "kgm-t-2b": {
+    "kgm": "T-2b",
+    "file": "Turkey road sign T-2b.svg"
+  },
+  "is-26": {
+    "kgm": "P-2",
+    "file": "Turkey road sign P-2.svg"
+  },
+  "is-27": {
+    "kgm": "P-1",
+    "file": "Turkey road sign P-1.svg"
+  },
+  "is-21": {
+    "kgm": "P-3a",
+    "file": "Turkey road sign P-3a.svg"
+  },
+  "kgm-p-3b": {
+    "kgm": "P-3b",
+    "file": "Turkey road sign P-3b.svg"
+  },
+  "kgm-p-3c": {
+    "kgm": "P-3c",
+    "file": "Turkey road sign P-3c.svg"
+  },
+  "kgm-p-3d": {
+    "kgm": "P-3d",
+    "file": "Turkey road sign P-3d.svg"
+  },
+  "kgm-p-3e": {
+    "kgm": "P-3e",
+    "file": "Turkey road sign P-3e.svg"
+  },
+  "kgm-p-3f": {
+    "kgm": "P-3f",
+    "file": "Turkey road sign P-3f.svg"
+  },
+  "kgm-p-3g": {
+    "kgm": "P-3g",
+    "file": "Turkey road sign P-3g.svg"
+  },
+  "kgm-p-3h": {
+    "kgm": "P-3h",
+    "file": "Turkey road sign P-3h.svg"
+  },
+  "is-11": {
+    "kgm": "TT-26a",
+    "file": "Turkey road sign TT-26a.svg"
+  },
+  "is-10": {
+    "kgm": "TT-26b",
+    "file": "Turkey road sign TT-26b.svg"
+  },
+  "is-12": {
+    "kgm": "TT-26c",
+    "file": "Turkey road sign TT-26c.svg"
+  },
+  "is-13": {
+    "kgm": "TT-27",
+    "file": "Turkey road sign TT-27.svg"
+  },
+  "kgm-tt-28": {
+    "kgm": "TT-28",
+    "file": "Turkey road sign TT-28.svg"
+  },
+  "is-39": {
+    "kgm": "TT-34a",
+    "file": "Turkey road sign TT-34a.svg"
+  },
+  "kgm-tt-34b": {
+    "kgm": "TT-34b",
+    "file": "Turkey road sign TT-34b.svg"
+  },
+  "is-14": {
+    "kgm": "TT-29-50",
+    "file": "Turkey road sign TT-29-50.svg"
+  },
+  "kgm-tt-29-30": {
+    "kgm": "TT-29-30",
+    "file": "Turkey road sign TT-29-30.svg"
+  },
+  "kgm-tt-29-40": {
+    "kgm": "TT-29-40",
+    "file": "Turkey road sign TT-29-40.svg"
+  },
+  "kgm-tt-29-60": {
+    "kgm": "TT-29-60",
+    "file": "Turkey road sign TT-29-60.svg"
+  },
+  "kgm-tt-29-70": {
+    "kgm": "TT-29-70",
+    "file": "Turkey road sign TT-29-70.svg"
+  },
+  "kgm-tt-29-80": {
+    "kgm": "TT-29-80",
+    "file": "Turkey road sign TT-29-80.svg"
+  },
+  "kgm-tt-29-90": {
+    "kgm": "TT-29-90",
+    "file": "Turkey road sign TT-29-90.svg"
+  },
+  "kgm-tt-29-130": {
+    "kgm": "TT-29-130",
+    "file": "Turkey road sign TT-29-130.svg"
+  },
+  "kgm-tt-29-140": {
+    "kgm": "TT-29-140",
+    "file": "Turkey road sign TT-29-140.svg"
+  },
+  "kgm-tt-29b": {
+    "kgm": "TT-29b",
+    "file": "Turkey road sign TT-29b.svg"
+  },
+  "is-38": {
+    "kgm": "TT-33-50",
+    "file": "Turkey road sign TT-33-50.svg"
+  },
+  "kgm-tt-33-30": {
+    "kgm": "TT-33-30",
+    "file": "Turkey road sign TT-33-30.svg"
+  },
+  "kgm-tt-33-40": {
+    "kgm": "TT-33-40",
+    "file": "Turkey road sign TT-33-40.svg"
+  },
+  "kgm-tt-33-60": {
+    "kgm": "TT-33-60",
+    "file": "Turkey road sign TT-33-60.svg"
+  },
+  "kgm-tt-33-70": {
+    "kgm": "TT-33-70",
+    "file": "Turkey road sign TT-33-70.svg"
+  },
+  "kgm-tt-33-80": {
+    "kgm": "TT-33-80",
+    "file": "Turkey road sign TT-33-80.svg"
+  },
+  "kgm-tt-33-90": {
+    "kgm": "TT-33-90",
+    "file": "Turkey road sign TT-33-90.svg"
+  },
+  "kgm-tt-33b": {
+    "kgm": "TT-33b",
+    "file": "Turkey road sign TT-33b.svg"
+  },
+  "is-17": {
+    "kgm": "TT-35c",
+    "file": "TR road sign TT-35c.svg"
+  },
+  "is-18": {
+    "kgm": "TT-35a",
+    "file": "TR road sign TT-35a.svg"
+  },
+  "is-40": {
+    "kgm": "TT-35b",
+    "file": "TR road sign TT-35b.svg"
+  },
+  "kgm-tt-35d": {
+    "kgm": "TT-35d",
+    "file": "Turkey road sign TT-35d.svg"
+  },
+  "kgm-tt-35e": {
+    "kgm": "TT-35e",
+    "file": "Turkey road sign TT-35e.svg"
+  },
+  "kgm-tt-35f": {
+    "kgm": "TT-35f",
+    "file": "Turkey road sign TT-35f.svg"
+  },
+  "kgm-tt-35g": {
+    "kgm": "TT-35g",
+    "file": "Turkey road sign TT-35g.svg"
+  },
+  "kgm-tt-35h": {
+    "kgm": "TT-35h",
+    "file": "Turkey road sign TT-35h.svg"
+  },
+  "is-19": {
+    "kgm": "TT-37",
+    "file": "Turkey road sign TT-37.svg"
+  },
+  "kgm-tt-36a": {
+    "kgm": "TT-36a",
+    "file": "Turkey road sign TT-36a.svg"
+  },
+  "kgm-tt-36b": {
+    "kgm": "TT-36b",
+    "file": "Turkey road sign TT-36b.svg"
+  },
+  "kgm-tt-36c": {
+    "kgm": "TT-36c",
+    "file": "Turkey road sign TT-36c.svg"
+  },
+  "is-20": {
+    "kgm": "TT-41a-30",
+    "file": "Turkey road sign TT-41a-30.svg"
+  },
+  "kgm-tt-41b-30": {
+    "kgm": "TT-41b-30",
+    "file": "Turkey road sign TT-41b-30.svg"
+  },
+  "is-41": {
+    "kgm": "TT-38a",
+    "file": "Turkey road sign TT-38a.svg"
+  },
+  "kgm-tt-38b": {
+    "kgm": "TT-38b",
+    "file": "Turkey road sign TT-38b.svg"
+  },
+  "is-02": {
+    "kgm": "T-7",
+    "file": "Turkey road sign T-7.svg"
+  },
+  "is-03": {
+    "kgm": "T-8",
+    "file": "Turkey road sign T-8.svg"
+  },
+  "is-34": {
+    "kgm": "T-19",
+    "file": "Turkey road sign T-19.svg"
+  },
+  "is-07": {
+    "kgm": "T-24",
+    "file": "Turkey road sign T-24.svg"
+  },
+  "is-37": {
+    "kgm": "T-26",
+    "file": "Turkey road sign T-26.svg"
+  },
+  "is-35": {
+    "kgm": "T-15",
+    "file": "Turkey road sign T-15.svg"
+  },
+  "is-51": {
+    "kgm": "T-20",
+    "file": "Turkey road sign T-20.svg"
+  },
+  "is-52": {
+    "kgm": "T-16",
+    "file": "Turkey road sign T-16.svg"
+  },
+  "is-56": {
+    "kgm": "T-21",
+    "file": "Turkey road sign T-21.svg"
+  },
+  "is-33": {
+    "kgm": "T-4a",
+    "file": "Turkey road sign T-4a.svg"
+  },
+  "kgm-t-4b": {
+    "kgm": "T-4b",
+    "file": "Turkey road sign T-4b.svg"
+  },
+  "kgm-t-4c": {
+    "kgm": "T-4c",
+    "file": "Turkey road sign T-4c.svg"
+  },
+  "is-36": {
+    "kgm": "T-13",
+    "file": "Turkey road sign T-13.svg"
+  },
+  "is-06": {
+    "kgm": "T-14a",
+    "file": "Turkey road sign T-14a.svg"
+  },
+  "kgm-t-14b": {
+    "kgm": "T-14b",
+    "file": "Turkey road sign T-14b.svg"
+  },
+  "is-55": {
+    "kgm": "T-3a",
+    "file": "Turkey road sign T-3a.svg"
+  },
+  "kgm-t-3b": {
+    "kgm": "T-3b",
+    "file": "Turkey road sign T-3b.svg"
+  },
+  "kgm-t-25": {
+    "kgm": "T-25",
+    "file": "Turkey road sign T-25.svg"
+  },
+  "kgm-t-27a": {
+    "kgm": "T-27a",
+    "file": "Turkey road sign T-27a.svg"
+  },
+  "kgm-t-27b": {
+    "kgm": "T-27b",
+    "file": "Turkey road sign T-27b.svg"
+  },
+  "kgm-t-37": {
+    "kgm": "T-37",
+    "file": "Turkey road sign T-37.svg"
+  },
+  "kgm-t-38": {
+    "kgm": "T-38",
+    "file": "Turkey road sign T-38.svg"
+  },
+  "kgm-t-39": {
+    "kgm": "T-39",
+    "file": "Turkey road sign T-39.svg"
+  },
+  "is-24": {
+    "kgm": "B-14a",
+    "file": "Turkey road sign B-14a.svg"
+  },
+  "is-53": {
+    "kgm": "B-14b",
+    "file": "Turkey road sign B-14b.svg"
+  },
+  "kgm-b-14c": {
+    "kgm": "B-14c",
+    "file": "Turkey road sign B-14c.svg"
+  },
+  "kgm-b-14d": {
+    "kgm": "B-14d",
+    "file": "Turkey road sign B-14d.svg"
+  },
+  "kgm-b-14e": {
+    "kgm": "B-14e",
+    "file": "Turkey road sign B-14e.svg"
+  },
+  "kgm-b-14f": {
+    "kgm": "B-14f",
+    "file": "Turkey road sign B-14f.svg"
+  },
+  "is-44": {
+    "kgm": "B-9",
+    "file": "Turkey road sign B-9.svg"
+  },
+  "is-45": {
+    "kgm": "B-10",
+    "file": "Turkey road sign B-10.svg"
+  },
+  "is-25": {
+    "kgm": "B-18",
+    "file": "Turkey road sign B-18 (2).svg"
+  },
+  "is-58": {
+    "kgm": "B-19",
+    "file": "Turkey road sign B-19.svg"
+  },
+  "kgm-b-20": {
+    "kgm": "B-20",
+    "file": "Turkey road sign B-20.svg"
+  },
+  "kgm-b-21": {
+    "kgm": "B-21",
+    "file": "Turkey road sign B-21.svg"
+  },
+  "is-22": {
+    "kgm": "B-15",
+    "file": "Turkey road sign B-15.svg"
+  },
+  "is-47": {
+    "kgm": "B-22",
+    "file": "Turkey road sign B-22.svg"
+  },
+  "is-23": {
+    "kgm": "B-23",
+    "file": "Turkey road sign B-23.svg"
+  },
+  "is-42": {
+    "kgm": "B-16",
+    "file": "Turkey road sign B-16.svg"
+  },
+  "kgm-b-16b": {
+    "kgm": "B-16b",
+    "file": "Turkey road sign B-16b.svg"
+  },
+  "is-43": {
+    "kgm": "B-26",
+    "file": "Turkey road sign B-26.svg"
+  },
+  "kgm-b-37": {
+    "kgm": "B-37",
+    "file": "Turkey road sign B-37.svg"
+  },
+  "kgm-b-38": {
+    "kgm": "B-38",
+    "file": "Turkey road sign B-38.svg"
+  },
+  "kgm-b-39": {
+    "kgm": "B-39",
+    "file": "Turkey road sign B-39.svg"
+  },
+  "is-48": {
+    "kgm": "TT-30",
+    "file": "Turkey road sign TT-30.svg"
+  },
+  "is-57": {
+    "kgm": "TT-32",
+    "file": "Turkey road sign TT-32.svg"
+  },
+  "kgm-tt-25": {
+    "kgm": "TT-25",
+    "file": "Turkey road sign TT-25.svg"
+  },
+  "kgm-tt-31": {
+    "kgm": "TT-31",
+    "file": "Turkey road sign TT-31.svg"
+  },
+  "kgm-tt-6": {
+    "kgm": "TT-6",
+    "file": "Turkey road sign TT-6.svg"
+  },
+  "kgm-tt-7": {
+    "kgm": "TT-7",
+    "file": "Turkey road sign TT-7.svg"
+  },
+  "kgm-tt-8": {
+    "kgm": "TT-8",
+    "file": "Turkey road sign TT-8.svg"
+  },
+  "kgm-tt-9": {
+    "kgm": "TT-9",
+    "file": "Turkey road sign TT-9.svg"
+  },
+  "kgm-tt-10a": {
+    "kgm": "TT-10a",
+    "file": "Turkey road sign TT-10a.svg"
+  },
+  "kgm-tt-10b": {
+    "kgm": "TT-10b",
+    "file": "Turkey road sign TT-10b.svg"
+  },
+  "kgm-tt-11": {
+    "kgm": "TT-11",
+    "file": "Turkey road sign TT-11.svg"
+  },
+  "kgm-tt-12": {
+    "kgm": "TT-12",
+    "file": "Turkey road sign TT-12.svg"
+  },
+  "kgm-tt-13": {
+    "kgm": "TT-13",
+    "file": "Turkey road sign TT-13.svg"
+  },
+  "kgm-tt-14": {
+    "kgm": "TT-14",
+    "file": "Turkey road sign TT-14.svg"
+  },
+  "kgm-tt-15": {
+    "kgm": "TT-15",
+    "file": "Turkey road sign TT-15.svg"
+  },
+  "kgm-tt-16a": {
+    "kgm": "TT-16a",
+    "file": "Turkey road sign TT-16a.svg"
+  },
+  "kgm-tt-16b": {
+    "kgm": "TT-16b",
+    "file": "Turkey road sign TT-16b.svg"
+  },
+  "kgm-tt-17": {
+    "kgm": "TT-17",
+    "file": "Turkey road sign TT-17.svg"
+  },
+  "kgm-tt-18": {
+    "kgm": "TT-18",
+    "file": "Turkey road sign TT-18.svg"
+  },
+  "kgm-tt-19": {
+    "kgm": "TT-19",
+    "file": "Turkey road sign TT-19.svg"
+  },
+  "kgm-tt-20": {
+    "kgm": "TT-20",
+    "file": "Turkey road sign TT-20.svg"
+  },
+  "kgm-tt-21": {
+    "kgm": "TT-21",
+    "file": "Turkey road sign TT-21.svg"
+  },
+  "kgm-tt-22": {
+    "kgm": "TT-22",
+    "file": "Turkey road sign TT-22.svg"
+  },
+  "kgm-tt-23": {
+    "kgm": "TT-23",
+    "file": "Turkey road sign TT-23.svg"
+  },
+  "kgm-tt-24": {
+    "kgm": "TT-24",
+    "file": "Turkey road sign TT-24.svg"
+  },
+  "kgm-t-5": {
+    "kgm": "T-5",
+    "file": "Turkey road sign T-5.svg"
+  },
+  "kgm-t-6": {
+    "kgm": "T-6",
+    "file": "Turkey road sign T-6.svg"
+  },
+  "kgm-t-9": {
+    "kgm": "T-9",
+    "file": "Turkey road sign T-9.svg"
+  },
+  "kgm-t-10": {
+    "kgm": "T-10",
+    "file": "Turkey road sign T-10.svg"
+  },
+  "kgm-t-17": {
+    "kgm": "T-17",
+    "file": "Turkey road sign T-17.svg"
+  },
+  "kgm-t-18": {
+    "kgm": "T-18",
+    "file": "Turkey road sign T-18.svg"
+  },
+  "kgm-t-22a": {
+    "kgm": "T-22a",
+    "file": "Turkey road sign T-22a.svg"
+  },
+  "kgm-t-22b": {
+    "kgm": "T-22b",
+    "file": "Turkey road sign T-22b.svg"
+  },
+  "kgm-t-22c": {
+    "kgm": "T-22c",
+    "file": "Turkey road sign T-22c.svg"
+  },
+  "kgm-t-22d": {
+    "kgm": "T-22d",
+    "file": "Turkey road sign T-22d.svg"
+  },
+  "kgm-t-22e": {
+    "kgm": "T-22e",
+    "file": "Turkey road sign T-22e.svg"
+  },
+  "kgm-t-23a": {
+    "kgm": "T-23a",
+    "file": "Turkey road sign T-23a.svg"
+  },
+  "kgm-t-23b": {
+    "kgm": "T-23b",
+    "file": "Turkey road sign T-23b.svg"
+  },
+  "kgm-t-28a-b": {
+    "kgm": "T-28a-b",
+    "file": "Turkey road sign T-28a-b.svg"
+  },
+  "kgm-t-29a-b": {
+    "kgm": "T-29a-b",
+    "file": "Turkey road sign T-29a-b.svg"
+  },
+  "kgm-t-30a-b": {
+    "kgm": "T-30a-b",
+    "file": "Turkey road sign T-30a-b.svg"
+  },
+  "kgm-t-31a-b": {
+    "kgm": "T-31a-b",
+    "file": "Turkey road sign T-31a-b.svg"
+  },
+  "kgm-t-32": {
+    "kgm": "T-32",
+    "file": "Turkey road sign T-32.svg"
+  },
+  "kgm-t-33a": {
+    "kgm": "T-33a",
+    "file": "Turkey road sign T-33a.svg"
+  },
+  "kgm-t-33b": {
+    "kgm": "T-33b",
+    "file": "Turkey road sign T-33b.svg"
+  },
+  "kgm-t-33d-e": {
+    "kgm": "T-33d-e",
+    "file": "Turkey road sign T-33d-e.svg"
+  },
+  "kgm-t-33f": {
+    "kgm": "T-33f",
+    "file": "Turkey road sign T-33f.svg"
+  },
+  "kgm-t-34a-b": {
+    "kgm": "T-34a-b",
+    "file": "Turkey road sign T-34a-b.svg"
+  },
+  "kgm-t-35": {
+    "kgm": "T-35",
+    "file": "Turkey road sign T-35.svg"
+  },
+  "kgm-t-36": {
+    "kgm": "T-36",
+    "file": "Turkey road sign T-36.svg"
+  },
+  "kgm-tt-39a": {
+    "kgm": "TT-39a",
+    "file": "Turkey road sign TT-39a.svg"
+  },
+  "kgm-tt-39b": {
+    "kgm": "TT-39b",
+    "file": "Turkey road sign TT-39b.svg"
+  },
+  "kgm-tt-40a": {
+    "kgm": "TT-40a",
+    "file": "Turkey road sign TT-40a.svg"
+  },
+  "kgm-tt-40b": {
+    "kgm": "TT-40b",
+    "file": "Turkey road sign TT-40b.svg"
+  },
+  "kgm-tt-42a": {
+    "kgm": "TT-42a",
+    "file": "Turkey road sign TT-42a.svg"
+  },
+  "kgm-tt-42b": {
+    "kgm": "TT-42b",
+    "file": "Turkey road sign TT-42b.svg"
+  },
+  "kgm-tt-43": {
+    "kgm": "TT-43",
+    "file": "Turkey road sign TT-43.svg"
+  },
+  "kgm-tt-43a": {
+    "kgm": "TT-43a",
+    "file": "Turkey road sign TT-43a.svg"
+  },
+  "kgm-tt-43b": {
+    "kgm": "TT-43b",
+    "file": "Turkey road sign TT-43b.svg"
+  },
+  "kgm-tt-43c": {
+    "kgm": "TT-43c",
+    "file": "Turkey road sign TT-43c.svg"
+  },
+  "kgm-tt-44a": {
+    "kgm": "TT-44a",
+    "file": "Turkey road sign TT-44a.svg"
+  },
+  "kgm-tt-44b": {
+    "kgm": "TT-44b",
+    "file": "Turkey road sign TT-44b.svg"
+  },
+  "kgm-tt-45a": {
+    "kgm": "TT-45a",
+    "file": "Turkey road sign TT-45a.svg"
+  },
+  "kgm-tt-45b": {
+    "kgm": "TT-45b",
+    "file": "Turkey road sign TT-45b.svg"
+  },
+  "kgm-b-2a": {
+    "kgm": "B-2a",
+    "file": "Turkey road sign B-2a.svg"
+  },
+  "kgm-b-2b": {
+    "kgm": "B-2b",
+    "file": "Turkey road sign B-2b.svg"
+  },
+  "kgm-b-2c": {
+    "kgm": "B-2c",
+    "file": "Turkey road sign B-2c.svg"
+  },
+  "kgm-b-2d": {
+    "kgm": "B-2d",
+    "file": "Turkey road sign B-2d.svg"
+  },
+  "kgm-b-3": {
+    "kgm": "B-3",
+    "file": "Turkey road sign B-3.svg"
+  },
+  "kgm-b-4": {
+    "kgm": "B-4",
+    "file": "Turkey road sign B-4.svg"
+  },
+  "kgm-b-7": {
+    "kgm": "B-7",
+    "file": "Turkey road sign B-7.svg"
+  },
+  "kgm-b-8a": {
+    "kgm": "B-8a",
+    "file": "Turkey road sign B-8a.svg"
+  },
+  "kgm-b-8b": {
+    "kgm": "B-8b",
+    "file": "Turkey road sign B-8b.svg"
+  },
+  "kgm-b-8c": {
+    "kgm": "B-8c",
+    "file": "Turkey road sign B-8c.svg"
+  },
+  "kgm-b-11a": {
+    "kgm": "B-11a",
+    "file": "Turkey road sign B-11a.svg"
+  },
+  "kgm-b-11b": {
+    "kgm": "B-11b",
+    "file": "Turkey road sign B-11b.svg"
+  },
+  "kgm-b-11c": {
+    "kgm": "B-11c",
+    "file": "Turkey road sign B-11c.svg"
+  },
+  "kgm-b-11d": {
+    "kgm": "B-11d",
+    "file": "Turkey road sign B-11d.svg"
+  },
+  "kgm-b-12a": {
+    "kgm": "B-12a",
+    "file": "Turkey road sign B-12a.svg"
+  },
+  "kgm-b-12b": {
+    "kgm": "B-12b",
+    "file": "Turkey road sign B-12b.svg"
+  },
+  "kgm-b-12c": {
+    "kgm": "B-12c",
+    "file": "Turkey road sign B-12c.svg"
+  },
+  "kgm-b-12d": {
+    "kgm": "B-12d",
+    "file": "Turkey road sign B-12d.svg"
+  },
+  "kgm-b-12e": {
+    "kgm": "B-12e",
+    "file": "Turkey road sign B-12e.svg"
+  },
+  "kgm-b-12f": {
+    "kgm": "B-12f",
+    "file": "Turkey road sign B-12f.svg"
+  },
+  "kgm-b-12g": {
+    "kgm": "B-12g",
+    "file": "Turkey road sign B-12g.svg"
+  },
+  "kgm-b-12h": {
+    "kgm": "B-12h",
+    "file": "Turkey road sign B-12h.svg"
+  },
+  "kgm-b-12i": {
+    "kgm": "B-12i",
+    "file": "Turkey road sign B-12i.svg"
+  },
+  "kgm-b-13a-01": {
+    "kgm": "B-13a-01",
+    "file": "Turkey road sign B-13a 01.svg"
+  },
+  "kgm-b-13a-02": {
+    "kgm": "B-13a-02",
+    "file": "Turkey road sign B-13a 02.svg"
+  },
+  "kgm-b-13b-01": {
+    "kgm": "B-13b-01",
+    "file": "Turkey road sign B-13b 01.svg"
+  },
+  "kgm-b-13b-02": {
+    "kgm": "B-13b-02",
+    "file": "Turkey road sign B-13b 02.svg"
+  },
+  "kgm-b-17": {
+    "kgm": "B-17",
+    "file": "Turkey road sign B-17.svg"
+  },
+  "kgm-b-24": {
+    "kgm": "B-24",
+    "file": "Turkey road sign B-24.svg"
+  },
+  "kgm-b-25": {
+    "kgm": "B-25",
+    "file": "Turkey road sign B-25.svg"
+  },
+  "kgm-b-27": {
+    "kgm": "B-27",
+    "file": "Turkey road sign B-27.svg"
+  },
+  "kgm-b-28": {
+    "kgm": "B-28",
+    "file": "Turkey road sign B-28.svg"
+  },
+  "kgm-b-29": {
+    "kgm": "B-29",
+    "file": "Turkey road sign B-29.svg"
+  },
+  "kgm-b-30": {
+    "kgm": "B-30",
+    "file": "Turkey road sign B-30.svg"
+  },
+  "kgm-b-31": {
+    "kgm": "B-31",
+    "file": "Turkey road sign B-31.svg"
+  },
+  "kgm-b-32": {
+    "kgm": "B-32",
+    "file": "Turkey road sign B-32.svg"
+  },
+  "kgm-b-33": {
+    "kgm": "B-33",
+    "file": "Turkey road sign B-33.svg"
+  },
+  "kgm-b-34": {
+    "kgm": "B-34",
+    "file": "Turkey road sign B-34.svg"
+  },
+  "kgm-b-35": {
+    "kgm": "B-35",
+    "file": "Turkey road sign B-35.svg"
+  },
+  "kgm-b-36": {
+    "kgm": "B-36",
+    "file": "Turkey road sign B-36.svg"
+  },
+  "kgm-b-40": {
+    "kgm": "B-40",
+    "file": "Turkey road sign B-40.svg"
+  },
+  "kgm-b-41": {
+    "kgm": "B-41",
+    "file": "Turkey road sign B-41.svg"
+  },
+  "kgm-b-42": {
+    "kgm": "B-42",
+    "file": "Turkey road sign B-42.svg"
+  },
+  "kgm-b-43": {
+    "kgm": "B-43",
+    "file": "Turkey road sign B-43.svg"
+  },
+  "kgm-b-44": {
+    "kgm": "B-44",
+    "file": "Turkey road sign B-44.svg"
+  },
+  "kgm-b-45a": {
+    "kgm": "B-45a",
+    "file": "Turkey road sign B-45a.svg"
+  },
+  "kgm-b-45b": {
+    "kgm": "B-45b",
+    "file": "Turkey road sign B-45b.svg"
+  },
+  "kgm-b-45c": {
+    "kgm": "B-45c",
+    "file": "Turkey road sign B-45c.svg"
+  },
+  "kgm-b-45d": {
+    "kgm": "B-45d",
+    "file": "Turkey road sign B-45d.svg"
+  },
+  "kgm-b-46": {
+    "kgm": "B-46",
+    "file": "Turkey road sign B-46.svg"
+  },
+  "kgm-b-47": {
+    "kgm": "B-47",
+    "file": "Turkey road sign B-47.svg"
+  },
+  "kgm-b-48": {
+    "kgm": "B-48",
+    "file": "Turkey road sign B-48.svg"
+  },
+  "kgm-b-49": {
+    "kgm": "B-49",
+    "file": "Turkey road sign B-49.svg"
+  },
+  "kgm-b-49b": {
+    "kgm": "B-49b",
+    "file": "Turkey road sign B-49b.svg"
+  },
+  "kgm-b-52": {
+    "kgm": "B-52",
+    "file": "Turkey road sign B-52.svg"
+  },
+  "kgm-b-52b": {
+    "kgm": "B-52b",
+    "file": "Turkey road sign B-52b.svg"
+  },
+  "kgm-b-53a": {
+    "kgm": "B-53a",
+    "file": "Turkey road sign B-53a.svg"
+  },
+  "kgm-b-53b": {
+    "kgm": "B-53b",
+    "file": "Turkey road sign B-53b.svg"
+  },
+  "kgm-b-53c": {
+    "kgm": "B-53c",
+    "file": "Turkey road sign B-53c.svg"
+  },
+  "kgm-b-54": {
+    "kgm": "B-54",
+    "file": "Turkey road sign B-54.svg"
+  },
+  "kgm-b-55a": {
+    "kgm": "B-55a",
+    "file": "Turkey road sign B-55a.svg"
+  },
+  "kgm-b-55b": {
+    "kgm": "B-55b",
+    "file": "Turkey road sign B-55b.svg"
+  },
+  "kgm-b-55c": {
+    "kgm": "B-55c",
+    "file": "Turkey road sign B-55c.svg"
+  },
+  "kgm-b-55d": {
+    "kgm": "B-55d",
+    "file": "Turkey road sign B-55d.svg"
+  },
+  "kgm-b-55e": {
+    "kgm": "B-55e",
+    "file": "Turkey road sign B-55e.svg"
+  },
+  "kgm-b-56": {
+    "kgm": "B-56",
+    "file": "Turkey road sign B-56.svg"
+  },
+  "kgm-b-57": {
+    "kgm": "B-57",
+    "file": "Turkey road sign B-57.svg"
+  },
+  "kgm-b-58a": {
+    "kgm": "B-58a",
+    "file": "Turkey road sign B-58a.svg"
+  },
+  "kgm-b-58b": {
+    "kgm": "B-58b",
+    "file": "Turkey road sign B-58b.svg"
+  },
+  "kgm-b-59": {
+    "kgm": "B-59",
+    "file": "Turkey road sign B-59.svg"
+  },
+  "kgm-b-60": {
+    "kgm": "B-60",
+    "file": "Turkey road sign B-60.svg"
+  },
+  "kgm-b-62": {
+    "kgm": "B-62",
+    "file": "Turkey road sign B-62.svg"
+  },
+  "kgm-b-64": {
+    "kgm": "B-64",
+    "file": "Turkey road sign B-64.svg"
+  },
+  "kgm-b-61a": {
+    "kgm": "B-61a",
+    "file": "Turkey road sign B-61a.svg"
+  },
+  "kgm-b-61b": {
+    "kgm": "B-61b",
+    "file": "Turkey road sign B-61b.svg"
+  },
+  "kgm-b-61c": {
+    "kgm": "B-61c",
+    "file": "Turkey road sign B-61c.svg"
+  },
+  "kgm-b-61d": {
+    "kgm": "B-61d",
+    "file": "Turkey road sign B-61d.svg"
+  },
+  "kgm-b-61e": {
+    "kgm": "B-61e",
+    "file": "Turkey road sign B-61e.svg"
+  },
+  "kgm-b-61f": {
+    "kgm": "B-61f",
+    "file": "Turkey road sign B-61f.svg"
+  },
+  "kgm-b-61g": {
+    "kgm": "B-61g",
+    "file": "Turkey road sign B-61g.svg"
+  },
+  "kgm-b-63a": {
+    "kgm": "B-63a",
+    "file": "Turkey road sign B-63a.svg"
+  },
+  "kgm-b-63b": {
+    "kgm": "B-63b",
+    "file": "Turkey road sign B-63b.svg"
+  },
+  "kgm-b-63c": {
+    "kgm": "B-63c",
+    "file": "Turkey road sign B-63c.svg"
+  },
+  "kgm-b-63d": {
+    "kgm": "B-63d",
+    "file": "Turkey road sign B-63d.svg"
+  },
+  "kgm-b-5a-01": {
+    "kgm": "B-5a-01",
+    "file": "Turkey road sign B-5a 01.svg"
+  },
+  "kgm-b-5a-02": {
+    "kgm": "B-5a-02",
+    "file": "Turkey road sign B-5a 02.svg"
+  },
+  "kgm-b-5a-03": {
+    "kgm": "B-5a-03",
+    "file": "Turkey road sign B-5a 03.svg"
+  },
+  "kgm-b-5a-04": {
+    "kgm": "B-5a-04",
+    "file": "Turkey road sign B-5a 04.svg"
+  },
+  "kgm-b-5a-05": {
+    "kgm": "B-5a-05",
+    "file": "Turkey road sign B-5a 05.svg"
+  },
+  "kgm-b-5a-06": {
+    "kgm": "B-5a-06",
+    "file": "Turkey road sign B-5a 06.svg"
+  },
+  "kgm-b-5a-07": {
+    "kgm": "B-5a-07",
+    "file": "Turkey road sign B-5a 07.svg"
+  },
+  "kgm-b-5a-08": {
+    "kgm": "B-5a-08",
+    "file": "Turkey road sign B-5a 08.svg"
+  },
+  "kgm-b-5a-09": {
+    "kgm": "B-5a-09",
+    "file": "Turkey road sign B-5a 09.svg"
+  },
+  "kgm-b-5b": {
+    "kgm": "B-5b",
+    "file": "Turkey road sign B-5b.svg"
+  },
+  "kgm-b-5c": {
+    "kgm": "B-5c",
+    "file": "Turkey road sign B-5c.svg"
+  },
+  "kgm-b-5d-01": {
+    "kgm": "B-5d-01",
+    "file": "Turkey road sign B-5d 01.svg"
+  },
+  "kgm-b-5d-02": {
+    "kgm": "B-5d-02",
+    "file": "Turkey road sign B-5d 02.svg"
+  },
+  "kgm-b-50a-01": {
+    "kgm": "B-50a-01",
+    "file": "Turkey road sign B-50a 01.svg"
+  },
+  "kgm-b-50a-02": {
+    "kgm": "B-50a-02",
+    "file": "Turkey road sign B-50a 02.svg"
+  },
+  "kgm-b-50b-01": {
+    "kgm": "B-50b-01",
+    "file": "Turkey road sign B-50b 01.svg"
+  },
+  "kgm-b-50b-02": {
+    "kgm": "B-50b-02",
+    "file": "Turkey road sign B-50b 02.svg"
+  },
+  "kgm-b-50c-01": {
+    "kgm": "B-50c-01",
+    "file": "Turkey road sign B-50c 01.svg"
+  },
+  "kgm-b-50c-02": {
+    "kgm": "B-50c-02",
+    "file": "Turkey road sign B-50c 02.svg"
+  },
+  "kgm-b-50d-01": {
+    "kgm": "B-50d-01",
+    "file": "Turkey road sign B-50d 01.svg"
+  },
+  "kgm-b-50d-02": {
+    "kgm": "B-50d-02",
+    "file": "Turkey road sign B-50d 02.svg"
+  },
+  "kgm-b-50e": {
+    "kgm": "B-50e",
+    "file": "Turkey road sign B-50e.svg"
+  },
+  "kgm-b-50f-01": {
+    "kgm": "B-50f-01",
+    "file": "Turkey road sign B-50f 01.svg"
+  },
+  "kgm-b-50f-02": {
+    "kgm": "B-50f-02",
+    "file": "Turkey road sign B-50f 02.svg"
+  },
+  "kgm-b-51a-01": {
+    "kgm": "B-51a-01",
+    "file": "Turkey road sign B-51a 01.svg"
+  },
+  "kgm-b-51a-02": {
+    "kgm": "B-51a-02",
+    "file": "Turkey road sign B-51a 02.svg"
+  },
+  "kgm-b-51a-03": {
+    "kgm": "B-51a-03",
+    "file": "Turkey road sign B-51a 03.svg"
+  },
+  "kgm-b-51a-04": {
+    "kgm": "B-51a-04",
+    "file": "Turkey road sign B-51a 04.svg"
+  },
+  "kgm-b-51b": {
+    "kgm": "B-51b",
+    "file": "Turkey road sign B-51b.svg"
+  },
+  "kgm-b-51c-01": {
+    "kgm": "B-51c-01",
+    "file": "Turkey road sign B-51c 01.svg"
+  },
+  "kgm-b-51c-02": {
+    "kgm": "B-51c-02",
+    "file": "Turkey road sign B-51c 02.svg"
+  },
+  "kgm-b-51d-01": {
+    "kgm": "B-51d-01",
+    "file": "Turkey road sign B-51d 01.svg"
+  },
+  "kgm-b-51d-02": {
+    "kgm": "B-51d-02",
+    "file": "Turkey road sign B-51d 02.svg"
+  },
+  "kgm-b-1a-01": {
+    "kgm": "B-1a-01",
+    "file": "Turkey road sign B-1a 01.svg"
+  },
+  "kgm-b-1a-02": {
+    "kgm": "B-1a-02",
+    "file": "Turkey road sign B-1a 02.svg"
+  },
+  "kgm-b-1a-03": {
+    "kgm": "B-1a-03",
+    "file": "Turkey road sign B-1a 03.svg"
+  },
+  "kgm-b-1a-04": {
+    "kgm": "B-1a-04",
+    "file": "Turkey road sign B-1a 04.svg"
+  },
+  "kgm-b-1a-05": {
+    "kgm": "B-1a-05",
+    "file": "Turkey road sign B-1a 05.svg"
+  },
+  "kgm-b-1a-06": {
+    "kgm": "B-1a-06",
+    "file": "Turkey road sign B-1a 06.svg"
+  },
+  "kgm-b-1a-07": {
+    "kgm": "B-1a-07",
+    "file": "Turkey road sign B-1a 07.svg"
+  },
+  "kgm-b-1a-08": {
+    "kgm": "B-1a-08",
+    "file": "Turkey road sign B-1a 08.svg"
+  },
+  "kgm-b-1b-01": {
+    "kgm": "B-1b-01",
+    "file": "Turkey road sign B-1b 01.svg"
+  },
+  "kgm-b-1b-02": {
+    "kgm": "B-1b-02",
+    "file": "Turkey road sign B-1b 02.svg"
+  },
+  "kgm-b-1b-03": {
+    "kgm": "B-1b-03",
+    "file": "Turkey road sign B-1b 03.svg"
+  },
+  "kgm-b-1b-04": {
+    "kgm": "B-1b-04",
+    "file": "Turkey road sign B-1b 04.svg"
+  },
+  "kgm-b-1b-05": {
+    "kgm": "B-1b-05",
+    "file": "Turkey road sign B-1b 05.svg"
+  },
+  "kgm-b-1b-06": {
+    "kgm": "B-1b-06",
+    "file": "Turkey road sign B-1b 06.svg"
+  },
+  "kgm-b-1c-01": {
+    "kgm": "B-1c-01",
+    "file": "Turkey road sign B-1c 01.svg"
+  },
+  "kgm-b-1c-02": {
+    "kgm": "B-1c-02",
+    "file": "Turkey road sign B-1c 02.svg"
+  },
+  "kgm-b-1d-01": {
+    "kgm": "B-1d-01",
+    "file": "Turkey road sign B-1d 01.svg"
+  },
+  "kgm-b-1d-02": {
+    "kgm": "B-1d-02",
+    "file": "Turkey road sign B-1d 02.svg"
+  },
+  "kgm-b-1d-03": {
+    "kgm": "B-1d-03",
+    "file": "Turkey road sign B-1d 03.svg"
+  },
+  "kgm-b-6a": {
+    "kgm": "B-6a",
+    "file": "Turkey road sign B-6a.svg"
+  },
+  "kgm-b-6b": {
+    "kgm": "B-6b",
+    "file": "Turkey road sign B-6b.svg"
+  },
+  "kgm-pl-11-1": {
+    "kgm": "PL-11.1",
+    "file": "TR road sign PL-11.1.svg"
+  },
+  "kgm-pl-11-2": {
+    "kgm": "PL-11.2",
+    "file": "TR road sign PL-11.2.svg"
+  }
+}
