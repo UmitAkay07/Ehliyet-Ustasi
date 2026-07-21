@@ -29,6 +29,23 @@ export default function DireksiyonScreen() {
         </Text>
       </View>
 
+      <Card elevated onPress={() => router.push("/pratik-sinav-simulasyonu")} style={{ backgroundColor: colors.primarySoft }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
+          <View style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: colors.primary, alignItems: "center", justifyContent: "center" }}>
+            <Ionicons name="play-circle" size={24} color="#fff" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: colors.primary, fontSize: fontSize.md, fontWeight: fontWeight.extrabold }}>
+              Tam Sınav Simülasyonu
+            </Text>
+            <Text style={{ color: colors.text, fontSize: fontSize.xs, marginTop: 2 }}>
+              Hızlandırılmış sınav videosu ve sesli anlatım
+            </Text>
+          </View>
+          <Ionicons name="chevron-forward" size={24} color={colors.primary} />
+        </View>
+      </Card>
+
       <View style={{ gap: spacing.md }}>
         {DIREKSIYON_DERSLERI.map((ders) => (
           <Card key={ders.id} onPress={() => router.push(`/direksiyon/${ders.id}`)}>

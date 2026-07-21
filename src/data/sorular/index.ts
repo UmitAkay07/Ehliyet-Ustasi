@@ -7,6 +7,7 @@ import { GENIS_HAVUZ } from "./genis-havuz";
 import { KONU_HAVUZ } from "./konu-havuz";
 import { SENARYO_SORULARI } from "./senaryo";
 import { ISARET_SORULARI } from "./isaret-sorulari";
+import { EKSTRA_SORULAR } from "./ekstra";
 
 export const SORULAR: Soru[] = [
   ...TRAFIK_SORULARI,
@@ -17,6 +18,7 @@ export const SORULAR: Soru[] = [
   ...KONU_HAVUZ,
   ...SENARYO_SORULARI,
   ...ISARET_SORULARI,
+  ...EKSTRA_SORULAR,
 ];
 
 export function sorularByDers(dersId: DersId): Soru[] {

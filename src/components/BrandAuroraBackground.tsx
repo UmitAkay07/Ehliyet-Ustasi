@@ -23,16 +23,16 @@ export function BrandAuroraBackground() {
             <Stop offset="100%" stopColor="#0F172A" />
           </LinearGradient>
           <RadialGradient id="glow1" cx="30%" cy="22%" rx="45%" ry="35%">
-            <Stop offset="0%" stopColor="rgba(124,58,237,0.45)" />
-            <Stop offset="100%" stopColor="rgba(124,58,237,0)" />
+            <Stop offset="0%" stopColor="rgba(6,182,212,0.35)" />
+            <Stop offset="100%" stopColor="rgba(6,182,212,0)" />
           </RadialGradient>
           <RadialGradient id="glow2" cx="75%" cy="55%" rx="40%" ry="35%">
-            <Stop offset="0%" stopColor="rgba(37,99,235,0.35)" />
-            <Stop offset="100%" stopColor="rgba(37,99,235,0)" />
+            <Stop offset="0%" stopColor="rgba(245,158,11,0.25)" />
+            <Stop offset="100%" stopColor="rgba(245,158,11,0)" />
           </RadialGradient>
           <RadialGradient id="glow3" cx="50%" cy="85%" rx="50%" ry="30%">
-            <Stop offset="0%" stopColor="rgba(99,102,241,0.2)" />
-            <Stop offset="100%" stopColor="rgba(99,102,241,0)" />
+            <Stop offset="0%" stopColor="rgba(16,185,129,0.2)" />
+            <Stop offset="100%" stopColor="rgba(16,185,129,0)" />
           </RadialGradient>
         </Defs>
         <Rect width={W} height={H} fill="url(#bgBase)" />

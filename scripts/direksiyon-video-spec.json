@@ -129,6 +129,24 @@
       ],
       "prompt": "Reverse driving maneuver training video, white car reverses slowly in straight line on driving school lot, driver looks over shoulder, mirrors as secondary, constant slow speed using clutch control, stops at marked line, handbrake on, instructional overhead angle, no swerving left or right",
       "kritikKontrol": ["Omuz kontrolü", "Düz hat", "Yavaş hız", "Çevre kontrolü"]
+    },
+    {
+      "id": "dr-tam-sinav",
+      "dosya": "dr-tam-sinav.mp4",
+      "sureSn": 120,
+      "baslik": "Tam Sınav Simülasyonu",
+      "sahne": "Tüm direksiyon sınav parkuru özet (Hızlandırılmış)",
+      "adimlar": [
+        "Araç çalıştırma",
+        "L Park",
+        "Paralel Park",
+        "U Dönüşü",
+        "Ani Fren",
+        "25 Metre Geri Gelme",
+        "Yokuş Kalkış"
+      ],
+      "prompt": "Fast-forward timelapse video of a full driving exam in Turkey, white training car starts engine, performs L parking, then curbside parallel parking, U-turn on wide road, sudden emergency braking, reverses 25 meters in a straight line, and performs a hill start without rolling back. Car uses turn signals before every maneuver. Top-down 45 degree instructional view, sunny day, clear asphalt markings, highly realistic.",
+      "kritikKontrol": ["Sinyaller", "Park kuralları", "Trafik kuralları"]
     }
   ]
 }

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Alert, Platform, Pressable, Text, View } from "react-native";
+import { Alert, Platform, Pressable, Text, View, Linking } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
@@ -344,14 +344,22 @@ export default function ProfilScreen() {
 
       <Card>
         <View style={{ gap: spacing.sm }}>
-          <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
-            Ehliyet Ustası hakkında
-          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
+            <Ionicons name="information-circle" size={20} color={colors.primary} />
+            <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
+              Yasal Uyarı ve Gizlilik
+            </Text>
+          </View>
           <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>
-            Bu uygulama tamamen çevrimdışı çalışır ve hiçbir kişisel veri toplamaz. İçerikler MEB e-sınav
-            müfredatına uygun olarak hazırlanmış özgün eğitim materyalleridir. Resmî MEB kaynağı değildir;
-            hazırlık amaçlıdır.
+            Bu uygulama hiçbir devlet kurumunu (MEB, EGM vb.) temsil etmez ve resmî bir kurum uygulaması değildir.
+            Sürücü adaylarına yardımcı olmak amacıyla bağımsız olarak geliştirilmiş eğitim içerikleri sunar.
+            Uygulama tamamen çevrimdışı çalışır ve kişisel verilerinizi asla toplamaz veya paylaşmaz.
           </Text>
+          <Pressable onPress={() => Linking.openURL("https://www.kolayehliyet.com/privacy") /* TODO: Replace URL */}>
+            <Text style={{ color: colors.primary, fontSize: fontSize.sm, fontWeight: fontWeight.bold, marginTop: spacing.xs }}>
+              Gizlilik Politikası (Privacy Policy)
+            </Text>
+          </Pressable>
           <Text style={{ color: colors.textFaint, fontSize: fontSize.xs, marginTop: spacing.sm }}>
             Sürüm 1.0.0
           </Text>
