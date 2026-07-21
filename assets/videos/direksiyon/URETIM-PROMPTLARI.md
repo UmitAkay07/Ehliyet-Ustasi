@@ -42,13 +42,13 @@ Professional driver education video, top-down 45 degree angle, empty Turkish dri
 - **ID:** `dr-paralel-park`
 - **Dosya:** `dr-paralel-park.mp4`
 - **Süre:** ~60 sn
-- **Sahne:** İki gri parklı araç arası boşluk, kaldırım sağda, sarı park çizgisi
+- **Sahne:** Kaldırım kenarında yol boyunca park etmiş iki gri araç arası boşluk; üç araç da yola paralel, aynı yöne bakıyor (dik/90° cebe değil)
 
 ### Adımlar (videoda sırayla gösterilmeli)
-1. Öndeki araca paralel hizalanma (~50 cm)
-2. Geri manevra, sağa tam direksiyon
-3. 45° açıyla boşluğa giriş
-4. Sola kırarak önü içeri alma, kaldırıma paralel bitiş
+1. Öndeki gri araca yan yana, ona paralel hizalanma (~50 cm mesafe)
+2. Geri vites; öndeki aracın arka tamponu hizasında direksiyon tam sağa
+3. Boşluğa ~45° açıyla geri girme
+4. Direksiyon sola kırılarak ön kısım içeri alınır; kaldırıma paralel bitiş
 
 ### Sınav kontrol listesi
 - [ ] 50 cm kaldırım mesafesi
@@ -58,7 +58,12 @@ Professional driver education video, top-down 45 degree angle, empty Turkish dri
 
 ### AI Prompt (İngilizce — Runway / Kling / Pika)
 ```
-Driver exam parallel parking tutorial video, bird eye view, white car parks between two gray parked cars beside curb, reverse maneuver step by step, steering wheel turns clearly visible through roof cutaway style OR clear car path overlay, yellow parking lines, maximum 2 maneuver feel, car ends parallel within 50cm of curb, Turkish driving test standard, instructional, no collision, clean sunny day
+Turkish MEB driving exam CURBSIDE parallel parking tutorial. 45-degree overhead instructional camera on a straight street, curb on the right. Two gray sedans already parked lengthwise along the curb with one empty gap between them. White hatchback training car drives forward alongside the front gray car, stops parallel and aligned, then reverses backward into the gap with smooth S-curve steering: full right, straighten, full left. All three cars face the same direction along the road, bumpers aligned, white car ends parallel to curb within 50cm. Slow controlled reverse, sunny daylight, educational style, no collision.
+```
+
+### Negative prompt (Kling / negatif alan)
+```
+perpendicular parking, 90-degree parking, L-shaped parking bay, backing into marked rectangular slot, orange cones, parking lot bay lines, car parked across the road, single maneuver into a box, NOT curbside parallel between two cars
 ```
 
 ---
@@ -84,7 +89,12 @@ Driver exam parallel parking tutorial video, bird eye view, white car parks betw
 
 ### AI Prompt (İngilizce — Runway / Kling / Pika)
 ```
-Driving test perpendicular L parking video, overhead instructional view, white car backs into marked perpendicular parking bay with yellow lines and orange cones, reverse into slot smoothly, wheels stay inside lines, centered in bay, Turkish exam course style, slow controlled movement, educational animation-like clarity
+Turkish MEB driving exam PERPENDICULAR L-parking (90-degree bay) tutorial. Overhead instructional view. Marked rectangular parking bay perpendicular to the road with yellow boundary lines and orange cones at corners — NOT curbside parallel parking between two cars. White hatchback drives forward past the bay, stops when bay corner is at driver shoulder, then reverses straight back into the 90-degree slot with full steering turn into the bay. Car ends centered inside yellow lines, wheels inside markings, facing across the road. Slow controlled movement, sunny daylight, educational clarity.
+```
+
+### Negative prompt (Kling / negatif alan)
+```
+curbside parallel parking between two parked cars, parking along the curb lengthwise, three cars in a row facing same direction, street parallel park
 ```
 
 ---

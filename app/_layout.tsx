@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import * as SystemUI from "expo-system-ui";
 import { Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { ThemeProvider, useTheme } from "@/theme";
@@ -11,6 +11,10 @@ import { useHydration } from "@/store/useHydration";
 import { sinavBildirimleriniKur } from "@/services/notifications";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
+SystemUI.setBackgroundColorAsync("#030712").catch(() => {});
+
+/** Native splash en az bu kadar görünsün (marka anı) */
+const SPLASH_MIN_MS = 1400;
 
 function RootNavigator() {
   const { colors, scheme } = useTheme();
@@ -19,11 +23,10 @@ function RootNavigator() {
   const sinavTarihi = useAppStore((s) => s.settings.sinavTarihi);
   const router = useRouter();
   const segments = useSegments();
+  const mountTime = useRef(Date.now());
+  const [hazir, setHazir] = useState(false);
 
-  useEffect(() => {
-    if (hydrated) SplashScreen.hideAsync().catch(() => {});
-  }, [hydrated]);
-
+  // Hydration bitince doğru rotaya git — hepsi native splash perdesinin altında olur
   useEffect(() => {
     if (!hydrated) return;
     const ilkSegment = segments[0];
@@ -32,16 +35,24 @@ function RootNavigator() {
     } else if (onboardingTamam && ilkSegment === "onboarding") {
       router.replace("/(tabs)");
     }
-  }, [hydrated, onboardingTamam, segments]);
+  }, [hydrated, onboardingTamam, segments, router]);
+
+  // Rota hazır olunca kısa bir marka anından sonra native splash'ı gizle
+  useEffect(() => {
+    if (!hydrated) return;
+    const elapsed = Date.now() - mountTime.current;
+    const remaining = Math.max(0, SPLASH_MIN_MS - elapsed);
+    const t = setTimeout(() => {
+      setHazir(true);
+      SplashScreen.hideAsync().catch(() => {});
+    }, remaining);
+    return () => clearTimeout(t);
+  }, [hydrated]);
 
   useEffect(() => {
-    if (!hydrated || !onboardingTamam) return;
+    if (!hazir || !onboardingTamam) return;
     sinavBildirimleriniKur(sinavTarihi).catch(() => {});
-  }, [hydrated, onboardingTamam, sinavTarihi]);
-
-  if (!hydrated) {
-    return <View style={{ flex: 1, backgroundColor: colors.background }} />;
-  }
+  }, [hazir, onboardingTamam, sinavTarihi]);
 
   return (
     <>
@@ -50,7 +61,7 @@ function RootNavigator() {
         screenOptions={{
           headerShown: false,
           contentStyle: { backgroundColor: colors.background },
-          animation: "slide_from_right",
+          animation: "fade",
         }}
       >
         <Stack.Screen name="onboarding" />
@@ -75,7 +86,7 @@ function RootNavigator() {
 
 export default function RootLayout() {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: "#030712" }}>
       <SafeAreaProvider>
         <ThemeProvider>
           <RootNavigator />

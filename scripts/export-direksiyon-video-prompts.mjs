@@ -45,6 +45,13 @@ for (const d of spec.dersler) {
   lines.push("```");
   lines.push(d.prompt);
   lines.push("```");
+  if (d.negativePrompt) {
+    lines.push("");
+    lines.push("### Negative prompt (Kling / negatif alan)");
+    lines.push("```");
+    lines.push(d.negativePrompt);
+    lines.push("```");
+  }
   lines.push("");
   lines.push("---");
   lines.push("");

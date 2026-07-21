@@ -8,10 +8,8 @@ import { VideoSource } from "expo-video";
  * Video yoksa uygulama otomatik olarak ManevraAnimasyonu gösterir.
  */
 export const DIREKSIYON_VIDEO_KAYNAKLARI: Partial<Record<string, VideoSource>> = {
-  // Örnek (dosya eklendiğinde yorumu kaldırın):
-  // "dr-temel-kumanda": require("../../assets/videos/direksiyon/dr-temel-kumanda.mp4"),
-  // "dr-paralel-park": require("../../assets/videos/direksiyon/dr-paralel-park.mp4"),
-  // "dr-l-park": require("../../assets/videos/direksiyon/dr-l-park.mp4"),
+  "dr-temel-kumanda": require("../../assets/videos/direksiyon/dr-temel-kumanda.mp4"),
+  "dr-l-park": require("../../assets/videos/direksiyon/dr-l-park.mp4"),
   // "dr-rampa-kalkis": require("../../assets/videos/direksiyon/dr-rampa-kalkis.mp4"),
   // "dr-u-donusu": require("../../assets/videos/direksiyon/dr-u-donusu.mp4"),
   // "dr-ani-fren": require("../../assets/videos/direksiyon/dr-ani-fren.mp4"),
