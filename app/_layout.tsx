@@ -9,6 +9,14 @@ import { ThemeProvider, useTheme } from "@/theme";
 import { useAppStore } from "@/store/useAppStore";
 import { useHydration } from "@/store/useHydration";
 import { sinavBildirimleriniKur } from "@/services/notifications";
+import {
+  useFonts,
+  Nunito_400Regular,
+  Nunito_500Medium,
+  Nunito_600SemiBold,
+  Nunito_700Bold,
+  Nunito_800ExtraBold,
+} from "@expo-google-fonts/nunito";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 SystemUI.setBackgroundColorAsync("#030712").catch(() => {});
@@ -85,8 +93,20 @@ function RootNavigator() {
 }
 
 export default function RootLayout() {
+  const [fontsLoaded] = useFonts({
+    Nunito_400Regular,
+    Nunito_500Medium,
+    Nunito_600SemiBold,
+    Nunito_700Bold,
+    Nunito_800ExtraBold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <GestureHandlerRootView style={{ flex: 1, backgroundColor: "#030712" }}>
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: "#0F172A" }}>
       <SafeAreaProvider>
         <ThemeProvider>
           <RootNavigator />

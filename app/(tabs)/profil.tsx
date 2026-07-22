@@ -1,370 +1,258 @@
-import React, { useMemo, useState } from "react";
-import { Alert, Platform, Pressable, Text, View, Linking } from "react-native";
+import React, { useState } from "react";
+import { Alert, Pressable, ScrollView, Text, View, Switch, Platform } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
-import { Screen, Card, ProgressRing, ProgressBar, SectionTitle, Badge, Button } from "@/components/ui";
+import { SafeAreaView } from "react-native-safe-area-context";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { useTheme } from "@/theme";
-import { useAppStore, seriHesapla, ThemeMode } from "@/store/useAppStore";
-import { genelIlerleme, dersIlerlemesi } from "@/utils/progress";
-import { DERSLER } from "@/data/dersler";
-import { sinavGunKalan, tarihGoster } from "@/utils/gununSorusu";
-import { sinavBildirimleriniKur } from "@/services/notifications";
-
-function tarihBicimle(ts: number): string {
-  const d = new Date(ts);
-  return `${d.getDate().toString().padStart(2, "0")}.${(d.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}.${d.getFullYear()}`;
-}
-
-function isoFromDate(d: Date): string {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
-}
-
-function dateFromIso(iso: string | null): Date {
-  if (!iso) {
-    const d = new Date();
-    d.setHours(0, 0, 0, 0);
-    d.setDate(d.getDate() + 30);
-    return d;
-  }
-  const [y, m, day] = iso.split("-").map(Number);
-  return new Date(y, m - 1, day);
-}
+import { useAppStore, seriHesapla } from "@/store/useAppStore";
+import { genelIlerleme } from "@/utils/progress";
+import { tarihGoster } from "@/utils/gununSorusu";
 
 export default function ProfilScreen() {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius, scheme } = useTheme();
   const router = useRouter();
 
   const okunanKonular = useAppStore((s) => s.okunanKonular);
   const cozulenSorular = useAppStore((s) => s.cozulenSorular);
   const gunlukAktivite = useAppStore((s) => s.gunlukAktivite);
-  const provaGecmisi = useAppStore((s) => s.provaGecmisi);
   const settings = useAppStore((s) => s.settings);
   const setThemeMode = useAppStore((s) => s.setThemeMode);
   const setSinavTarihi = useAppStore((s) => s.setSinavTarihi);
   const herseyiSifirla = useAppStore((s) => s.herseyiSifirla);
 
-  const [pickerAcik, setPickerAcik] = useState(Platform.OS === "ios");
-  const [taslakTarih, setTaslakTarih] = useState(() => dateFromIso(settings.sinavTarihi));
+  const [tarihSeciciAcik, setTarihSeciciAcik] = useState(false);
 
   const genel = genelIlerleme(okunanKonular, cozulenSorular);
   const seri = seriHesapla(gunlukAktivite);
-  const gecilenProva = provaGecmisi.filter((p) => p.gecti).length;
-  const kalanGun = sinavGunKalan(settings.sinavTarihi);
+  const basariOraniStr = `%${Math.round(genel.basariOrani * 100)}`;
+  const puan = Math.round(genel.cozulenSoru * 1.5 + genel.okunanKonu * 10);
+  const seviye = Math.floor(puan / 500) + 1;
 
-  const kalanMetin = useMemo(() => {
-    if (kalanGun == null) return null;
-    if (kalanGun > 1) return `${kalanGun} gün kaldı`;
-    if (kalanGun === 1) return "1 gün kaldı";
-    if (kalanGun === 0) return "Sınav bugün";
-    return `${Math.abs(kalanGun)} gün geçti`;
-  }, [kalanGun]);
-
-  const temaSecenekleri: { id: ThemeMode; ad: string; ikon: any }[] = [
-    { id: "auto", ad: "Otomatik", ikon: "phone-portrait" },
-    { id: "light", ad: "Açık", ikon: "sunny" },
-    { id: "dark", ad: "Koyu", ikon: "moon" },
-  ];
-
-  const tarihKaydet = async (d: Date) => {
-    const iso = isoFromDate(d);
-    setSinavTarihi(iso);
-    setTaslakTarih(d);
-    try {
-      await sinavBildirimleriniKur(iso);
-    } catch {
-      /* izin reddedilebilir */
-    }
-  };
-
-  const onPickerChange = (event: DateTimePickerEvent, selected?: Date) => {
-    if (Platform.OS === "android") {
-      setPickerAcik(false);
-      if (event.type === "dismissed" || !selected) return;
-    }
-    if (!selected) return;
-    const temiz = new Date(selected);
-    temiz.setHours(0, 0, 0, 0);
-    if (Platform.OS === "ios") {
-      setTaslakTarih(temiz);
-    } else {
-      void tarihKaydet(temiz);
-    }
-  };
-
-  const tarihiTemizle = async () => {
-    setSinavTarihi(null);
-    await sinavBildirimleriniKur(null).catch(() => {});
-  };
-
-  const sifirlaOnayi = () => {
-    Alert.alert("Verileri Sıfırla", "Tüm ilerleme, istatistik ve hatalar silinecek. Emin misin?", [
-      { text: "Vazgeç", style: "cancel" },
-      {
-        text: "Sıfırla",
-        style: "destructive",
-        onPress: () => {
-          herseyiSifirla();
-          void sinavBildirimleriniKur(null);
+  const handleSifirla = () => {
+    Alert.alert(
+      "Verileri Sıfırla",
+      "Tüm ilerlemen, çözdüğün testler ve istatistiklerin silinecek. Emin misin?",
+      [
+        { text: "Vazgeç", style: "cancel" },
+        {
+          text: "Sıfırla",
+          style: "destructive",
+          onPress: () => {
+            herseyiSifirla();
+            router.replace("/");
+          },
         },
-      },
-    ]);
+      ]
+    );
+  };
+
+  const setTarih = (event: any, selectedDate?: Date) => {
+    setTarihSeciciAcik(Platform.OS === "ios");
+    if (selectedDate) {
+      setSinavTarihi(selectedDate.toISOString());
+    }
+  };
+
+  const toggleTema = () => {
+    setThemeMode(settings.themeMode === "dark" ? "light" : "dark");
   };
 
   return (
-    <Screen>
-      <Text style={{ color: colors.text, fontSize: fontSize.xxl, fontWeight: fontWeight.extrabold }}>
-        Profil ve İstatistik
-      </Text>
-
-      <Card elevated>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.lg }}>
-          <ProgressRing
-            progress={genel.hazirlikOrani}
-            size={92}
-            strokeWidth={10}
-            label={`%${Math.round(genel.hazirlikOrani * 100)}`}
-          />
-          <View style={{ flex: 1, gap: spacing.sm }}>
-            <View style={{ flexDirection: "row", gap: spacing.sm }}>
-              <Badge label={`${seri} gün seri`} color={colors.warning} bg={colors.warningSoft} icon="flame" />
-            </View>
-            <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>
-              {genel.cozulenSoru} soru çözüldü · {genel.dogruSoru} doğru{"\n"}
-              {gecilenProva} provada baraj geçildi
-            </Text>
-          </View>
+    <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: colors.background }}>
+      <ScrollView
+        contentContainerStyle={{ padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xxxl * 2 }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={{ marginBottom: spacing.sm }}>
+          <Text style={{ color: colors.text, fontSize: fontSize.xxl, fontFamily: fontFamily.extrabold }}>
+            Profil ve Ayarlar
+          </Text>
         </View>
-      </Card>
 
-      <SectionTitle title="Sınav Tarihi" />
-      <Card>
-        <View style={{ gap: spacing.md }}>
-          {settings.sinavTarihi ? (
-            <View
-              style={{
-                backgroundColor: colors.primarySoft,
-                borderRadius: radius.md,
-                padding: spacing.md,
-                gap: 4,
-              }}
-            >
-              <Text style={{ color: colors.primary, fontSize: fontSize.xs, fontWeight: fontWeight.semibold }}>
-                Seçili tarih
-              </Text>
-              <Text style={{ color: colors.text, fontSize: fontSize.xl, fontWeight: fontWeight.extrabold }}>
-                {tarihGoster(settings.sinavTarihi)}
-              </Text>
-              {kalanMetin ? (
-                <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.bold }}>
-                  {kalanMetin}
-                </Text>
-              ) : null}
-              <Text style={{ color: colors.textMuted, fontSize: fontSize.xs, marginTop: 4 }}>
-                Her gün sabah 09:00’da “X gününüz kaldı” bildirimi gönderilir.
-              </Text>
-            </View>
-          ) : (
-            <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>
-              Gün, ay ve yıl seçerek sınav tarihini kaydet. Ana sayfada geri sayım görünür; her gün bildirim
-              alırsın.
-            </Text>
-          )}
-
-          {Platform.OS === "android" && (
-            <Button
-              label={settings.sinavTarihi ? "Tarihi Değiştir" : "Gün / Ay / Yıl Seç"}
-              icon="calendar"
-              variant="secondary"
-              onPress={() => {
-                setTaslakTarih(dateFromIso(settings.sinavTarihi));
-                setPickerAcik(true);
-              }}
-            />
-          )}
-
-          {(pickerAcik || Platform.OS === "ios") && (
-            <DateTimePicker
-              value={taslakTarih}
-              mode="date"
-              display={Platform.OS === "ios" ? "spinner" : "default"}
-              minimumDate={new Date(2020, 0, 1)}
-              maximumDate={new Date(2035, 11, 31)}
-              onChange={onPickerChange}
-              locale="tr-TR"
-            />
-          )}
-
-          {Platform.OS === "ios" && (
-            <Button label="Tarihi Kaydet" icon="checkmark" onPress={() => void tarihKaydet(taslakTarih)} />
-          )}
-
-          {settings.sinavTarihi ? (
-            <Pressable onPress={() => void tarihiTemizle()}>
-              <Text style={{ color: colors.danger, fontSize: fontSize.sm, fontWeight: fontWeight.semibold }}>
-                Sınav tarihini temizle
-              </Text>
-            </Pressable>
-          ) : null}
-        </View>
-      </Card>
-
-      <SectionTitle title="Derslere Göre Başarı" />
-      <View style={{ gap: spacing.md }}>
-        {DERSLER.map((ders) => {
-          const il = dersIlerlemesi(ders.id, okunanKonular, cozulenSorular);
-          return (
-            <Card key={ders.id}>
-              <View style={{ gap: spacing.sm }}>
-                <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
-                  <Ionicons name={ders.ikon} size={18} color={ders.renk} />
-                  <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.semibold, flex: 1 }}>
-                    {ders.kisaAd}
-                  </Text>
-                  <Text style={{ color: colors.textMuted, fontSize: fontSize.sm }}>
-                    {il.cozulenSoru > 0 ? `%${Math.round(il.basariOrani * 100)} başarı` : "Henüz çözülmedi"}
-                  </Text>
-                </View>
-                <ProgressBar progress={il.basariOrani} color={ders.renk} height={6} />
-              </View>
-            </Card>
-          );
-        })}
-      </View>
-
-      {provaGecmisi.length > 0 && (
-        <>
-          <SectionTitle title="Prova Geçmişi" />
-          <View style={{ gap: spacing.sm }}>
-            {provaGecmisi.slice(0, 5).map((p) => (
-              <Card key={p.id}>
-                <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
-                  <View
-                    style={{
-                      width: 44,
-                      height: 44,
-                      borderRadius: 12,
-                      backgroundColor: p.gecti ? colors.successSoft : colors.dangerSoft,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text style={{ color: p.gecti ? colors.success : colors.danger, fontWeight: fontWeight.extrabold }}>
-                      {p.puan}
-                    </Text>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text style={{ color: colors.text, fontSize: fontSize.sm, fontWeight: fontWeight.semibold }}>
-                      {p.dogru} doğru · {p.yanlis} yanlış · {p.bos} boş
-                    </Text>
-                    <Text style={{ color: colors.textMuted, fontSize: fontSize.xs }}>{tarihBicimle(p.tarih)}</Text>
-                  </View>
-                  <Ionicons
-                    name={p.gecti ? "checkmark-circle" : "close-circle"}
-                    size={22}
-                    color={p.gecti ? colors.success : colors.danger}
-                  />
-                </View>
-              </Card>
-            ))}
-          </View>
-        </>
-      )}
-
-      <SectionTitle title="Ayarlar" />
-      <Card>
-        <Text
+        {/* User Card */}
+        <View
           style={{
-            color: colors.text,
-            fontSize: fontSize.md,
-            fontWeight: fontWeight.semibold,
-            marginBottom: spacing.md,
+            flexDirection: "row",
+            alignItems: "center",
+            gap: spacing.md,
+            backgroundColor: colors.surface,
+            borderRadius: radius["3xl"],
+            padding: spacing.xl,
+            borderWidth: 1,
+            borderColor: colors.border,
           }}
         >
-          Tema
-        </Text>
-        <View style={{ flexDirection: "row", gap: spacing.sm }}>
-          {temaSecenekleri.map((t) => {
-            const secili = settings.themeMode === t.id;
-            return (
-              <Pressable
-                key={t.id}
-                onPress={() => setThemeMode(t.id)}
-                style={{
-                  flex: 1,
-                  alignItems: "center",
-                  gap: 6,
-                  paddingVertical: spacing.md,
-                  borderRadius: radius.md,
-                  backgroundColor: secili ? colors.primarySoft : colors.surfaceAlt,
-                  borderWidth: 1.5,
-                  borderColor: secili ? colors.primary : "transparent",
-                }}
-              >
-                <Ionicons name={t.ikon} size={20} color={secili ? colors.primary : colors.textMuted} />
-                <Text
-                  style={{
-                    color: secili ? colors.primary : colors.textMuted,
-                    fontSize: fontSize.xs,
-                    fontWeight: fontWeight.semibold,
-                  }}
-                >
-                  {t.ad}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
-      </Card>
-
-      <Card onPress={() => router.push("/bilgi-bankasi")}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
-          <Ionicons name="library" size={20} color={colors.primary} />
-          <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.semibold, flex: 1 }}>
-            Bilgi Bankası
-          </Text>
-          <Ionicons name="chevron-forward" size={20} color={colors.textFaint} />
-        </View>
-      </Card>
-
-      <Card onPress={sifirlaOnayi}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
-          <Ionicons name="trash" size={20} color={colors.danger} />
-          <Text style={{ color: colors.danger, fontSize: fontSize.md, fontWeight: fontWeight.semibold, flex: 1 }}>
-            Tüm Verileri Sıfırla
-          </Text>
-          <Ionicons name="chevron-forward" size={20} color={colors.textFaint} />
-        </View>
-      </Card>
-
-      <Card>
-        <View style={{ gap: spacing.sm }}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
-            <Ionicons name="information-circle" size={20} color={colors.primary} />
-            <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
-              Yasal Uyarı ve Gizlilik
+          <View
+            style={{
+              width: 64,
+              height: 64,
+              borderRadius: radius.pill,
+              backgroundColor: colors.primary,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={{ color: "#FFF", fontSize: 24, fontFamily: fontFamily.extrabold }}>
+              EU
             </Text>
           </View>
-          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>
-            Bu uygulama hiçbir devlet kurumunu (MEB, EGM vb.) temsil etmez ve resmî bir kurum uygulaması değildir.
-            Sürücü adaylarına yardımcı olmak amacıyla bağımsız olarak geliştirilmiş eğitim içerikleri sunar.
-            Uygulama tamamen çevrimdışı çalışır ve kişisel verilerinizi asla toplamaz veya paylaşmaz.
-          </Text>
-          <Pressable onPress={() => Linking.openURL("https://www.kolayehliyet.com/privacy") /* TODO: Replace URL */}>
-            <Text style={{ color: colors.primary, fontSize: fontSize.sm, fontWeight: fontWeight.bold, marginTop: spacing.xs }}>
-              Gizlilik Politikası (Privacy Policy)
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.extrabold }}>
+              Ehliyet Ustası
             </Text>
-          </Pressable>
-          <Text style={{ color: colors.textFaint, fontSize: fontSize.xs, marginTop: spacing.sm }}>
-            Sürüm 1.0.0
-          </Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm, marginTop: 4 }}>
+              <View style={{ backgroundColor: colors.infoSoft, paddingHorizontal: 12, paddingVertical: 4, borderRadius: radius.pill }}>
+                <Text style={{ color: colors.info, fontSize: 12, fontFamily: fontFamily.extrabold }}>
+                  Seviye {seviye}
+                </Text>
+              </View>
+              <Text style={{ color: colors.textMuted, fontSize: 12, fontFamily: fontFamily.bold }}>
+                {puan.toLocaleString()} Puan
+              </Text>
+            </View>
+          </View>
         </View>
-      </Card>
-    </Screen>
+
+        {/* Stats Grid */}
+        <View style={{ flexDirection: "row", gap: spacing.md }}>
+          {/* Soru */}
+          <View style={{ flex: 1, backgroundColor: colors.surface, borderRadius: radius["3xl"], padding: spacing.md, alignItems: "center", borderWidth: 1, borderColor: colors.border }}>
+            <View style={{ width: 40, height: 40, borderRadius: radius.xl, backgroundColor: colors.primarySoft, alignItems: "center", justifyContent: "center", marginBottom: spacing.sm }}>
+              <Ionicons name="disc" size={20} color={colors.primary} />
+            </View>
+            <Text style={{ color: colors.text, fontSize: 16, fontFamily: fontFamily.extrabold }}>{genel.cozulenSoru}</Text>
+            <Text style={{ color: colors.textMuted, fontSize: 10, fontFamily: fontFamily.bold }}>Çözülen Soru</Text>
+          </View>
+          {/* Başarı */}
+          <View style={{ flex: 1, backgroundColor: colors.surface, borderRadius: radius["3xl"], padding: spacing.md, alignItems: "center", borderWidth: 1, borderColor: colors.border }}>
+            <View style={{ width: 40, height: 40, borderRadius: radius.xl, backgroundColor: colors.successSoft, alignItems: "center", justifyContent: "center", marginBottom: spacing.sm }}>
+              <Ionicons name="trophy" size={20} color={colors.success} />
+            </View>
+            <Text style={{ color: colors.text, fontSize: 16, fontFamily: fontFamily.extrabold }}>{basariOraniStr}</Text>
+            <Text style={{ color: colors.textMuted, fontSize: 10, fontFamily: fontFamily.bold }}>Başarı Oranı</Text>
+          </View>
+          {/* Seri */}
+          <View style={{ flex: 1, backgroundColor: colors.surface, borderRadius: radius["3xl"], padding: spacing.md, alignItems: "center", borderWidth: 1, borderColor: colors.border }}>
+            <View style={{ width: 40, height: 40, borderRadius: radius.xl, backgroundColor: colors.warningSoft, alignItems: "center", justifyContent: "center", marginBottom: spacing.sm }}>
+              <Ionicons name="flame" size={20} color={colors.warning} />
+            </View>
+            <Text style={{ color: colors.text, fontSize: 16, fontFamily: fontFamily.extrabold }}>{seri} Gün</Text>
+            <Text style={{ color: colors.textMuted, fontSize: 10, fontFamily: fontFamily.bold }}>Seri</Text>
+          </View>
+        </View>
+
+        {/* Exam Date */}
+        <View style={{ backgroundColor: colors.surface, borderRadius: radius["3xl"], padding: spacing.xl, borderWidth: 1, borderColor: colors.border }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md, marginBottom: spacing.md }}>
+            <View style={{ width: 44, height: 44, borderRadius: radius.xl, backgroundColor: colors.primarySoft, alignItems: "center", justifyContent: "center" }}>
+              <Ionicons name="calendar" size={20} color={colors.primary} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.extrabold }}>
+                Sınav Tarihin
+              </Text>
+              <Text style={{ color: colors.textMuted, fontSize: 12, fontFamily: fontFamily.semibold, marginTop: 2 }}>
+                Geri sayım için tarihini ayarla
+              </Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: colors.background, paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderRadius: radius.xl }}>
+            <Text style={{ color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
+              {settings.sinavTarihi ? tarihGoster(settings.sinavTarihi) : "Belirlenmedi"}
+            </Text>
+            <Pressable
+              onPress={() => setTarihSeciciAcik(true)}
+              style={({ pressed }) => ({
+                backgroundColor: colors.primary,
+                paddingHorizontal: 16,
+                paddingVertical: 6,
+                borderRadius: radius.pill,
+                opacity: pressed ? 0.8 : 1,
+              })}
+            >
+              <Text style={{ color: "#FFF", fontSize: 12, fontFamily: fontFamily.extrabold }}>Değiştir</Text>
+            </Pressable>
+          </View>
+        </View>
+
+        {/* Settings */}
+        <View style={{ backgroundColor: colors.surface, borderRadius: radius["3xl"], overflow: "hidden", borderWidth: 1, borderColor: colors.border }}>
+          <Pressable
+            onPress={toggleTema}
+            style={({ pressed }) => ({
+              flexDirection: "row",
+              alignItems: "center",
+              gap: spacing.md,
+              padding: spacing.lg,
+              borderBottomWidth: 1,
+              borderBottomColor: colors.border,
+              backgroundColor: pressed ? "rgba(0,0,0,0.02)" : "transparent",
+            })}
+          >
+            <View style={{ width: 40, height: 40, borderRadius: radius.xl, backgroundColor: colors.infoSoft, alignItems: "center", justifyContent: "center" }}>
+              <Ionicons name="moon" size={20} color={colors.info} />
+            </View>
+            <Text style={{ flex: 1, color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
+              Tema (Koyu / Açık)
+            </Text>
+            <Switch
+              value={settings.themeMode === "dark"}
+              onValueChange={toggleTema}
+              trackColor={{ false: colors.border, true: colors.primarySoft }}
+              thumbColor={settings.themeMode === "dark" ? colors.primary : "#f4f3f4"}
+            />
+          </Pressable>
+          <Pressable
+            onPress={() => router.push("/bilgi-bankasi")}
+            style={({ pressed }) => ({
+              flexDirection: "row",
+              alignItems: "center",
+              gap: spacing.md,
+              padding: spacing.lg,
+              borderBottomWidth: 1,
+              borderBottomColor: colors.border,
+              backgroundColor: pressed ? "rgba(0,0,0,0.02)" : "transparent",
+            })}
+          >
+            <View style={{ width: 40, height: 40, borderRadius: radius.xl, backgroundColor: colors.successSoft, alignItems: "center", justifyContent: "center" }}>
+              <Ionicons name="library" size={20} color={colors.success} />
+            </View>
+            <Text style={{ flex: 1, color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
+              Bilgi Bankası
+            </Text>
+            <Ionicons name="chevron-forward" size={20} color={colors.textFaint} />
+          </Pressable>
+          <Pressable
+            onPress={handleSifirla}
+            style={({ pressed }) => ({
+              flexDirection: "row",
+              alignItems: "center",
+              gap: spacing.md,
+              padding: spacing.lg,
+              backgroundColor: pressed ? colors.dangerSoft : "transparent",
+            })}
+          >
+            <View style={{ width: 40, height: 40, borderRadius: radius.xl, backgroundColor: colors.dangerSoft, alignItems: "center", justifyContent: "center" }}>
+              <Ionicons name="trash" size={20} color={colors.danger} />
+            </View>
+            <Text style={{ flex: 1, color: colors.danger, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
+              Verileri Sıfırla
+            </Text>
+            <Ionicons name="chevron-forward" size={20} color={colors.textFaint} />
+          </Pressable>
+        </View>
+
+        {tarihSeciciAcik && (
+          <DateTimePicker
+            value={settings.sinavTarihi ? new Date(settings.sinavTarihi) : new Date()}
+            mode="date"
+            display="default"
+            onChange={setTarih}
+            minimumDate={new Date()}
+          />
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
 }

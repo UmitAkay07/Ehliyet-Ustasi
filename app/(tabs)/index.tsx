@@ -21,50 +21,60 @@ function selamla(): string {
 function HizliErisim({
   ikon,
   baslik,
-  renk,
+  altBaslik,
+  bgRenk,
+  textRenk,
   onPress,
 }: {
   ikon: IconName;
   baslik: string;
-  renk: string;
+  altBaslik: string;
+  bgRenk: string;
+  textRenk: string;
   onPress: () => void;
 }) {
-  const { colors, radius, fontSize, fontWeight, spacing } = useTheme();
+  const { fontFamily, spacing, radius } = useTheme();
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed }) => ({
         flex: 1,
-        backgroundColor: colors.surface,
-        borderRadius: radius.lg,
-        borderWidth: 1,
-        borderColor: colors.border,
-        padding: spacing.md,
+        backgroundColor: bgRenk,
+        borderRadius: radius["3xl"],
+        padding: spacing.lg,
         gap: spacing.sm,
-        opacity: pressed ? 0.85 : 1,
+        justifyContent: "space-between",
+        opacity: pressed ? 0.9 : 1,
+        transform: [{ scale: pressed ? 0.98 : 1 }],
       })}
     >
       <View
         style={{
-          width: 40,
-          height: 40,
-          borderRadius: radius.md,
-          backgroundColor: renk + "22",
+          width: 44,
+          height: 44,
+          borderRadius: radius.xl,
+          backgroundColor: "rgba(255,255,255,0.25)",
           alignItems: "center",
           justifyContent: "center",
+          marginBottom: spacing.sm,
         }}
       >
-        <Ionicons name={ikon} size={22} color={renk} />
+        <Ionicons name={ikon} size={24} color={textRenk} />
       </View>
-      <Text style={{ color: colors.text, fontSize: fontSize.sm, fontWeight: fontWeight.semibold }}>
-        {baslik}
-      </Text>
+      <View>
+        <Text style={{ color: textRenk, fontSize: 16, fontFamily: fontFamily.extrabold, lineHeight: 20 }}>
+          {baslik}
+        </Text>
+        <Text style={{ color: textRenk, fontSize: 12, fontFamily: fontFamily.semibold, opacity: 0.85, marginTop: 2 }}>
+          {altBaslik}
+        </Text>
+      </View>
     </Pressable>
   );
 }
 
 export default function HomeScreen() {
-  const { colors, fontSize, fontWeight, spacing } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
 
   const okunanKonular = useAppStore((s) => s.okunanKonular);
@@ -80,190 +90,249 @@ export default function HomeScreen() {
   const kalanGun = sinavGunKalan(sinavTarihi);
 
   return (
-    <Screen>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+    <Screen contentStyle={{ gap: spacing.xl, paddingBottom: spacing.xxxl }}>
+      {/* Header */}
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingTop: spacing.sm }}>
         <View>
-          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm }}>{selamla()},</Text>
-          <Text style={{ color: colors.text, fontSize: fontSize.xxl, fontWeight: fontWeight.extrabold }}>
-            Ehliyet Ustası
+          <Text style={{ color: colors.text, fontSize: fontSize.xxl, fontFamily: fontFamily.extrabold }}>
+            Günaydın!
+          </Text>
+          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
+            Bugün de harika gidiyorsun
           </Text>
         </View>
         <View
           style={{
             flexDirection: "row",
             alignItems: "center",
-            gap: 4,
+            gap: 6,
             backgroundColor: colors.warningSoft,
-            paddingHorizontal: spacing.md,
-            paddingVertical: 6,
-            borderRadius: 999,
+            paddingHorizontal: spacing.lg,
+            paddingVertical: spacing.sm,
+            borderRadius: radius.pill,
           }}
         >
-          <Ionicons name="flame" size={18} color={colors.warning} />
-          <Text style={{ color: colors.warning, fontWeight: fontWeight.bold }}>{seri} gün</Text>
+          <Ionicons name="flame" size={20} color={colors.warning} />
+          <Text style={{ color: colors.warning, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
+            {seri} Gün
+          </Text>
         </View>
       </View>
 
+      {/* Exam Countdown */}
       {sinavTarihi && kalanGun != null ? (
-        <Card
-          elevated
+        <Pressable
           onPress={() => router.push("/(tabs)/profil")}
-          style={{
-            backgroundColor: kalanGun <= 7 && kalanGun >= 0 ? colors.warningSoft : undefined,
-          }}
+          style={({ pressed }) => ({
+            flexDirection: "row",
+            alignItems: "center",
+            gap: spacing.lg,
+            backgroundColor: colors.primary,
+            borderRadius: radius["3xl"],
+            padding: spacing.xl,
+            opacity: pressed ? 0.9 : 1,
+            shadowColor: colors.primary,
+            shadowOffset: { width: 0, height: 8 },
+            shadowOpacity: 0.3,
+            shadowRadius: 16,
+            elevation: 8,
+          })}
         >
-          <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
-            <View
-              style={{
-                width: 48,
-                height: 48,
-                borderRadius: 14,
-                backgroundColor: colors.primarySoft,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Ionicons name="calendar" size={24} color={colors.primary} />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.bold }}>
-                {kalanGun > 0
-                  ? `Sınava ${kalanGun} gün`
-                  : kalanGun === 0
-                    ? "Sınav bugün!"
-                    : `Sınav ${Math.abs(kalanGun)} gün önceydi`}
-              </Text>
-              <Text style={{ color: colors.textMuted, fontSize: fontSize.sm }}>
-                {tarihGoster(sinavTarihi)} · Profilde değiştir
-              </Text>
-            </View>
-            <Ionicons name="chevron-forward" size={20} color={colors.textFaint} />
-          </View>
-        </Card>
-      ) : null}
-
-      <Card onPress={() => router.push("/gunun-sorusu")}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
           <View
             style={{
-              width: 48,
-              height: 48,
-              borderRadius: 14,
-              backgroundColor: colors.info + "22",
+              width: 56,
+              height: 56,
+              borderRadius: radius.xl,
+              backgroundColor: "rgba(255,255,255,0.2)",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Ionicons name="today" size={24} color={colors.info} />
+            <Ionicons name="calendar" size={28} color="#FFFFFF" />
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.bold }}>
+            <Text style={{ color: "#FFFFFF", fontSize: fontSize.xl, fontFamily: fontFamily.extrabold }}>
+              {kalanGun > 0 ? `Sınava ${kalanGun} Gün Kaldı!` : kalanGun === 0 ? "Sınav bugün!" : "Sınav geçti"}
+            </Text>
+            <Text style={{ color: "rgba(255,255,255,0.85)", fontSize: fontSize.sm, fontFamily: fontFamily.semibold, marginTop: 2 }}>
+              Hedefine çok yaklaştın, devam et!
+            </Text>
+          </View>
+        </Pressable>
+      ) : null}
+
+      {/* Question of the Day */}
+      <Pressable
+        onPress={() => router.push("/gunun-sorusu")}
+        style={({ pressed }) => ({
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: spacing.md,
+          backgroundColor: colors.surface,
+          borderRadius: radius["3xl"],
+          padding: spacing.lg,
+          opacity: pressed ? 0.9 : 1,
+          borderWidth: 1,
+          borderColor: colors.border,
+        })}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md, flex: 1 }}>
+          <View
+            style={{
+              width: 48,
+              height: 48,
+              borderRadius: radius.xl,
+              backgroundColor: colors.primarySoft,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Ionicons name="sparkles" size={24} color={colors.primary} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.extrabold }}>
               Günün Sorusu
             </Text>
-            <Text style={{ color: colors.textMuted, fontSize: fontSize.sm }}>
-              {gununCevap ? "Bugünkü soruyu çözdün" : "Bugünkü soruyu çöz, serini bozma"}
+            <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
+              Bugünkü meydan okumayı çöz!
             </Text>
           </View>
-          <Badge
-            label={gununCevap ? "Tamam" : "Yeni"}
-            color={gununCevap ? colors.success : colors.info}
-            bg={gununCevap ? colors.successSoft : colors.info + "22"}
-          />
         </View>
-      </Card>
-
-      <Card elevated>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.lg }}>
-          <ProgressRing
-            progress={genel.hazirlikOrani}
-            size={104}
-            strokeWidth={11}
-            label={`%${Math.round(genel.hazirlikOrani * 100)}`}
-            sublabel="hazırlık"
-          />
-          <View style={{ flex: 1, gap: spacing.sm }}>
-            <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.bold }}>
-              Sınava Hazırlık
-            </Text>
-            <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>
-              {genel.okunanKonu}/{genel.toplamKonu} konu okundu · {genel.cozulenSoru} soru çözüldü
-            </Text>
-            <Badge
-              label={`Başarı: %${Math.round(genel.basariOrani * 100)}`}
-              color={colors.success}
-              bg={colors.successSoft}
-              icon="trophy"
-            />
+        {gununCevap ? (
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: colors.successSoft, paddingHorizontal: 12, paddingVertical: 6, borderRadius: radius.pill }}>
+            <Ionicons name="checkmark-circle" size={14} color={colors.success} />
+            <Text style={{ color: colors.success, fontSize: 12, fontFamily: fontFamily.extrabold }}>Tamamlandı</Text>
           </View>
-        </View>
-      </Card>
+        ) : (
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: colors.infoSoft, paddingHorizontal: 12, paddingVertical: 6, borderRadius: radius.pill }}>
+            <Text style={{ color: colors.info, fontSize: 12, fontFamily: fontFamily.extrabold }}>Yeni</Text>
+          </View>
+        )}
+      </Pressable>
 
-      <View style={{ gap: spacing.md }}>
-        <View style={{ flexDirection: "row", gap: spacing.md }}>
-          <HizliErisim
-            ikon="ribbon"
-            baslik="Sınav Provası"
-            renk={colors.primary}
-            onPress={() => router.push("/prova")}
-          />
-          <HizliErisim
-            ikon="alert-circle"
-            baslik={`Hata Defteri${hataSayisi ? ` (${hataSayisi})` : ""}`}
-            renk={colors.danger}
-            onPress={() => router.push("/hatalar")}
-          />
-        </View>
-        <View style={{ flexDirection: "row", gap: spacing.md }}>
-          <HizliErisim
-            ikon="images"
-            baslik="Trafik İşaretleri"
-            renk={colors.info}
-            onPress={() => router.push("/isaretler")}
-          />
-          <HizliErisim
-            ikon="library"
-            baslik="Bilgi Bankası"
-            renk={colors.success}
-            onPress={() => router.push("/bilgi-bankasi")}
-          />
-        </View>
-        <View style={{ flexDirection: "row", gap: spacing.md }}>
-          <HizliErisim
-            ikon="cash"
-            baslik="Trafik Cezaları"
-            renk={colors.warning}
-            onPress={() => router.push("/cezalar")}
-          />
-          <HizliErisim
-            ikon="clipboard"
-            baslik="Sınav Rehberi"
-            renk={colors.primary}
-            onPress={() => router.push("/sinav-rehberi")}
-          />
+      {/* Overall Progress */}
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: spacing.xl,
+          backgroundColor: colors.surface,
+          borderRadius: radius["3xl"],
+          padding: spacing.xl,
+          borderWidth: 1,
+          borderColor: colors.border,
+        }}
+      >
+        <ProgressRing
+          progress={genel.hazirlikOrani}
+          size={110}
+          strokeWidth={12}
+          label={`%${Math.round(genel.hazirlikOrani * 100)}`}
+        />
+        <View style={{ flex: 1, gap: spacing.md }}>
+          <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.extrabold }}>
+            Sınava Hazırlık
+          </Text>
+          <View style={{ gap: 6 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+              <Ionicons name="speedometer" size={16} color={colors.primary} />
+              <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
+                {genel.cozulenSoru} soru çözüldü
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+              <Ionicons name="book" size={16} color={colors.success} />
+              <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
+                {genel.okunanKonu} ders okundu
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
 
-      <SectionTitle
-        title="Derslere Göre İlerleme"
-        action={
+      {/* Quick Actions */}
+      <View>
+        <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.extrabold, marginBottom: spacing.md }}>
+          Hızlı Erişim
+        </Text>
+        <View style={{ gap: spacing.md }}>
+          <View style={{ flexDirection: "row", gap: spacing.md }}>
+            <HizliErisim
+              ikon="clipboard"
+              baslik="Sınav Provası"
+              altBaslik="50 soru"
+              bgRenk={colors.primary}
+              textRenk="#FFFFFF"
+              onPress={() => router.push("/prova")}
+            />
+            <HizliErisim
+              ikon="journal"
+              baslik="Hata Defteri"
+              altBaslik={`${hataSayisi} soru`}
+              bgRenk={colors.danger}
+              textRenk="#FFFFFF"
+              onPress={() => router.push("/hatalar")}
+            />
+          </View>
+          <View style={{ flexDirection: "row", gap: spacing.md }}>
+            <HizliErisim
+              ikon="warning"
+              baslik="Trafik İşaretleri"
+              altBaslik="Tüm işaretler"
+              bgRenk={colors.success}
+              textRenk="#FFFFFF"
+              onPress={() => router.push("/isaretler")}
+            />
+            <HizliErisim
+              ikon="cash"
+              baslik="Trafik Cezaları"
+              altBaslik="Güncel liste"
+              bgRenk={colors.warning}
+              textRenk={colors.background === "#0F172A" ? "#1E293B" : "#FFFFFF"} // Koyu temada uyumlu olsun
+              onPress={() => router.push("/cezalar")}
+            />
+          </View>
+        </View>
+      </View>
+
+      {/* Subject Progress */}
+      <View>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: spacing.md }}>
+          <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.extrabold }}>
+            Konu İlerlemen
+          </Text>
           <Pressable onPress={() => router.push("/(tabs)/konular")}>
-            <Text style={{ color: colors.primary, fontSize: fontSize.sm, fontWeight: fontWeight.semibold }}>
+            <Text style={{ color: colors.primary, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
               Tümü
             </Text>
           </Pressable>
-        }
-      />
-      <View style={{ gap: spacing.md }}>
-        {DERSLER.map((ders) => {
-          const ilerleme = dersIlerlemesi(ders.id, okunanKonular, cozulenSorular);
-          return (
-            <Card key={ders.id} onPress={() => router.push(`/(tabs)/konular?ders=${ders.id}`)}>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
+        </View>
+        
+        <View style={{ gap: spacing.md }}>
+          {DERSLER.map((ders) => {
+            const ilerleme = dersIlerlemesi(ders.id, okunanKonular, cozulenSorular);
+            return (
+              <Pressable
+                key={ders.id}
+                onPress={() => router.push(`/(tabs)/konular?ders=${ders.id}`)}
+                style={({ pressed }) => ({
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: spacing.md,
+                  backgroundColor: colors.surface,
+                  borderRadius: radius["3xl"],
+                  padding: spacing.lg,
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  opacity: pressed ? 0.9 : 1,
+                })}
+              >
                 <View
                   style={{
-                    width: 46,
-                    height: 46,
-                    borderRadius: 14,
+                    width: 44,
+                    height: 44,
+                    borderRadius: radius.xl,
                     backgroundColor: ders.renk + "22",
                     alignItems: "center",
                     justifyContent: "center",
@@ -271,21 +340,21 @@ export default function HomeScreen() {
                 >
                   <Ionicons name={ders.ikon} size={24} color={ders.renk} />
                 </View>
-                <View style={{ flex: 1, gap: 6 }}>
-                  <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                    <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
-                      {ders.kisaAd}
+                <View style={{ flex: 1 }}>
+                  <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 6 }}>
+                    <Text style={{ color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
+                      {ders.ad}
                     </Text>
-                    <Text style={{ color: colors.textMuted, fontSize: fontSize.xs }}>
-                      {ilerleme.okunanKonu}/{ilerleme.toplamKonu} konu
+                    <Text style={{ color: colors.textMuted, fontSize: 12, fontFamily: fontFamily.extrabold }}>
+                      %{Math.round(ilerleme.konuOrani * 100)}
                     </Text>
                   </View>
-                  <ProgressBar progress={ilerleme.konuOrani} color={ders.renk} height={6} />
+                  <ProgressBar progress={ilerleme.konuOrani} color={ders.renk} height={10} style={{ borderRadius: radius.pill }} />
                 </View>
-              </View>
-            </Card>
-          );
-        })}
+              </Pressable>
+            );
+          })}
+        </View>
       </View>
     </Screen>
   );

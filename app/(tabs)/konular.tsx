@@ -1,123 +1,148 @@
 import React, { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Card, Badge } from "@/components/ui";
 import { useTheme } from "@/theme";
 import { useAppStore } from "@/store/useAppStore";
 import { DERSLER } from "@/data/dersler";
 import { konularByDers } from "@/data/konular";
-import { konuIstatistigi } from "@/utils/progress";
-import { KONU_KAPAK_RESIMLERI } from "@/data/konuKapakResimleri";
-import type { DersId } from "@/types";
 
 export default function KonularScreen() {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
-  const params = useLocalSearchParams<{ ders?: string }>();
-  const [aktifDers, setAktifDers] = useState<DersId>((params.ders as DersId) || "trafik");
+  const [openId, setOpenId] = useState<string | null>("trafik");
 
   const okunanKonular = useAppStore((s) => s.okunanKonular);
-  const cozulenSorular = useAppStore((s) => s.cozulenSorular);
-
-  const konular = konularByDers(aktifDers);
-  const ders = DERSLER.find((d) => d.id === aktifDers)!;
 
   return (
     <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: colors.background }}>
-      <View style={{ paddingHorizontal: spacing.lg, paddingTop: spacing.md, gap: spacing.md }}>
-        <Text style={{ color: colors.text, fontSize: fontSize.xxl, fontWeight: fontWeight.extrabold }}>
-          Konu Anlatımları
-        </Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ gap: spacing.sm, paddingRight: spacing.lg }}
-        >
-          {DERSLER.map((d) => {
-            const aktif = d.id === aktifDers;
-            return (
-              <Pressable
-                key={d.id}
-                onPress={() => setAktifDers(d.id)}
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 6,
-                  backgroundColor: aktif ? d.renk : colors.surface,
-                  borderColor: aktif ? d.renk : colors.border,
-                  borderWidth: 1,
-                  paddingHorizontal: spacing.md,
-                  paddingVertical: spacing.sm,
-                  borderRadius: radius.pill,
-                }}
-              >
-                <Ionicons name={d.ikon} size={16} color={aktif ? "#fff" : d.renk} />
-                <Text
-                  style={{
-                    color: aktif ? "#fff" : colors.text,
-                    fontSize: fontSize.sm,
-                    fontWeight: fontWeight.semibold,
-                  }}
-                >
-                  {d.kisaAd}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </ScrollView>
-      </View>
-
       <ScrollView
-        contentContainerStyle={{ padding: spacing.lg, gap: spacing.md, paddingBottom: 48 }}
+        contentContainerStyle={{ padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xxxl * 2 }}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={{ color: colors.textMuted, fontSize: fontSize.sm }}>{ders.aciklama}</Text>
-        {konular.map((konu) => {
-          const okundu = Boolean(okunanKonular[konu.id]);
-          const ist = konuIstatistigi(konu.id, cozulenSorular);
-          return (
-            <Card key={konu.id} onPress={() => router.push(`/konu/${konu.id}`)}>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
-                <View
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 12,
-                    backgroundColor: ders.renk + "22",
+        <View style={{ marginBottom: spacing.sm }}>
+          <Text style={{ color: colors.text, fontSize: fontSize.xxl, fontFamily: fontFamily.extrabold }}>
+            Ders Çalış
+          </Text>
+          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold, marginTop: 4 }}>
+            Konuları öğren, sınava hazır ol
+          </Text>
+        </View>
+
+        <View style={{ gap: spacing.md }}>
+          {DERSLER.map((ders) => {
+            const isOpen = openId === ders.id;
+            const konular = konularByDers(ders.id);
+            const tamamlanan = konular.filter((k) => okunanKonular[k.id]).length;
+            const toplam = konular.length;
+
+            return (
+              <View
+                key={ders.id}
+                style={{
+                  backgroundColor: colors.surface,
+                  borderRadius: radius["3xl"],
+                  overflow: "hidden",
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                }}
+              >
+                <Pressable
+                  onPress={() => setOpenId(isOpen ? null : ders.id)}
+                  style={({ pressed }) => ({
+                    flexDirection: "row",
                     alignItems: "center",
-                    justifyContent: "center",
-                  }}
+                    padding: spacing.lg,
+                    gap: spacing.md,
+                    backgroundColor: pressed ? "rgba(0,0,0,0.02)" : "transparent",
+                  })}
                 >
-                  <Ionicons name={konu.ikon} size={22} color={ders.renk} />
-                </View>
-                <View style={{ flex: 1, gap: 4 }}>
-                  <Text
-                    style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}
-                    numberOfLines={2}
+                  <View
+                    style={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: radius.xl,
+                      backgroundColor: ders.renk + "22",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    {konu.baslik}
-                  </Text>
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm, flexWrap: "wrap" }}>
-                    <Ionicons name="time-outline" size={13} color={colors.textFaint} />
-                    <Text style={{ color: colors.textMuted, fontSize: fontSize.xs }}>
-                      {konu.okumaSuresiDk} dk · {ist.toplamSoru} soru
-                    </Text>
-                    {konu.kapakGorsel || KONU_KAPAK_RESIMLERI[konu.id] ? (
-                      <Text style={{ color: colors.info, fontSize: fontSize.xs }}>görselli</Text>
-                    ) : null}
+                    <Ionicons name={ders.ikon} size={24} color={ders.renk} />
                   </View>
-                </View>
-                {okundu ? (
-                  <Ionicons name="checkmark-circle" size={24} color={colors.success} />
-                ) : (
-                  <Ionicons name="chevron-forward" size={22} color={colors.textFaint} />
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.extrabold }}>
+                      {ders.ad}
+                    </Text>
+                    <Text style={{ color: colors.textMuted, fontSize: 12, fontFamily: fontFamily.semibold, marginTop: 2 }}>
+                      {tamamlanan}/{toplam} konu tamamlandı
+                    </Text>
+                  </View>
+                  <Ionicons
+                    name={isOpen ? "chevron-up" : "chevron-down"}
+                    size={20}
+                    color={colors.textFaint}
+                  />
+                </Pressable>
+
+                {isOpen && (
+                  <View style={{ borderTopWidth: 1, borderTopColor: colors.border }}>
+                    {konular.map((konu, index) => {
+                      const okundu = Boolean(okunanKonular[konu.id]);
+                      return (
+                        <Pressable
+                          key={konu.id}
+                          onPress={() => router.push(`/konu/${konu.id}`)}
+                          style={({ pressed }) => ({
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: spacing.md,
+                            paddingVertical: 14,
+                            paddingHorizontal: spacing.lg,
+                            backgroundColor: pressed ? "rgba(0,0,0,0.02)" : "transparent",
+                            borderTopWidth: index === 0 ? 0 : 1,
+                            borderTopColor: colors.background, // Subtle separator
+                          })}
+                        >
+                          <Ionicons
+                            name={okundu ? "checkmark-circle" : "ellipse-outline"}
+                            size={20}
+                            color={okundu ? colors.success : colors.border}
+                          />
+                          <Text
+                            style={{
+                              flex: 1,
+                              color: okundu ? colors.textMuted : colors.text,
+                              fontSize: fontSize.sm,
+                              fontFamily: fontFamily.bold,
+                            }}
+                            numberOfLines={2}
+                          >
+                            {konu.baslik}
+                          </Text>
+                          {okundu && (
+                            <View
+                              style={{
+                                backgroundColor: colors.successSoft,
+                                paddingHorizontal: 8,
+                                paddingVertical: 2,
+                                borderRadius: radius.pill,
+                              }}
+                            >
+                              <Text style={{ color: colors.success, fontSize: 10, fontFamily: fontFamily.extrabold }}>
+                                Bitti
+                              </Text>
+                            </View>
+                          )}
+                        </Pressable>
+                      );
+                    })}
+                  </View>
                 )}
               </View>
-            </Card>
-          );
-        })}
+            );
+          })}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

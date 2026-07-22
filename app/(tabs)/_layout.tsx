@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useTheme } from "@/theme";
 import type { IconName } from "@/types";
 
@@ -10,7 +10,18 @@ export default function TabLayout() {
 
   const ikon = (aktif: IconName, pasif: IconName) => ({
     tabBarIcon: ({ focused, color, size }: { focused: boolean; color: string; size: number }) => (
-      <Ionicons name={focused ? aktif : pasif} size={size} color={color} />
+      <View
+        style={{
+          width: 48,
+          height: 32,
+          borderRadius: 16,
+          backgroundColor: focused ? colors.primarySoft : "transparent",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Ionicons name={focused ? aktif : pasif} size={22} color={color} />
+      </View>
     ),
   });
 
@@ -19,16 +30,17 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.textFaint,
+        tabBarInactiveTintColor: colors.textMuted,
         tabBarStyle: {
           backgroundColor: colors.surface,
           borderTopColor: colors.border,
-          borderTopWidth: StyleSheet.hairlineWidth,
-          height: 64,
-          paddingBottom: 8,
+          borderTopWidth: 1,
+          height: 68,
+          paddingBottom: 10,
           paddingTop: 8,
+          elevation: 0,
         },
-        tabBarLabelStyle: { fontSize: fontSize.xs, fontWeight: "600" },
+        tabBarLabelStyle: { fontSize: 10, fontFamily: "Nunito_700Bold", marginTop: 4 },
       }}
     >
       <Tabs.Screen

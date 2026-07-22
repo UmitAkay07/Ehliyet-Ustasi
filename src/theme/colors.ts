@@ -25,51 +25,51 @@ export interface Palette {
 }
 
 export const darkPalette: Palette = {
-  background: "#0B1220",
-  surface: "#131C2E",
-  surfaceAlt: "#1B2740",
-  surfaceElevated: "#1F2B45",
-  border: "#26324A",
-  text: "#F1F5F9",
+  background: "#0F172A",
+  surface: "#1E293B",
+  surfaceAlt: "#334155",
+  surfaceElevated: "#334155",
+  border: "#334155",
+  text: "#F8FAFC",
   textMuted: "#94A3B8",
   textFaint: "#64748B",
-  primary: "#6366F1",
-  primarySoft: "rgba(99,102,241,0.16)",
+  primary: "#6366F1", // Indigo 500
+  primarySoft: "rgba(99,102,241,0.2)",
   onPrimary: "#FFFFFF",
-  success: "#22C55E",
-  successSoft: "rgba(34,197,94,0.16)",
-  danger: "#F87171",
-  dangerSoft: "rgba(248,113,113,0.16)",
-  warning: "#FBBF24",
-  warningSoft: "rgba(251,191,36,0.16)",
-  info: "#38BDF8",
-  infoSoft: "rgba(56,189,248,0.16)",
+  success: "#10B981", // Emerald 500
+  successSoft: "rgba(16,185,129,0.2)",
+  danger: "#F43F5E", // Rose 500
+  dangerSoft: "rgba(244,63,94,0.2)",
+  warning: "#F59E0B", // Amber 500
+  warningSoft: "rgba(245,158,11,0.2)",
+  info: "#0EA5E9",
+  infoSoft: "rgba(14,165,233,0.2)",
   shadow: "#000000",
-  overlay: "rgba(5,9,18,0.7)",
+  overlay: "rgba(15,23,42,0.7)",
 };
 
 export const lightPalette: Palette = {
-  background: "#F4F7FC",
+  background: "#F8FAFC", // soft off-white
   surface: "#FFFFFF",
-  surfaceAlt: "#EEF2F9",
+  surfaceAlt: "#F1F5F9",
   surfaceElevated: "#FFFFFF",
   border: "#E2E8F0",
-  text: "#0F172A",
-  textMuted: "#5A6B85",
+  text: "#0F172A", // deep slate
+  textMuted: "#64748B",
   textFaint: "#94A3B8",
-  primary: "#4F46E5",
-  primarySoft: "rgba(79,70,229,0.10)",
+  primary: "#4F46E5", // vibrant indigo
+  primarySoft: "rgba(79,70,229,0.12)",
   onPrimary: "#FFFFFF",
-  success: "#16A34A",
-  successSoft: "rgba(22,163,74,0.10)",
-  danger: "#DC2626",
-  dangerSoft: "rgba(220,38,38,0.10)",
-  warning: "#D97706",
-  warningSoft: "rgba(217,119,6,0.12)",
-  info: "#0284C7",
-  infoSoft: "rgba(2,132,199,0.10)",
-  shadow: "#1E293B",
-  overlay: "rgba(15,23,42,0.5)",
+  success: "#10B981", // emerald
+  successSoft: "rgba(16,185,129,0.12)",
+  danger: "#F43F5E", // rose
+  dangerSoft: "rgba(244,63,94,0.12)",
+  warning: "#F59E0B", // amber
+  warningSoft: "rgba(245,158,11,0.15)",
+  info: "#0EA5E9",
+  infoSoft: "rgba(14,165,233,0.12)",
+  shadow: "#94A3B8",
+  overlay: "rgba(15,23,42,0.4)",
 };
 
 // Ders (ders) renkleri - her iki temada da tutarlı marka aksanları

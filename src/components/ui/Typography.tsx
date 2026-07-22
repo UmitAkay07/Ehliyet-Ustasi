@@ -3,11 +3,11 @@ import { Text, TextProps, View } from "react-native";
 import { useTheme } from "@/theme";
 
 export function Title({ children, style, ...rest }: TextProps) {
-  const { colors, fontSize, fontWeight } = useTheme();
+  const { colors, fontSize, fontFamily } = useTheme();
   return (
     <Text
       style={[
-        { color: colors.text, fontSize: fontSize.xxl, fontWeight: fontWeight.extrabold },
+        { color: colors.text, fontSize: fontSize.xxl, fontFamily: fontFamily.extrabold },
         style,
       ]}
       {...rest}
@@ -18,11 +18,11 @@ export function Title({ children, style, ...rest }: TextProps) {
 }
 
 export function Subtitle({ children, style, ...rest }: TextProps) {
-  const { colors, fontSize, fontWeight } = useTheme();
+  const { colors, fontSize, fontFamily } = useTheme();
   return (
     <Text
       style={[
-        { color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.bold },
+        { color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.bold },
         style,
       ]}
       {...rest}
@@ -33,11 +33,11 @@ export function Subtitle({ children, style, ...rest }: TextProps) {
 }
 
 export function Body({ children, style, muted, ...rest }: TextProps & { muted?: boolean }) {
-  const { colors, fontSize } = useTheme();
+  const { colors, fontSize, fontFamily } = useTheme();
   return (
     <Text
       style={[
-        { color: muted ? colors.textMuted : colors.text, fontSize: fontSize.md, lineHeight: 22 },
+        { color: muted ? colors.textMuted : colors.text, fontSize: fontSize.md, fontFamily: fontFamily.regular, lineHeight: 22 },
         style,
       ]}
       {...rest}
@@ -48,9 +48,9 @@ export function Body({ children, style, muted, ...rest }: TextProps & { muted?: 
 }
 
 export function Caption({ children, style, ...rest }: TextProps) {
-  const { colors, fontSize } = useTheme();
+  const { colors, fontSize, fontFamily } = useTheme();
   return (
-    <Text style={[{ color: colors.textMuted, fontSize: fontSize.xs }, style]} {...rest}>
+    <Text style={[{ color: colors.textMuted, fontSize: fontSize.xs, fontFamily: fontFamily.medium }, style]} {...rest}>
       {children}
     </Text>
   );
@@ -63,7 +63,7 @@ export function SectionTitle({
   title: string;
   action?: React.ReactNode;
 }) {
-  const { colors, fontSize, fontWeight } = useTheme();
+  const { colors, fontSize, fontFamily } = useTheme();
   return (
     <View
       style={{
@@ -73,7 +73,7 @@ export function SectionTitle({
         marginBottom: 2,
       }}
     >
-      <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.bold }}>
+      <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.bold }}>
         {title}
       </Text>
       {action}

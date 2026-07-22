@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo } from "react";
 import { useColorScheme } from "react-native";
 import { ColorScheme, Palette, palettes } from "./colors";
-import { fontSize, fontWeight, radius, spacing } from "./tokens";
+import { fontSize, fontWeight, fontFamily, radius, spacing } from "./tokens";
 import { useAppStore } from "@/store/useAppStore";
 
 export interface Theme {
@@ -11,6 +11,7 @@ export interface Theme {
   radius: typeof radius;
   fontSize: typeof fontSize;
   fontWeight: typeof fontWeight;
+  fontFamily: typeof fontFamily;
 }
 
 const ThemeContext = createContext<Theme | null>(null);
@@ -33,6 +34,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       radius,
       fontSize,
       fontWeight,
+      fontFamily,
     }),
     [scheme]
   );

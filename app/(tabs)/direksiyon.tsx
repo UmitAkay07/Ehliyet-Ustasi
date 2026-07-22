@@ -1,86 +1,143 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { Screen, Card, Badge } from "@/components/ui";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@/theme";
 import { DIREKSIYON_DERSLERI } from "@/data/direksiyon";
-import type { Zorluk } from "@/types";
 
-const zorlukRenk: Record<Zorluk, string> = {
-  kolay: "#22C55E",
-  orta: "#F59E0B",
-  zor: "#EF4444",
-};
-const zorlukAd: Record<Zorluk, string> = { kolay: "Kolay", orta: "Orta", zor: "Zor" };
+function getDifficultyColors(zorluk: string, colors: any) {
+  switch (zorluk) {
+    case "kolay":
+      return { bg: colors.successSoft, text: colors.success };
+    case "orta":
+      return { bg: colors.warningSoft, text: colors.warning };
+    case "zor":
+      return { bg: colors.dangerSoft, text: colors.danger };
+    default:
+      return { bg: colors.surfaceAlt, text: colors.text };
+  }
+}
 
 export default function DireksiyonScreen() {
-  const { colors, fontSize, fontWeight, spacing } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
 
   return (
-    <Screen>
-      <View>
-        <Text style={{ color: colors.text, fontSize: fontSize.xxl, fontWeight: fontWeight.extrabold }}>
-          Direksiyon Dersleri
-        </Text>
-        <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: 4 }}>
-          Her manevra için adım adım anlatım ve 2D kuş bakışı animasyon.
-        </Text>
-      </View>
-
-      <Card elevated onPress={() => router.push("/pratik-sinav-simulasyonu")} style={{ backgroundColor: colors.primarySoft }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
-          <View style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: colors.primary, alignItems: "center", justifyContent: "center" }}>
-            <Ionicons name="play-circle" size={24} color="#fff" />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: colors.primary, fontSize: fontSize.md, fontWeight: fontWeight.extrabold }}>
-              Tam Sınav Simülasyonu
-            </Text>
-            <Text style={{ color: colors.text, fontSize: fontSize.xs, marginTop: 2 }}>
-              Hızlandırılmış sınav videosu ve sesli anlatım
-            </Text>
-          </View>
-          <Ionicons name="chevron-forward" size={24} color={colors.primary} />
+    <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: colors.background }}>
+      <ScrollView
+        contentContainerStyle={{ padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xxxl * 2 }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={{ marginBottom: spacing.sm }}>
+          <Text style={{ color: colors.text, fontSize: fontSize.xxl, fontFamily: fontFamily.extrabold }}>
+            Direksiyon Sınavı
+          </Text>
+          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold, marginTop: 4 }}>
+            Manevra animasyonlarını izle ve kuralları öğren.
+          </Text>
         </View>
-      </Card>
 
-      <View style={{ gap: spacing.md }}>
-        {DIREKSIYON_DERSLERI.map((ders) => (
-          <Card key={ders.id} onPress={() => router.push(`/direksiyon/${ders.id}`)}>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
-              <View
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 15,
-                  backgroundColor: colors.primarySoft,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Ionicons name={ders.ikon} size={26} color={colors.primary} />
-              </View>
-              <View style={{ flex: 1, gap: 6 }}>
-                <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.bold }}>
-                  {ders.baslik}
-                </Text>
-                <Text style={{ color: colors.textMuted, fontSize: fontSize.xs, lineHeight: 18 }} numberOfLines={2}>
-                  {ders.ozet}
-                </Text>
-                <Badge
-                  label={zorlukAd[ders.zorluk]}
-                  color={zorlukRenk[ders.zorluk]}
-                  bg={zorlukRenk[ders.zorluk] + "22"}
-                  icon="speedometer"
-                />
-              </View>
-              <Ionicons name="chevron-forward" size={22} color={colors.textFaint} />
-            </View>
-          </Card>
-        ))}
-      </View>
-    </Screen>
+        {/* Hero: Full simulation */}
+        <Pressable
+          onPress={() => router.push("/pratik-sinav-simulasyonu")}
+          style={({ pressed }) => ({
+            backgroundColor: colors.success,
+            borderRadius: radius["3xl"],
+            padding: spacing.xl,
+            alignItems: "center",
+            opacity: pressed ? 0.9 : 1,
+            shadowColor: colors.success,
+            shadowOffset: { width: 0, height: 8 },
+            shadowOpacity: 0.25,
+            shadowRadius: 16,
+            elevation: 8,
+          })}
+        >
+          <View
+            style={{
+              width: 80,
+              height: 80,
+              borderRadius: radius.pill,
+              backgroundColor: "rgba(255,255,255,0.2)",
+              alignItems: "center",
+              justifyContent: "center",
+              marginBottom: spacing.md,
+            }}
+          >
+            <Ionicons name="play" size={40} color="#FFFFFF" style={{ marginLeft: 6 }} />
+          </View>
+          <Text style={{ color: "#FFFFFF", fontSize: fontSize.xl, fontFamily: fontFamily.extrabold, textAlign: "center" }}>
+            Tam Sınav Simülasyonu
+          </Text>
+          <Text style={{ color: "rgba(255,255,255,0.85)", fontSize: fontSize.sm, fontFamily: fontFamily.semibold, textAlign: "center", marginTop: 4 }}>
+            Sınav güzergahını baştan sona deneyimle
+          </Text>
+        </Pressable>
+
+        {/* Maneuvers */}
+        <View style={{ marginTop: spacing.sm }}>
+          <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.extrabold, marginBottom: spacing.md }}>
+            Manevralar
+          </Text>
+          <View style={{ gap: spacing.sm }}>
+            {DIREKSIYON_DERSLERI.map((manevra) => {
+              const diffColors = getDifficultyColors(manevra.zorluk, colors);
+              return (
+                <Pressable
+                  key={manevra.id}
+                  onPress={() => router.push(`/direksiyon/${manevra.id}`)}
+                  style={({ pressed }) => ({
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: spacing.md,
+                    backgroundColor: colors.surface,
+                    borderRadius: radius["3xl"],
+                    padding: spacing.lg,
+                    borderWidth: 1,
+                    borderColor: colors.border,
+                    opacity: pressed ? 0.9 : 1,
+                    transform: [{ scale: pressed ? 0.98 : 1 }],
+                  })}
+                >
+                  <View
+                    style={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: radius.xl,
+                      backgroundColor: colors.infoSoft,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Ionicons name={manevra.ikon} size={24} color={colors.info} />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.extrabold }}>
+                      {manevra.baslik}
+                    </Text>
+                    <Text style={{ color: colors.textMuted, fontSize: 12, fontFamily: fontFamily.semibold, marginTop: 2 }}>
+                      {manevra.aciklama}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      backgroundColor: diffColors.bg,
+                      paddingHorizontal: 12,
+                      paddingVertical: 6,
+                      borderRadius: radius.pill,
+                    }}
+                  >
+                    <Text style={{ color: diffColors.text, fontSize: 12, fontFamily: fontFamily.extrabold }}>
+                      {manevra.zorluk.charAt(0).toUpperCase() + manevra.zorluk.slice(1)}
+                    </Text>
+                  </View>
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
