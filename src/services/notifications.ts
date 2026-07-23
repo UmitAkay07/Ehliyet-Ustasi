@@ -2,7 +2,7 @@ import { Platform } from "react-native";
 import * as Notifications from "expo-notifications";
 import { sinavGunKalan } from "@/utils/gununSorusu";
 
-const BILDIRIM_SAAT = 9;
+const BILDIRIM_SAAT = 13;
 const BILDIRIM_DAKIKA = 0;
 const MAX_GUN = 120;
 

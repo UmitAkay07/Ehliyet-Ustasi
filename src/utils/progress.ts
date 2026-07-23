@@ -81,9 +81,10 @@ export function genelIlerleme(
 
   const konuOrani = toplamKonu ? okunanKonu / toplamKonu : 0;
   const soruOrani = toplamSoru ? cozulenList.length / toplamSoru : 0;
-  // Hazırlık: konu okuma %40 + soru çözme %30 + başarı %30
+  // Hazırlık: konu okuma %50 + doğru çözülen soruların tüm sorulara oranı %50
+  // Bu sayede ilerleme çubuğu sadece kümülatif olarak artar, küçük veri setlerinde (örn. ilk 6 soruda) aniden %30'a fırlamaz.
   const basari = cozulenList.length ? dogru / cozulenList.length : 0;
-  const hazirlik = konuOrani * 0.4 + soruOrani * 0.3 + basari * 0.3;
+  const hazirlik = (konuOrani * 0.5) + (toplamSoru ? (dogru / toplamSoru) * 0.5 : 0);
 
   return {
     toplamKonu,

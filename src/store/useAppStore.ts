@@ -58,7 +58,9 @@ interface AppState {
 }
 
 function bugunAnahtar(d = new Date()): string {
-  return d.toISOString().slice(0, 10);
+  // Use local timezone instead of UTC so streaks don't break based on midnight offsets
+  const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
 }
 
 const baslangicSettings: Settings = {

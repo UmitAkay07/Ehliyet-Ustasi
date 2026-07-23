@@ -20,8 +20,9 @@ export const DIREKSIYON_DERSLERI: DireksiyonDersi[] = [
       "Bakışını uzağa, gitmek istediğin yöne yönlendir.",
     ],
     hatalar: [
+      { seviye: "kirmizi", metin: "Emniyet kemerini takmamak." },
+      { seviye: "kirmizi", metin: "Kalkış yaparken sinyal vermemek." },
       { seviye: "sari", metin: "Kalkış öncesi ayna ve çevre kontrolü yapmamak." },
-      { seviye: "sari", metin: "Emniyet kemerini takmamak." },
     ],
   },
   {
@@ -45,8 +46,9 @@ export const DIREKSIYON_DERSLERI: DireksiyonDersi[] = [
     ],
     hatalar: [
       { seviye: "kirmizi", metin: "Dubalara/konilere veya kaldırıma çarpmak." },
-      { seviye: "kirmizi", metin: "En fazla iki hamlede park edememek." },
+      { seviye: "kirmizi", metin: "En fazla iki hamlede (1 ileri, 1 geri) park edememek." },
       { seviye: "kirmizi", metin: "Kaldırıma 50 cm'den fazla uzağa park etmek." },
+      { seviye: "kirmizi", metin: "Park alanına girerken veya çıkarken sinyal vermemek." },
       { seviye: "sari", metin: "Manevra sırasında ayna/omuz üstü kontrolü yapmamak." },
     ],
   },
@@ -70,8 +72,9 @@ export const DIREKSIYON_DERSLERI: DireksiyonDersi[] = [
       "Aynalardan iki yandaki çizgilere eşit mesafeyi kontrol et.",
     ],
     hatalar: [
-      { seviye: "kirmizi", metin: "Park çizgilerini/dubaları ihlal etmek, çarpmak." },
-      { seviye: "kirmizi", metin: "Belirlenen hamle sayısını aşmak." },
+      { seviye: "kirmizi", metin: "Park çizgilerini/dubaları ihlal etmek veya çarpmak." },
+      { seviye: "kirmizi", metin: "Tek hamlede park alanına girememek." },
+      { seviye: "kirmizi", metin: "Park alanından çıkarken sinyal vermemek." },
       { seviye: "sari", metin: "Park sonrası el frenini çekmemek, vitesi boşa almamak." },
     ],
   },
@@ -94,8 +97,9 @@ export const DIREKSIYON_DERSLERI: DireksiyonDersi[] = [
       "Debriyaj-gaz-el freni uyumunu yavaşça sağla.",
     ],
     hatalar: [
+      { seviye: "kirmizi", metin: "Kalkış yaparken sol sinyal vermemek." },
       { seviye: "kirmizi", metin: "Aracı 50 cm'den fazla geri kaçırmak." },
-      { seviye: "sari", metin: "Kalkışta aracı defalarca stop ettirmek." },
+      { seviye: "sari", metin: "Aracı stop ettirmek (Aynı sınavda 2 kez stop etmek kırmızı hatadır)." },
     ],
   },
   {
@@ -117,8 +121,9 @@ export const DIREKSIYON_DERSLERI: DireksiyonDersi[] = [
       "Yasak levhası veya kesintisiz çizgi varsa U dönüşü yapma.",
     ],
     hatalar: [
+      { seviye: "kirmizi", metin: "Dönüş öncesi veya sırasında sinyal vermemek." },
       { seviye: "kirmizi", metin: "Karşı yönden gelen aracı tehlikeye atmak." },
-      { seviye: "sari", metin: "Dönüş öncesi sinyal ve ayna kontrolü yapmamak." },
+      { seviye: "sari", metin: "Ayna ve omuz üstü kör nokta kontrolü yapmamak." },
     ],
   },
   {
@@ -140,8 +145,9 @@ export const DIREKSIYON_DERSLERI: DireksiyonDersi[] = [
       "Islak/buzlu yolda fren mesafesi uzar, hızını önceden düşür.",
     ],
     hatalar: [
-      { seviye: "mavi", metin: "Gereksiz ve sert fren yaparak arkadaki aracı tehlikeye atmak." },
-      { seviye: "sari", metin: "Frenle birlikte direksiyon hâkimiyetini kaybetmek." },
+      { seviye: "kirmizi", metin: "Frenle birlikte direksiyon hâkimiyetini kaybetmek." },
+      { seviye: "kirmizi", metin: "Ani fren alanına girerken sağ, kalkış yaparken sol sinyal vermemek." },
+      { seviye: "sari", metin: "Arkadan gelen trafiği ayna ile kontrol etmemek." },
     ],
   },
   {
@@ -163,8 +169,8 @@ export const DIREKSIYON_DERSLERI: DireksiyonDersi[] = [
       "Kör nokta kontrolünü asla atlama.",
     ],
     hatalar: [
-      { seviye: "sari", metin: "Şerit değiştirmeden önce sinyal vermemek." },
-      { seviye: "sari", metin: "Ayna ve kör nokta (omuz üstü) kontrolü yapmamak." },
+      { seviye: "kirmizi", metin: "Şerit değiştirmeden önce veya dönüşlerde sinyal vermemek." },
+      { seviye: "kirmizi", metin: "Şerit değiştirirken ayna ve kör nokta kontrolü yapmayıp trafiği tehlikeye atmak." },
     ],
   },
   {
@@ -187,9 +193,9 @@ export const DIREKSIYON_DERSLERI: DireksiyonDersi[] = [
       "Çocuk/yaya olabilecek alanlarda ekstra yavaş ve dikkatli ol.",
     ],
     hatalar: [
-      { seviye: "kirmizi", metin: "Geri giderken aracı sağa veya sola kaydırıp hâkimiyeti kaybetmek." },
+      { seviye: "kirmizi", metin: "Geri gelirken şerit dışına çıkmak veya aracı kaydırmak." },
+      { seviye: "kirmizi", metin: "Dururken sağ, kalkarken sol sinyal vermemek." },
       { seviye: "sari", metin: "Geri manevra öncesi/sırasında çevre kontrolü yapmamak." },
-      { seviye: "sari", metin: "Sinyal vermeden geri manevraya başlamak." },
     ],
   },
 ];

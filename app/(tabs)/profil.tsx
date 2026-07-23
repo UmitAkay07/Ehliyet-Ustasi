@@ -143,6 +143,49 @@ export default function ProfilScreen() {
           </View>
         </View>
 
+        {/* Akıllı Analiz (Zayıf Nokta Tespiti) */}
+        <View style={{ backgroundColor: colors.surfaceAlt, borderRadius: radius["3xl"], padding: spacing.xl, borderWidth: 1, borderColor: colors.border }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md, marginBottom: spacing.md }}>
+            <View style={{ width: 44, height: 44, borderRadius: radius.xl, backgroundColor: colors.warningSoft, alignItems: "center", justifyContent: "center" }}>
+              <Ionicons name="bulb" size={24} color={colors.warning} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.extrabold }}>
+                Akıllı Tavsiye
+              </Text>
+              <Text style={{ color: colors.warning, fontSize: 12, fontFamily: fontFamily.bold, marginTop: 2 }}>
+                Yapay Zeka Destekli Analiz
+              </Text>
+            </View>
+          </View>
+          
+          <View style={{ backgroundColor: colors.surface, padding: spacing.md, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border }}>
+            <Text style={{ color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.semibold, lineHeight: 22 }}>
+              {(() => {
+                const hataKayitlari = Object.values(useAppStore.getState().hatalar);
+                if (hataKayitlari.length === 0) {
+                  return "Şu an hata defterin tertemiz! Bol bol deneme çözerek zayıf noktalarını burada görebilirsin.";
+                }
+                const sayilar = hataKayitlari.reduce((acc, h) => {
+                  acc[h.dersId] = (acc[h.dersId] || 0) + 1;
+                  return acc;
+                }, {} as Record<string, number>);
+                const enCok = Object.entries(sayilar).sort((a, b) => b[1] - a[1])[0];
+                
+                const dersIsimleri: Record<string, string> = {
+                  ilkyardim: "İlk Yardım",
+                  trafik: "Trafik ve Çevre",
+                  motor: "Araç Tekniği (Motor)",
+                  adab: "Trafik Adabı"
+                };
+                const dersAdi = dersIsimleri[enCok[0]] || enCok[0];
+                
+                return `Verilerine göre en çok "${dersAdi}" konularında hata yapıyorsun (${enCok[1]} hata). Sınavda sürpriz yaşamamak için bu konulara ağırlık vermelisin!`;
+              })()}
+            </Text>
+          </View>
+        </View>
+
         {/* Exam Date */}
         <View style={{ backgroundColor: colors.surface, borderRadius: radius["3xl"], padding: spacing.xl, borderWidth: 1, borderColor: colors.border }}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md, marginBottom: spacing.md }}>

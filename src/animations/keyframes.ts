@@ -218,9 +218,9 @@ export const MANEVRALAR: Record<ManevraTipi, ManevraTanim> = {
     sureMs: 5000,
     keyframes: joinPaths(
       straight({ x: 200, y: 240 }, { x: 200, y: 150 }, 15, false, "left"), // Sağ şeritte gidiş, sol sinyal
-      bezier({ x: 200, y: 150 }, { x: 200, y: 110 }, { x: 100, y: 110 }, { x: 100, y: 70 }, 30, false, "left"), // S-Curve şerit değişimi
+      straight({ x: 200, y: 150 }, { x: 100, y: 70 }, 30, false, "left"), // Sola doğru çapraz geçiş
       straight({ x: 100, y: 70 }, { x: 100, y: -20 }, 20, false, "none") // Sol şeritte devam
-    ),
+    ).map((f) => ({ ...f, a: 0 })), // Aracın burnu hep düz kalsın
   },
 
   sinyal: {

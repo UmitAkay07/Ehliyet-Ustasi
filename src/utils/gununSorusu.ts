@@ -28,7 +28,9 @@ export function sinavGunKalan(sinavTarihi: string | null | undefined): number | 
 export function tarihGoster(isoGun: string): string {
   if (!isoGun) return "Belirlenmedi";
   try {
-    const date = new Date(isoGun);
+    const parts = isoGun.split("T")[0].split("-");
+    if (parts.length < 3) return "Belirlenmedi";
+    const date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
     if (isNaN(date.getTime())) return "Belirlenmedi";
     return date.toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
   } catch (e) {
