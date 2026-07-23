@@ -181,21 +181,23 @@ export const MANEVRALAR: Record<ManevraTipi, ManevraTanim> = {
     yoyo: false,
     sureMs: 5000,
     keyframes: joinPaths(
-      straight({ x: 150, y: 220 }, { x: 150, y: 140 }, 20, false, "none", true), // Yokuşa geliş
-      wait({ x: 150, y: 140, a: 0, signalLeft: 0, signalRight: 0, brake: 1 }, 15, true, "none"), // 30 sn bekleme simülasyonu
+      straight({ x: 150, y: 220 }, { x: 150, y: 140 }, 20, false, "right", true), // Sağ sinyalle geliş
+      wait({ x: 150, y: 140, a: 0, signalLeft: 0, signalRight: 1, brake: 1 }, 10, true, "right"), // Sağ sinyalle bekleme
+      wait({ x: 150, y: 140, a: 0, signalLeft: 1, signalRight: 0, brake: 1 }, 10, true, "left"), // Sol sinyal yakıp kalkışa hazırlık
       straight({ x: 150, y: 140 }, { x: 150, y: 145 }, 5, true, "left", false), // Yarım metre geri kaçırma (hata payı veya titreme)
-      straight({ x: 150, y: 145 }, { x: 150, y: -20 }, 30, false, "left", false) // Başarılı kalkış
+      straight({ x: 150, y: 145 }, { x: 150, y: -20 }, 30, false, "left", false) // Sol sinyalle başarılı kalkış
     ),
   },
 
   aniFren: {
     yoyo: false,
-    sureMs: 3500,
+    sureMs: 5000,
     keyframes: joinPaths(
       straight({ x: 150, y: 220 }, { x: 150, y: 100 }, 30, false, "right", false), // Sağ sinyalle hızlanma
       straight({ x: 150, y: 100 }, { x: 150, y: 80 }, 5, false, "right", true), // Sağ sinyalle sert fren
-      wait({ x: 150, y: 80, a: 0, signalLeft: 0, signalRight: 1, brake: 1 }, 20, true, "right"), // Durma ve fren
-      wait({ x: 150, y: 80, a: 0, signalLeft: 0, signalRight: 1, brake: 1 }, 10, true, "right") // Sağ sinyal açık bekleme
+      wait({ x: 150, y: 80, a: 0, signalLeft: 0, signalRight: 1, brake: 1 }, 15, true, "right"), // Durma ve fren
+      wait({ x: 150, y: 80, a: 0, signalLeft: 1, signalRight: 0, brake: 1 }, 10, true, "left"), // Sol sinyal açık bekleme
+      straight({ x: 150, y: 80 }, { x: 150, y: -20 }, 30, false, "left", false) // Sol sinyalle kalkış ve devam
     ),
   },
 

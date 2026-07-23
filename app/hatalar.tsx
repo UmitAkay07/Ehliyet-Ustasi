@@ -12,7 +12,7 @@ import { dersBul } from "@/data/dersler";
 import type { Soru } from "@/types";
 
 export default function HatalarScreen() {
-  const { colors, fontSize, fontWeight, spacing } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
   const hatalar = useAppStore((s) => s.hatalar);
   const hataSil = useAppStore((s) => s.hataSil);
@@ -38,27 +38,32 @@ export default function HatalarScreen() {
     return (
       <Screen>
         <ScreenHeader title="Hata Defteri" />
-        <Card style={{ alignItems: "center", gap: spacing.md, paddingVertical: spacing.xxl }}>
-          <View
-            style={{
-              width: 72,
-              height: 72,
-              borderRadius: 36,
-              backgroundColor: colors.successSoft,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Ionicons name="checkmark-done" size={38} color={colors.success} />
-          </View>
-          <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.bold }}>
-            Hata defterin tertemiz!
-          </Text>
-          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, textAlign: "center" }}>
-            Yanlış yaptığın sorular burada birikir ve konu açıklamasıyla birlikte tekrar çözebilirsin.
-          </Text>
-        </Card>
-        <Button label="Test Çözmeye Başla" icon="clipboard" onPress={() => router.push("/(tabs)/testler")} />
+        <View style={{ flex: 1, justifyContent: "center", paddingBottom: spacing.xxxl }}>
+          <Card style={{ alignItems: "center", gap: spacing.md, paddingVertical: spacing.xxxl, marginHorizontal: spacing.lg, borderRadius: radius["3xl"], borderWidth: 1, borderColor: colors.border, shadowColor: colors.primary, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.1, shadowRadius: 20, elevation: 5 }}>
+            <View
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: radius.full,
+                backgroundColor: colors.successSoft,
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: spacing.sm,
+              }}
+            >
+              <Ionicons name="checkmark-done" size={40} color={colors.success} />
+            </View>
+            <Text style={{ color: colors.text, fontSize: fontSize.xl, fontFamily: fontFamily.extrabold, textAlign: "center" }}>
+              Hata defterin tertemiz!
+            </Text>
+            <Text style={{ color: colors.textMuted, fontSize: fontSize.md, fontFamily: fontFamily.semibold, textAlign: "center", paddingHorizontal: spacing.md, lineHeight: 22 }}>
+              Mükemmel gidiyorsun. Yanlış yaptığın sorular burada birikir ve sınavdan önce tekrar edebilirsin.
+            </Text>
+            <View style={{ width: "100%", paddingHorizontal: spacing.lg, marginTop: spacing.lg }}>
+              <Button label="Test Çözmeye Başla" icon="clipboard" onPress={() => router.push("/(tabs)/testler")} />
+            </View>
+          </Card>
+        </View>
       </Screen>
     );
   }
@@ -87,7 +92,7 @@ export default function HatalarScreen() {
       }
     >
       <ScreenHeader title="Hata Defteri" subtitle={`${hataSorulari.length} soru`} />
-      <Text style={{ color: colors.textMuted, fontSize: fontSize.sm }}>
+      <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold, marginBottom: spacing.sm }}>
         Doğru cevapladığında soru bu listeden otomatik çıkar.
       </Text>
 
@@ -106,7 +111,7 @@ export default function HatalarScreen() {
                     <Ionicons name="trash-outline" size={18} color={colors.textFaint} />
                   </Pressable>
                 </View>
-                <Text style={{ color: colors.text, fontSize: fontSize.md, lineHeight: 22 }} numberOfLines={3}>
+                <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.bold, lineHeight: 22 }} numberOfLines={3}>
                   {soru.metin}
                 </Text>
                 <View
@@ -119,7 +124,7 @@ export default function HatalarScreen() {
                   }}
                 >
                   <Ionicons name="checkmark-circle" size={16} color={colors.success} style={{ marginTop: 1 }} />
-                  <Text style={{ color: colors.text, fontSize: fontSize.sm, flex: 1 }}>
+                  <Text style={{ color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.bold, flex: 1 }}>
                     Doğru cevap: {soru.secenekler[soru.dogruIndex]}
                   </Text>
                 </View>
@@ -129,7 +134,7 @@ export default function HatalarScreen() {
                     style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
                   >
                     <Ionicons name="book-outline" size={15} color={colors.primary} />
-                    <Text style={{ color: colors.primary, fontSize: fontSize.sm, fontWeight: fontWeight.semibold }}>
+                    <Text style={{ color: colors.primary, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
                       Konu anlatımını oku
                     </Text>
                   </Pressable>

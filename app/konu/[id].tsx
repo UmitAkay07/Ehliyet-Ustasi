@@ -13,7 +13,7 @@ import { sorularByKonu } from "@/data/sorular";
 import { KONU_KAPAK_RESIMLERI } from "@/data/konuKapakResimleri";
 
 export default function KonuDetayScreen() {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
   const konu = konuBul(id);
@@ -105,7 +105,7 @@ export default function KonuDetayScreen() {
 
       <View style={{ gap: spacing.sm }}>
         <Badge label={ders.ad} color={ders.renk} bg={ders.renk + "22"} icon={ders.ikon} />
-        <Text style={{ color: colors.text, fontSize: fontSize.xxl, fontWeight: fontWeight.extrabold }}>
+        <Text style={{ color: colors.text, fontSize: fontSize.xxl, fontFamily: fontFamily.extrabold }}>
           {konu.baslik}
         </Text>
         <Text style={{ color: colors.textMuted, fontSize: fontSize.md, lineHeight: 22 }}>{konu.ozet}</Text>
@@ -138,7 +138,7 @@ export default function KonuDetayScreen() {
                   backgroundColor: ders.renk,
                 }}
               />
-              <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.bold, flex: 1 }}>
+              <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.bold, flex: 1 }}>
                 {bolum.baslik}
               </Text>
             </View>
@@ -151,7 +151,7 @@ export default function KonuDetayScreen() {
       <Card style={{ backgroundColor: ders.renk + "14", borderColor: ders.renk + "44" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm, marginBottom: spacing.md }}>
           <Ionicons name="key" size={20} color={ders.renk} />
-          <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.bold }}>
+          <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.bold }}>
             Anahtar Noktalar
           </Text>
         </View>

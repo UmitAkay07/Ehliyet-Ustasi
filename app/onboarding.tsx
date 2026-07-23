@@ -70,7 +70,7 @@ function DekorDaire({
 }
 
 export default function OnboardingScreen() {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
   const onboardingiTamamla = useAppStore((s) => s.onboardingiTamamla);
 
@@ -120,7 +120,7 @@ export default function OnboardingScreen() {
               }}
             >
               <Ionicons name="shield-checkmark" size={14} color="#C7D2FE" />
-              <Text style={{ color: "#C7D2FE", fontSize: fontSize.xs, fontWeight: fontWeight.semibold }}>
+              <Text style={{ color: "#C7D2FE", fontSize: fontSize.xs, fontFamily: fontFamily.semibold }}>
                 E-sınav & direksiyon hazırlık
               </Text>
             </View>
@@ -168,7 +168,7 @@ export default function OnboardingScreen() {
               >
                 <Ionicons name={o.ikon} size={22} color={o.renk} />
               </View>
-              <Text style={{ color: colors.text, fontSize: fontSize.sm, fontWeight: fontWeight.bold }}>
+              <Text style={{ color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.bold }}>
                 {o.baslik}
               </Text>
               <Text style={{ color: colors.textMuted, fontSize: fontSize.xs, lineHeight: 17 }}>

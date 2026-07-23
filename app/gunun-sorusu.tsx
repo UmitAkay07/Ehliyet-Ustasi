@@ -7,7 +7,7 @@ import { useAppStore, bugunAnahtar } from "@/store/useAppStore";
 import { gununSorusunuAl } from "@/utils/gununSorusu";
 
 export default function GununSorusuScreen() {
-  const { colors, fontSize, fontWeight, spacing } = useTheme();
+  const { colors, fontSize, fontFamily, spacing } = useTheme();
   const soru = useMemo(() => gununSorusunuAl(), []);
   const gun = bugunAnahtar();
   const oncekiCevapId = useAppStore((s) => s.gununSorusuCevap[gun]);
@@ -58,7 +58,7 @@ export default function GununSorusuScreen() {
               style={{
                 color: dogruMu ? colors.success : colors.danger,
                 fontSize: fontSize.lg,
-                fontWeight: fontWeight.bold,
+                fontFamily: fontFamily.extrabold,
               }}
             >
               {dogruMu ? "Doğru!" : "Yanlış"}

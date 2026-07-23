@@ -22,7 +22,7 @@ function Frame({
   title?: string;
   height?: number;
 }) {
-  const { colors, radius, spacing, fontSize, fontWeight } = useTheme();
+  const { colors, fontFamily, radius, spacing, fontSize, fontWeight } = useTheme();
   return (
     <View
       style={{
@@ -39,7 +39,7 @@ function Frame({
           style={{
             color: colors.textMuted,
             fontSize: fontSize.xs,
-            fontWeight: fontWeight.semibold,
+            fontFamily: fontFamily.semibold,
             paddingHorizontal: spacing.md,
             paddingTop: spacing.sm,
           }}

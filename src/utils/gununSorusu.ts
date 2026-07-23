@@ -18,13 +18,20 @@ export function sinavGunKalan(sinavTarihi: string | null | undefined): number | 
   if (!sinavTarihi) return null;
   const bugun = new Date();
   bugun.setHours(0, 0, 0, 0);
-  const [y, m, d] = sinavTarihi.split("-").map(Number);
+  const datePart = sinavTarihi.split("T")[0];
+  const [y, m, d] = datePart.split("-").map(Number);
   if (!y || !m || !d) return null;
   const hedef = new Date(y, m - 1, d);
   return Math.round((hedef.getTime() - bugun.getTime()) / (1000 * 60 * 60 * 24));
 }
 
 export function tarihGoster(isoGun: string): string {
-  const [y, m, d] = isoGun.split("-");
-  return `${d}.${m}.${y}`;
+  if (!isoGun) return "Belirlenmedi";
+  try {
+    const date = new Date(isoGun);
+    if (isNaN(date.getTime())) return "Belirlenmedi";
+    return date.toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
+  } catch (e) {
+    return "Belirlenmedi";
+  }
 }

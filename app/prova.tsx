@@ -19,7 +19,7 @@ function sureBicimle(saniye: number): string {
 }
 
 export default function ProvaScreen() {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
   const soruCevapla = useAppStore((s) => s.soruCevapla);
   const provaKaydet = useAppStore((s) => s.provaKaydet);
@@ -119,7 +119,7 @@ export default function ProvaScreen() {
             >
               <Ionicons name="ribbon" size={38} color={colors.primary} />
             </View>
-            <Text style={{ color: colors.text, fontSize: fontSize.xl, fontWeight: fontWeight.extrabold }}>
+            <Text style={{ color: colors.text, fontSize: fontSize.xl, fontFamily: fontFamily.extrabold }}>
               Gerçek Sınav Provası
             </Text>
           </View>
@@ -149,7 +149,7 @@ export default function ProvaScreen() {
       {/* Üst bar: süre + ilerleme */}
       <View style={{ paddingHorizontal: spacing.lg, paddingTop: spacing.sm, gap: spacing.sm }}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontWeight: fontWeight.semibold }}>
+          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
             {cevaplananSayisi}/{sorular.length} cevaplandı
           </Text>
           <View
@@ -167,7 +167,7 @@ export default function ProvaScreen() {
             <Text
               style={{
                 color: azaldi ? colors.danger : colors.text,
-                fontWeight: fontWeight.bold,
+                fontFamily: fontFamily.bold,
                 fontVariant: ["tabular-nums"],
               }}
             >
@@ -207,7 +207,7 @@ export default function ProvaScreen() {
                 style={{
                   color: aktif ? colors.onPrimary : cevaplandi ? colors.success : colors.textMuted,
                   fontSize: fontSize.xs,
-                  fontWeight: fontWeight.bold,
+                  fontFamily: fontFamily.bold,
                 }}
               >
                 {i + 1}

@@ -22,7 +22,7 @@ export function ProgressRing({
   label,
   sublabel,
 }: ProgressRingProps) {
-  const { colors, fontSize, fontWeight } = useTheme();
+  const { colors, fontFamily, fontSize, fontWeight } = useTheme();
   const clamped = Math.max(0, Math.min(1, progress));
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -60,7 +60,7 @@ export function ProgressRing({
               style={{
                 color: colors.text,
                 fontSize: size > 100 ? fontSize.xxl : fontSize.lg,
-                fontWeight: fontWeight.extrabold,
+                fontFamily: fontFamily.extrabold,
               }}
             >
               {label}

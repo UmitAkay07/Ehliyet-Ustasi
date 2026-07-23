@@ -8,7 +8,7 @@ import { ISARET_IMAGE_ATTRIBUTION } from "@/data/isaretImageMap";
 import type { IsaretKategori, TrafikIsareti } from "@/types";
 
 export default function IsaretlerScreen() {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
   const [aktif, setAktif] = useState<IsaretKategori | "hepsi">("hepsi");
   const [arama, setArama] = useState("");
 
@@ -44,7 +44,7 @@ export default function IsaretlerScreen() {
           style={{
             color: secili ? "#fff" : colors.text,
             fontSize: fontSize.sm,
-            fontWeight: fontWeight.semibold,
+            fontFamily: fontFamily.semibold,
           }}
         >
           {ad}
@@ -69,7 +69,7 @@ export default function IsaretlerScreen() {
           <IsaretGorseli isaretId={isaret.id} kategori={isaret.kategori} boyut={44} />
         </View>
         <View style={{ flex: 1, gap: 2 }}>
-          <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
+          <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.semibold }}>
             {isaret.ad}
           </Text>
           <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>

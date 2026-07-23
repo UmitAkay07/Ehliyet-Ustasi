@@ -12,7 +12,7 @@ interface BadgeProps {
 }
 
 export function Badge({ label, color, bg, icon }: BadgeProps) {
-  const { colors, radius, fontSize, fontWeight, spacing } = useTheme();
+  const { colors, radius, fontFamily, fontSize, fontWeight, spacing } = useTheme();
   const fg = color ?? colors.primary;
   return (
     <View
@@ -28,7 +28,7 @@ export function Badge({ label, color, bg, icon }: BadgeProps) {
       }}
     >
       {icon && <Ionicons name={icon} size={fontSize.xs + 1} color={fg} />}
-      <Text style={{ color: fg, fontSize: fontSize.xs, fontWeight: fontWeight.semibold }}>
+      <Text style={{ color: fg, fontSize: fontSize.xs, fontFamily: fontFamily.semibold }}>
         {label}
       </Text>
     </View>

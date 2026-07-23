@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { View, Text, Pressable } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { Screen, Card, Button, ProgressBar } from "@/components/ui";
+import { Screen, ScreenHeader, Card, Button, ProgressBar } from "@/components/ui";
 import { useTheme } from "@/theme";
 import * as Speech from "expo-speech";
 import { ManevraAnimasyonu } from "@/animations/ManevraAnimasyonu";
@@ -23,12 +23,12 @@ const SINAV_ADIMLARI: SinavAdimi[] = [
   { 
     tip: "lPark", 
     baslik: "2. L Park", 
-    metin: "Sıradaki istasyonumuz L park alanı. Çizgilere ve dubalara çarpmadan geri geri dik şekilde parkı tamamlayın." 
+    metin: "Sıradaki istasyonumuz L park alanı. Sağ sinyalinizi vererek yanaşın. Çizgilere ve dubalara çarpmadan geri geri dik şekilde parkı tamamlayın." 
   },
   { 
     tip: "paralelPark", 
     baslik: "3. Paralel Park", 
-    metin: "Şimdi paralel park alanına geçiyoruz. Sağ sinyalinizi unutmayın. Dubalar arasına paralel olarak park edin." 
+    metin: "Şimdi paralel park alanına geçiyoruz. Sağ sinyalinizi unutmayın. Dubalar arasına paralel olarak park edin. Parktan çıkarken ise sol sinyalinizi vererek çıkış yapın." 
   },
   { 
     tip: "uDonusu", 
@@ -38,22 +38,22 @@ const SINAV_ADIMLARI: SinavAdimi[] = [
   { 
     tip: "aniFren", 
     baslik: "5. Ani Fren", 
-    metin: "Hızlanın ve komutla beraber ani fren yaparak aracı savurmadan durdurun. Durduğunuzda sağ sinyalinizin açık olduğundan emin olun." 
+    metin: "Hızlanarak sağ sinyalle ani fren alanına girin ve komutla beraber aracı savurmadan durdurun. Kalkış yapıp devam etmek için sol sinyalinizi verin." 
   },
   { 
     tip: "geriManevra", 
     baslik: "6. 25 Metre Geri Gelme", 
-    metin: "Şimdi şeridinizi bozmadan ve direksiyonu fazla kırmadan 25 metre düz bir hatta geri geri gelin." 
+    metin: "Şimdi şeridinizi bozmadan ve sağ sinyaliniz açıkken 25 metre düz bir hatta geri geri gelin. Manevra bittikten sonra sol sinyalinizi vererek kalkışınızı yapın." 
   },
   { 
     tip: "rampaKalkis", 
     baslik: "7. Yokuş Kalkış", 
-    metin: "Son olarak yokuş kalkış alanındayız. Aracı yarım debriyajla ayarlayıp, en fazla 50 santim geri kaçırarak kalkış yapın ve sınavı tamamlayın. Tebrikler." 
+    metin: "Son olarak yokuş kalkış alanındayız. Sağ sinyalinizle yokuşa yanaşıp durun. Kalkarken ise sol sinyalinizi verip, aracı yarım debriyajla en fazla 50 santim geri kaçırarak kalkış yapın ve sınavı tamamlayın." 
   },
 ];
 
 export default function PratikSinavSimulasyonuScreen() {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
   const [oynuyor, setOynuyor] = useState(false);
   const [adimIndex, setAdimIndex] = useState(0);
   const [bitti, setBitti] = useState(false);
@@ -75,7 +75,7 @@ export default function PratikSinavSimulasyonuScreen() {
     const adim = SINAV_ADIMLARI[index];
 
     Speech.speak(adim.metin, {
-      language: "tr-TR",
+      language: "tr", // "tr-TR" bazen Android'de desteklenmiyor olabilir, "tr" daha güvenli
       rate: 0.9,
       pitch: 1.0,
       onDone: () => {
@@ -87,7 +87,8 @@ export default function PratikSinavSimulasyonuScreen() {
       onStopped: () => {
         setOynuyor(false);
       },
-      onError: () => {
+      onError: (e) => {
+        console.warn("Speech Error:", e);
         // Hata olursa yine de devam etsin
         setTimeout(() => adimiOynat(index + 1), 2000);
       }
@@ -130,10 +131,10 @@ export default function PratikSinavSimulasyonuScreen() {
 
   return (
     <Screen scroll>
-      <Stack.Screen options={{ title: "Sınav Simülasyonu" }} />
+      <ScreenHeader title="Sınav Simülasyonu" subtitle="Pratik Yap" />
       
       <View style={{ marginBottom: spacing.lg }}>
-        <Text style={{ color: colors.text, fontSize: fontSize.xl, fontWeight: fontWeight.extrabold }}>
+        <Text style={{ color: colors.text, fontSize: fontSize.xl, fontFamily: fontFamily.extrabold }}>
           Pratik Sınav Simülasyonu
         </Text>
         <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, marginTop: spacing.xs }}>
@@ -145,11 +146,11 @@ export default function PratikSinavSimulasyonuScreen() {
         
         <View style={{ marginBottom: spacing.md }}>
           <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 6 }}>
-            <Text style={{ color: colors.primary, fontSize: fontSize.xs, fontWeight: fontWeight.bold }}>
+            <Text style={{ color: colors.primary, fontSize: fontSize.xs, fontFamily: fontFamily.bold }}>
               Manevra {adimIndex + 1} / {SINAV_ADIMLARI.length}
             </Text>
             {bitti && (
-               <Text style={{ color: colors.success, fontSize: fontSize.xs, fontWeight: fontWeight.bold }}>
+               <Text style={{ color: colors.success, fontSize: fontSize.xs, fontFamily: fontFamily.bold }}>
                  Sınav Tamamlandı
                </Text>
             )}
@@ -157,7 +158,7 @@ export default function PratikSinavSimulasyonuScreen() {
           <ProgressBar progress={bitti ? 1 : ilerlemeOrani} color={colors.primary} height={6} />
         </View>
 
-        <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.extrabold, textAlign: "center", marginBottom: spacing.md }}>
+        <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.extrabold, textAlign: "center", marginBottom: spacing.md }}>
           {aktifAdim.baslik}
         </Text>
 
@@ -198,7 +199,7 @@ export default function PratikSinavSimulasyonuScreen() {
         
         {(!oynuyor && adimIndex > 0) && (
           <Pressable onPress={bastanSifirla} style={{ alignItems: "center", padding: spacing.sm }}>
-            <Text style={{ color: colors.danger, fontSize: fontSize.sm, fontWeight: fontWeight.bold }}>
+            <Text style={{ color: colors.danger, fontSize: fontSize.sm, fontFamily: fontFamily.bold }}>
               Başa Dön
             </Text>
           </Pressable>

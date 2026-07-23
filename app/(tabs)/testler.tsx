@@ -141,44 +141,6 @@ export default function TestlerScreen() {
           </View>
         )}
 
-        {/* Scenario tests */}
-        <Pressable
-          onPress={() => router.push("/senaryo-test")}
-          style={({ pressed }) => ({
-            flexDirection: "row",
-            alignItems: "center",
-            gap: spacing.md,
-            backgroundColor: colors.surface,
-            borderRadius: radius["3xl"],
-            padding: spacing.lg,
-            borderWidth: 1,
-            borderColor: colors.border,
-            opacity: pressed ? 0.9 : 1,
-            transform: [{ scale: pressed ? 0.98 : 1 }],
-          })}
-        >
-          <View
-            style={{
-              width: 48,
-              height: 48,
-              borderRadius: radius.xl,
-              backgroundColor: colors.warningSoft,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Ionicons name="film" size={24} color={colors.warning} />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.extrabold }}>
-              Senaryo Testi
-            </Text>
-            <Text style={{ color: colors.textMuted, fontSize: 12, fontFamily: fontFamily.semibold, marginTop: 2 }}>
-              Animasyonlu trafik senaryolarını çöz
-            </Text>
-          </View>
-          <Ionicons name="chevron-forward" size={20} color={colors.textFaint} />
-        </Pressable>
 
         {/* Category quizzes */}
         <View>

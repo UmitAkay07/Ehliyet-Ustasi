@@ -1,13 +1,22 @@
 import React, { useState } from "react";
-import { Alert, Pressable, ScrollView, Text, View, Switch, Platform } from "react-native";
+import { Pressable, ScrollView, Text, View, Switch, Platform, Modal } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import { Calendar, LocaleConfig } from "react-native-calendars";
 import { useTheme } from "@/theme";
 import { useAppStore, seriHesapla } from "@/store/useAppStore";
 import { genelIlerleme } from "@/utils/progress";
 import { tarihGoster } from "@/utils/gununSorusu";
+
+LocaleConfig.locales['tr'] = {
+  monthNames: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+  monthNamesShort: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'],
+  dayNames: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+  dayNamesShort: ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'],
+  today: "Bugün"
+};
+LocaleConfig.defaultLocale = 'tr';
 
 export default function ProfilScreen() {
   const { colors, fontSize, fontFamily, spacing, radius, scheme } = useTheme();
@@ -22,6 +31,7 @@ export default function ProfilScreen() {
   const herseyiSifirla = useAppStore((s) => s.herseyiSifirla);
 
   const [tarihSeciciAcik, setTarihSeciciAcik] = useState(false);
+  const [sifirlaModalAcik, setSifirlaModalAcik] = useState(false);
 
   const genel = genelIlerleme(okunanKonular, cozulenSorular);
   const seri = seriHesapla(gunlukAktivite);
@@ -29,29 +39,20 @@ export default function ProfilScreen() {
   const puan = Math.round(genel.cozulenSoru * 1.5 + genel.okunanKonu * 10);
   const seviye = Math.floor(puan / 500) + 1;
 
-  const handleSifirla = () => {
-    Alert.alert(
-      "Verileri Sıfırla",
-      "Tüm ilerlemen, çözdüğün testler ve istatistiklerin silinecek. Emin misin?",
-      [
-        { text: "Vazgeç", style: "cancel" },
-        {
-          text: "Sıfırla",
-          style: "destructive",
-          onPress: () => {
-            herseyiSifirla();
-            router.replace("/");
-          },
-        },
-      ]
-    );
+  const handleSifirlaClick = () => {
+    setSifirlaModalAcik(true);
   };
 
-  const setTarih = (event: any, selectedDate?: Date) => {
-    setTarihSeciciAcik(Platform.OS === "ios");
-    if (selectedDate) {
-      setSinavTarihi(selectedDate.toISOString());
-    }
+  const gercektenSifirla = () => {
+    setSifirlaModalAcik(false);
+    herseyiSifirla();
+    router.replace("/");
+  };
+
+  const setTarih = (day: any) => {
+    // day.timestamp returns the UTC timestamp, we can just use day.dateString (YYYY-MM-DD)
+    setSinavTarihi(new Date(day.dateString).toISOString());
+    setTarihSeciciAcik(false);
   };
 
   const toggleTema = () => {
@@ -224,7 +225,7 @@ export default function ProfilScreen() {
             <Ionicons name="chevron-forward" size={20} color={colors.textFaint} />
           </Pressable>
           <Pressable
-            onPress={handleSifirla}
+            onPress={handleSifirlaClick}
             style={({ pressed }) => ({
               flexDirection: "row",
               alignItems: "center",
@@ -243,15 +244,120 @@ export default function ProfilScreen() {
           </Pressable>
         </View>
 
-        {tarihSeciciAcik && (
-          <DateTimePicker
-            value={settings.sinavTarihi ? new Date(settings.sinavTarihi) : new Date()}
-            mode="date"
-            display="default"
-            onChange={setTarih}
-            minimumDate={new Date()}
-          />
-        )}
+        <Modal
+          visible={tarihSeciciAcik}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={() => setTarihSeciciAcik(false)}
+        >
+          <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.6)", justifyContent: "center", alignItems: "center", padding: spacing.xl }}>
+            <View style={{ backgroundColor: colors.surface, borderRadius: radius["3xl"], padding: spacing.lg, width: "100%", overflow: "hidden" }}>
+              <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.extrabold, textAlign: "center", marginBottom: spacing.md }}>
+                Sınav Tarihini Seç
+              </Text>
+              <Calendar
+                current={settings.sinavTarihi ? settings.sinavTarihi.split("T")[0] : new Date().toISOString().split("T")[0]}
+                minDate={new Date().toISOString().split("T")[0]}
+                onDayPress={setTarih}
+                theme={{
+                  calendarBackground: colors.surface,
+                  textSectionTitleColor: colors.textMuted,
+                  selectedDayBackgroundColor: colors.primary,
+                  selectedDayTextColor: '#ffffff',
+                  todayTextColor: colors.primary,
+                  dayTextColor: colors.text,
+                  textDisabledColor: colors.textFaint,
+                  arrowColor: colors.primary,
+                  monthTextColor: colors.text,
+                  textDayFontFamily: fontFamily.bold,
+                  textMonthFontFamily: fontFamily.extrabold,
+                  textDayHeaderFontFamily: fontFamily.semibold,
+                  textDayFontSize: 15,
+                  textMonthFontSize: 18,
+                  textDayHeaderFontSize: 13,
+                  "stylesheet.calendar.header": {
+                     header: {
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        paddingLeft: 10,
+                        paddingRight: 10,
+                        marginTop: 6,
+                        alignItems: 'center'
+                     }
+                  }
+                }}
+              />
+              <Pressable
+                onPress={() => setTarihSeciciAcik(false)}
+                style={({ pressed }) => ({
+                  backgroundColor: colors.surfaceAlt,
+                  paddingVertical: spacing.md,
+                  borderRadius: radius.pill,
+                  alignItems: "center",
+                  marginTop: spacing.lg,
+                  opacity: pressed ? 0.8 : 1,
+                })}
+              >
+                <Text style={{ color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
+                  İptal
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal
+          visible={sifirlaModalAcik}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={() => setSifirlaModalAcik(false)}
+        >
+          <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.6)", justifyContent: "center", alignItems: "center", padding: spacing.xl }}>
+            <View style={{ backgroundColor: colors.surface, borderRadius: radius["3xl"], padding: spacing.xl, width: "100%", alignItems: "center" }}>
+              <View style={{ width: 64, height: 64, borderRadius: radius.full, backgroundColor: colors.dangerSoft, alignItems: "center", justifyContent: "center", marginBottom: spacing.lg }}>
+                <Ionicons name="warning" size={32} color={colors.danger} />
+              </View>
+              <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.extrabold, textAlign: "center", marginBottom: spacing.sm }}>
+                Verileri Sıfırlamak İstediğine Emin Misin?
+              </Text>
+              <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold, textAlign: "center", marginBottom: spacing.xl }}>
+                Bu işlem tüm ilerlemeni, puanlarını ve serini kalıcı olarak silecek. Bu işlem geri alınamaz.
+              </Text>
+              <View style={{ flexDirection: "row", gap: spacing.md, width: "100%" }}>
+                <Pressable
+                  onPress={() => setSifirlaModalAcik(false)}
+                  style={({ pressed }) => ({
+                    flex: 1,
+                    backgroundColor: colors.surfaceAlt,
+                    paddingVertical: spacing.md,
+                    borderRadius: radius.pill,
+                    alignItems: "center",
+                    opacity: pressed ? 0.8 : 1,
+                  })}
+                >
+                  <Text style={{ color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
+                    Vazgeç
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={gercektenSifirla}
+                  style={({ pressed }) => ({
+                    flex: 1,
+                    backgroundColor: colors.danger,
+                    paddingVertical: spacing.md,
+                    borderRadius: radius.pill,
+                    alignItems: "center",
+                    opacity: pressed ? 0.8 : 1,
+                  })}
+                >
+                  <Text style={{ color: "#FFF", fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
+                    Evet, Sıfırla
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
     </SafeAreaView>
   );

@@ -9,7 +9,7 @@ import type { IconName } from "@/types";
 type Sekme = "siniflar" | "hiz" | "plaka";
 
 export default function BilgiBankasiScreen() {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
   const [sekme, setSekme] = useState<Sekme>("siniflar");
   const [plakaArama, setPlakaArama] = useState("");
 
@@ -54,7 +54,7 @@ export default function BilgiBankasiScreen() {
                 style={{
                   color: aktif ? colors.primary : colors.textMuted,
                   fontSize: fontSize.xs,
-                  fontWeight: fontWeight.semibold,
+                  fontFamily: fontFamily.semibold,
                 }}
               >
                 {s.ad}
@@ -84,12 +84,12 @@ export default function BilgiBankasiScreen() {
                     justifyContent: "center",
                   }}
                 >
-                  <Text style={{ color: colors.primary, fontWeight: fontWeight.extrabold, fontSize: fontSize.lg }}>
+                  <Text style={{ color: colors.primary, fontFamily: fontFamily.extrabold, fontSize: fontSize.lg }}>
                     {s.kod}
                   </Text>
                 </View>
                 <View style={{ flex: 1, gap: 4 }}>
-                  <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.bold }}>
+                  <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.bold }}>
                     {s.ad}
                   </Text>
                   <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>{s.aciklama}</Text>
@@ -124,7 +124,7 @@ export default function BilgiBankasiScreen() {
                     borderTopColor: colors.border,
                   }}
                 >
-                  <Text style={{ flex: 1.4, color: colors.text, fontSize: fontSize.xs, fontWeight: fontWeight.semibold }}>
+                  <Text style={{ flex: 1.4, color: colors.text, fontSize: fontSize.xs, fontFamily: fontFamily.semibold }}>
                     {h.arac}
                   </Text>
                   <Text style={{ flex: 1, color: colors.textMuted, fontSize: fontSize.xs, textAlign: "center" }}>
@@ -179,9 +179,9 @@ export default function BilgiBankasiScreen() {
                       alignItems: "center",
                     }}
                   >
-                    <Text style={{ color: colors.text, fontWeight: fontWeight.extrabold }}>{p.kod}</Text>
+                    <Text style={{ color: colors.text, fontFamily: fontFamily.extrabold }}>{p.kod}</Text>
                   </View>
-                  <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.semibold, flex: 1 }}>
+                  <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.semibold, flex: 1 }}>
                     {p.il}
                   </Text>
                 </View>
@@ -195,17 +195,17 @@ export default function BilgiBankasiScreen() {
 }
 
 function HizBaslik() {
-  const { colors, fontSize, fontWeight } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily } = useTheme();
   const stil = {
     flex: 1,
     color: colors.textFaint,
     fontSize: fontSize.xs,
-    fontWeight: fontWeight.semibold,
+    fontFamily: fontFamily.semibold,
     textAlign: "center" as const,
   };
   return (
     <View style={{ flexDirection: "row", paddingBottom: 4 }}>
-      <Text style={{ flex: 1.4, color: colors.textFaint, fontSize: fontSize.xs, fontWeight: fontWeight.semibold }}>
+      <Text style={{ flex: 1.4, color: colors.textFaint, fontSize: fontSize.xs, fontFamily: fontFamily.semibold }}>
         Araç
       </Text>
       <Text style={stil}>Yerleşim</Text>

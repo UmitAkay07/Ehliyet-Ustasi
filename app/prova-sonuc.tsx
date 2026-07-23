@@ -10,7 +10,7 @@ import { DERSLER } from "@/data/dersler";
 import type { DersId } from "@/types";
 
 export default function ProvaSonucScreen() {
-  const { colors, fontSize, fontWeight, spacing } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing } = useTheme();
   const router = useRouter();
   const detay = provaDetayAl();
 
@@ -76,7 +76,7 @@ export default function ProvaSonucScreen() {
             style={{
               color: detay.gecti ? colors.success : colors.danger,
               fontSize: fontSize.lg,
-              fontWeight: fontWeight.bold,
+              fontFamily: fontFamily.bold,
             }}
           >
             {detay.gecti ? "Tebrikler, geçtin!" : "Baraj altında kaldın"}
@@ -84,19 +84,19 @@ export default function ProvaSonucScreen() {
         </View>
         <View style={{ flexDirection: "row", gap: spacing.xl }}>
           <View style={{ alignItems: "center" }}>
-            <Text style={{ color: colors.success, fontSize: fontSize.xl, fontWeight: fontWeight.extrabold }}>
+            <Text style={{ color: colors.success, fontSize: fontSize.xl, fontFamily: fontFamily.extrabold }}>
               {detay.dogru}
             </Text>
             <Text style={{ color: colors.textMuted, fontSize: fontSize.xs }}>Doğru</Text>
           </View>
           <View style={{ alignItems: "center" }}>
-            <Text style={{ color: colors.danger, fontSize: fontSize.xl, fontWeight: fontWeight.extrabold }}>
+            <Text style={{ color: colors.danger, fontSize: fontSize.xl, fontFamily: fontFamily.extrabold }}>
               {detay.yanlis}
             </Text>
             <Text style={{ color: colors.textMuted, fontSize: fontSize.xs }}>Yanlış</Text>
           </View>
           <View style={{ alignItems: "center" }}>
-            <Text style={{ color: colors.textFaint, fontSize: fontSize.xl, fontWeight: fontWeight.extrabold }}>
+            <Text style={{ color: colors.textFaint, fontSize: fontSize.xl, fontFamily: fontFamily.extrabold }}>
               {detay.bos}
             </Text>
             <Text style={{ color: colors.textMuted, fontSize: fontSize.xs }}>Boş</Text>
@@ -105,7 +105,7 @@ export default function ProvaSonucScreen() {
       </Card>
 
       <Card>
-        <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.bold, marginBottom: spacing.md }}>
+        <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.bold, marginBottom: spacing.md }}>
           Derslere Göre
         </Text>
         <View style={{ gap: spacing.md }}>
@@ -113,7 +113,7 @@ export default function ProvaSonucScreen() {
             <View key={ders.id} style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
               <Ionicons name={ders.ikon} size={18} color={ders.renk} />
               <Text style={{ color: colors.text, fontSize: fontSize.sm, flex: 1 }}>{ders.kisaAd}</Text>
-              <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontWeight: fontWeight.semibold }}>
+              <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
                 {dogru}/{toplam} doğru
               </Text>
             </View>
@@ -129,7 +129,7 @@ export default function ProvaSonucScreen() {
       />
       <Button label="Ana Sayfaya Dön" icon="home" onPress={() => router.replace("/(tabs)")} />
 
-      <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.bold, marginTop: spacing.md }}>
+      <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.bold, marginTop: spacing.md }}>
         Soru İncelemesi
       </Text>
       <View style={{ gap: spacing.xxl }}>

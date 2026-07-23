@@ -120,46 +120,57 @@ export default function HomeScreen() {
       </View>
 
       {/* Exam Countdown */}
-      {sinavTarihi && kalanGun != null ? (
-        <Pressable
-          onPress={() => router.push("/(tabs)/profil")}
-          style={({ pressed }) => ({
-            flexDirection: "row",
+      <Pressable
+        onPress={() => router.push("/(tabs)/profil")}
+        style={({ pressed }) => ({
+          flexDirection: "row",
+          alignItems: "center",
+          gap: spacing.lg,
+          backgroundColor: colors.primary,
+          borderRadius: radius["3xl"],
+          padding: spacing.xl,
+          opacity: pressed ? 0.9 : 1,
+          shadowColor: colors.primary,
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.3,
+          shadowRadius: 16,
+          elevation: 8,
+        })}
+      >
+        <View
+          style={{
+            width: 56,
+            height: 56,
+            borderRadius: radius.xl,
+            backgroundColor: "rgba(255,255,255,0.2)",
             alignItems: "center",
-            gap: spacing.lg,
-            backgroundColor: colors.primary,
-            borderRadius: radius["3xl"],
-            padding: spacing.xl,
-            opacity: pressed ? 0.9 : 1,
-            shadowColor: colors.primary,
-            shadowOffset: { width: 0, height: 8 },
-            shadowOpacity: 0.3,
-            shadowRadius: 16,
-            elevation: 8,
-          })}
+            justifyContent: "center",
+          }}
         >
-          <View
-            style={{
-              width: 56,
-              height: 56,
-              borderRadius: radius.xl,
-              backgroundColor: "rgba(255,255,255,0.2)",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Ionicons name="calendar" size={28} color="#FFFFFF" />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: "#FFFFFF", fontSize: fontSize.xl, fontFamily: fontFamily.extrabold }}>
-              {kalanGun > 0 ? `Sınava ${kalanGun} Gün Kaldı!` : kalanGun === 0 ? "Sınav bugün!" : "Sınav geçti"}
-            </Text>
-            <Text style={{ color: "rgba(255,255,255,0.85)", fontSize: fontSize.sm, fontFamily: fontFamily.semibold, marginTop: 2 }}>
-              Hedefine çok yaklaştın, devam et!
-            </Text>
-          </View>
-        </Pressable>
-      ) : null}
+          <Ionicons name="calendar" size={28} color="#FFFFFF" />
+        </View>
+        <View style={{ flex: 1 }}>
+          {sinavTarihi && kalanGun != null ? (
+            <>
+              <Text style={{ color: "#FFFFFF", fontSize: fontSize.xl, fontFamily: fontFamily.extrabold }}>
+                {kalanGun > 0 ? `Sınava ${kalanGun} Gün Kaldı!` : kalanGun === 0 ? "Sınav bugün!" : "Sınav geçti"}
+              </Text>
+              <Text style={{ color: "rgba(255,255,255,0.85)", fontSize: fontSize.sm, fontFamily: fontFamily.semibold, marginTop: 2 }}>
+                Hedefine çok yaklaştın, devam et!
+              </Text>
+            </>
+          ) : (
+            <>
+              <Text style={{ color: "#FFFFFF", fontSize: fontSize.xl, fontFamily: fontFamily.extrabold }}>
+                Sınav Tarihi Belirle
+              </Text>
+              <Text style={{ color: "rgba(255,255,255,0.85)", fontSize: fontSize.sm, fontFamily: fontFamily.semibold, marginTop: 2 }}>
+                Geri sayımı başlatmak için dokun
+              </Text>
+            </>
+          )}
+        </View>
+      </Pressable>
 
       {/* Question of the Day */}
       <Pressable

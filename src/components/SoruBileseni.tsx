@@ -5,7 +5,7 @@ import { useTheme } from "@/theme";
 import type { Soru } from "@/types";
 import { TRAFIK_ISARETLERI } from "@/data/isaretler";
 import { IsaretGorseli } from "@/components/IsaretGorseli";
-import { SenaryoAnimasyonu } from "@/animations/SenaryoAnimasyonu";
+
 
 interface SoruBileseniProps {
   soru: Soru;
@@ -28,7 +28,7 @@ export function SoruBileseni({
   siraNo,
   toplam,
 }: SoruBileseniProps) {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
   const gorselIsaret = soru.gorselIsaretId
     ? TRAFIK_ISARETLERI.find((i) => i.id === soru.gorselIsaretId)
     : undefined;
@@ -36,7 +36,7 @@ export function SoruBileseni({
   return (
     <View style={{ gap: spacing.lg }}>
       {siraNo != null && toplam != null && (
-        <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontWeight: fontWeight.semibold }}>
+        <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
           Soru {siraNo} / {toplam}
         </Text>
       )}
@@ -66,8 +66,8 @@ export function SoruBileseni({
             <Text style={{ color: colors.textFaint, fontSize: fontSize.xs }}>Trafik işareti</Text>
           </View>
         )}
-        {soru.senaryoAnimId ? <SenaryoAnimasyonu tip={soru.senaryoAnimId} /> : null}
-        <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.semibold, lineHeight: 26 }}>
+
+        <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.semibold, lineHeight: 26 }}>
           {soru.metin}
         </Text>
       </View>
@@ -127,7 +127,7 @@ export function SoruBileseni({
                 <Text
                   style={{
                     color: secili ? colors.onPrimary : colors.textMuted,
-                    fontWeight: fontWeight.bold,
+                    fontFamily: fontFamily.bold,
                     fontSize: fontSize.sm,
                   }}
                 >
@@ -157,7 +157,7 @@ export function SoruBileseni({
         >
           <Ionicons name="bulb" size={20} color={colors.info} style={{ marginTop: 2 }} />
           <View style={{ flex: 1 }}>
-            <Text style={{ color: colors.text, fontWeight: fontWeight.bold, marginBottom: 4 }}>
+            <Text style={{ color: colors.text, fontFamily: fontFamily.bold, marginBottom: 4 }}>
               Açıklama
             </Text>
             <Text style={{ color: colors.text, fontSize: fontSize.sm, lineHeight: 21 }}>

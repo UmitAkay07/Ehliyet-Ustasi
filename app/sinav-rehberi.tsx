@@ -28,7 +28,7 @@ const SINAV_GUNU_IPUCLARI = [
 ];
 
 export default function SinavRehberiScreen() {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
   const [sekme, setSekme] = useState<"esinav" | "direksiyon" | "ipuclari">("esinav");
 
@@ -78,7 +78,7 @@ export default function SinavRehberiScreen() {
                 style={{
                   color: aktif ? colors.primary : colors.textMuted,
                   fontSize: fontSize.xs,
-                  fontWeight: fontWeight.semibold,
+                  fontFamily: fontFamily.semibold,
                 }}
               >
                 {s.ad}
@@ -103,7 +103,7 @@ export default function SinavRehberiScreen() {
                   justifyContent: "center",
                 }}
               >
-                <Text style={{ color: colors.primary, fontWeight: fontWeight.bold, fontSize: fontSize.xs }}>
+                <Text style={{ color: colors.primary, fontFamily: fontFamily.bold, fontSize: fontSize.xs }}>
                   {i + 1}
                 </Text>
               </View>
@@ -117,7 +117,7 @@ export default function SinavRehberiScreen() {
         <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
           <Ionicons name="ribbon" size={22} color={colors.primary} />
           <View style={{ flex: 1 }}>
-            <Text style={{ color: colors.text, fontWeight: fontWeight.semibold }}>Sınav provası yap</Text>
+            <Text style={{ color: colors.text, fontFamily: fontFamily.semibold }}>Sınav provası yap</Text>
             <Text style={{ color: colors.textMuted, fontSize: fontSize.xs }}>50 soru · 45 dk simülasyonu</Text>
           </View>
           <Ionicons name="chevron-forward" size={20} color={colors.textFaint} />

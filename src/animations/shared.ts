@@ -1,12 +1,16 @@
 import { Easing } from "react-native-reanimated";
 
-export const CAR_W = 24;
-export const CAR_H = 42;
+export const CAR_W = 28;
+export const CAR_H = 50;
+
+export type SignalType = "left" | "right" | "hazard" | "none";
 
 export interface AnimKeyFrame {
   x: number;
   y: number;
   a: number;
+  signal?: SignalType;
+  narration?: string;
 }
 
 export interface AnimTanim {
@@ -36,5 +40,7 @@ export function interpolateKeyframes(
     x: a.x + (b.x - a.x) * frac,
     y: a.y + (b.y - a.y) * frac,
     a: a.a + (b.a - a.a) * frac,
+    signal: a.signal,
+    narration: a.narration,
   };
 }

@@ -117,7 +117,7 @@ export default function DireksiyonScreen() {
                       {manevra.baslik}
                     </Text>
                     <Text style={{ color: colors.textMuted, fontSize: 12, fontFamily: fontFamily.semibold, marginTop: 2 }}>
-                      {manevra.aciklama}
+                      {manevra.ozet}
                     </Text>
                   </View>
                   <View

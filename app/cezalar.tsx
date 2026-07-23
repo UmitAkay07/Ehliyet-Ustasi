@@ -6,7 +6,7 @@ import { CEZA_KATEGORILERI, TRAFIK_CEZALARI } from "@/data/cezalar";
 import type { TrafikCezasi } from "@/data/cezalar";
 
 export default function CezalarScreen() {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
   const [arama, setArama] = useState("");
   const [kategori, setKategori] = useState<string | "hepsi">("hepsi");
 
@@ -89,7 +89,7 @@ function KategoriChip({
   renk: string;
   onPress: () => void;
 }) {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
   return (
     <Pressable
       onPress={onPress}
@@ -102,7 +102,7 @@ function KategoriChip({
         borderColor: aktif ? renk : colors.border,
       }}
     >
-      <Text style={{ color: aktif ? renk : colors.textMuted, fontSize: fontSize.xs, fontWeight: fontWeight.semibold }}>
+      <Text style={{ color: aktif ? renk : colors.textMuted, fontSize: fontSize.xs, fontFamily: fontFamily.semibold }}>
         {label}
       </Text>
     </Pressable>
@@ -110,7 +110,7 @@ function KategoriChip({
 }
 
 function CezaKart({ ceza }: { ceza: TrafikCezasi }) {
-  const { colors, fontSize, fontWeight, spacing } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing } = useTheme();
   const kat = CEZA_KATEGORILERI.find((k) => k.id === ceza.kategori);
   return (
     <Card>
@@ -119,9 +119,9 @@ function CezaKart({ ceza }: { ceza: TrafikCezasi }) {
           <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: kat?.renk ?? colors.primary }} />
           <Text style={{ color: colors.textFaint, fontSize: fontSize.xs }}>{kat?.ad}</Text>
         </View>
-        <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.bold }}>{ceza.ihlal}</Text>
+        <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.bold }}>{ceza.ihlal}</Text>
         <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>{ceza.aciklama}</Text>
-        <Text style={{ color: colors.text, fontSize: fontSize.sm, fontWeight: fontWeight.semibold }}>
+        <Text style={{ color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
           Tipik sonuç: {ceza.tipikSonuc}
         </Text>
         {ceza.cezaPuani ? (

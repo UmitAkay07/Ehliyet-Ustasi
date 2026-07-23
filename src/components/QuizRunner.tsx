@@ -14,7 +14,7 @@ interface QuizRunnerProps {
 }
 
 export function QuizRunner({ sorular, baslik, altBaslik }: QuizRunnerProps) {
-  const { colors, fontSize, fontWeight, spacing } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
   const soruCevapla = useAppStore((s) => s.soruCevapla);
 
@@ -28,11 +28,32 @@ export function QuizRunner({ sorular, baslik, altBaslik }: QuizRunnerProps) {
     return (
       <Screen>
         <ScreenHeader title={baslik} />
-        <Card>
-          <Text style={{ color: colors.textMuted, fontSize: fontSize.md }}>
-            Bu bölüm için henüz soru bulunmuyor.
-          </Text>
-        </Card>
+        <View style={{ flex: 1, justifyContent: "center", paddingBottom: spacing.xxxl }}>
+          <Card style={{ alignItems: "center", gap: spacing.md, paddingVertical: spacing.xxxl, marginHorizontal: spacing.lg, borderRadius: radius["3xl"], borderWidth: 1, borderColor: colors.border, shadowColor: colors.primary, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.1, shadowRadius: 20, elevation: 5 }}>
+            <View
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: radius.full,
+                backgroundColor: colors.infoSoft,
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: spacing.sm,
+              }}
+            >
+              <Text style={{ fontSize: 40 }}>🤔</Text>
+            </View>
+            <Text style={{ color: colors.text, fontSize: fontSize.xl, fontFamily: fontFamily.extrabold, textAlign: "center" }}>
+              Soru Bulunamadı
+            </Text>
+            <Text style={{ color: colors.textMuted, fontSize: fontSize.md, fontFamily: fontFamily.semibold, textAlign: "center", paddingHorizontal: spacing.md, lineHeight: 22 }}>
+              Bu bölüm için henüz soru eklenmemiş. Lütfen daha sonra tekrar kontrol et.
+            </Text>
+            <View style={{ width: "100%", paddingHorizontal: spacing.lg, marginTop: spacing.lg }}>
+              <Button label="Geri Dön" variant="secondary" icon="arrow-back" onPress={() => router.back()} />
+            </View>
+          </Card>
+        </View>
       </Screen>
     );
   }
@@ -74,7 +95,7 @@ export function QuizRunner({ sorular, baslik, altBaslik }: QuizRunnerProps) {
             sublabel="doğru"
             color={oran >= 0.7 ? colors.success : oran >= 0.5 ? colors.warning : colors.danger}
           />
-          <Text style={{ color: colors.text, fontSize: fontSize.xl, fontWeight: fontWeight.bold, textAlign: "center" }}>
+          <Text style={{ color: colors.text, fontSize: fontSize.xl, fontFamily: fontFamily.extrabold, textAlign: "center" }}>
             {oran >= 0.7 ? "Tebrikler, çok iyi!" : oran >= 0.5 ? "Fena değil, tekrar dene!" : "Konuyu tekrar oku."}
           </Text>
           <Text style={{ color: colors.textMuted, fontSize: fontSize.sm }}>
@@ -114,7 +135,7 @@ export function QuizRunner({ sorular, baslik, altBaslik }: QuizRunnerProps) {
           <Text style={{ color: colors.textMuted, fontSize: fontSize.xs }}>
             İlerleme: {index + 1}/{sorular.length}
           </Text>
-          <Text style={{ color: colors.success, fontSize: fontSize.xs, fontWeight: fontWeight.semibold }}>
+          <Text style={{ color: colors.success, fontSize: fontSize.xs, fontFamily: fontFamily.bold }}>
             {dogruSayisi} doğru
           </Text>
         </View>

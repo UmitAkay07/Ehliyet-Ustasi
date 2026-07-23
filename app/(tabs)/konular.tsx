@@ -11,7 +11,7 @@ import { konularByDers } from "@/data/konular";
 export default function KonularScreen() {
   const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
-  const [openId, setOpenId] = useState<string | null>("trafik");
+  const [openId, setOpenId] = useState<string | null>(null);
 
   const okunanKonular = useAppStore((s) => s.okunanKonular);
 

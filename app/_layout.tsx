@@ -86,7 +86,6 @@ function RootNavigator() {
         <Stack.Screen name="cezalar" />
         <Stack.Screen name="bilgi-bankasi" />
         <Stack.Screen name="sinav-rehberi" />
-        <Stack.Screen name="senaryo-test" />
       </Stack>
     </>
   );

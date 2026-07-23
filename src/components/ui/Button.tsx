@@ -39,7 +39,7 @@ export function Button({
   fullWidth = true,
   style,
 }: ButtonProps) {
-  const { colors, radius, fontSize, fontWeight, spacing } = useTheme();
+  const { colors, radius, fontFamily, fontSize, fontWeight, spacing } = useTheme();
 
   const heights: Record<Size, number> = { sm: 40, md: 50, lg: 58 };
   const fonts: Record<Size, number> = {
@@ -93,7 +93,7 @@ export function Button({
             style={{
               color: fg[variant],
               fontSize: fonts[size],
-              fontWeight: fontWeight.semibold,
+              fontFamily: fontFamily.semibold,
             }}
           >
             {label}

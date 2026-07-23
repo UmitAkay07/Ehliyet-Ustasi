@@ -19,7 +19,7 @@ export function ScreenHeader({
   right,
   showBack = true,
 }: ScreenHeaderProps) {
-  const { colors, fontSize, fontWeight, radius, spacing } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, radius, spacing } = useTheme();
   const router = useRouter();
 
   const handleBack = () => {
@@ -57,7 +57,7 @@ export function ScreenHeader({
       <View style={{ flex: 1 }}>
         <Text
           numberOfLines={1}
-          style={{ color: colors.text, fontSize: fontSize.xl, fontWeight: fontWeight.extrabold }}
+          style={{ color: colors.text, fontSize: fontSize.xl, fontFamily: fontFamily.extrabold }}
         >
           {title}
         </Text>

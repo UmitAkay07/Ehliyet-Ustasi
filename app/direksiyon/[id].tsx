@@ -16,7 +16,7 @@ const hataRenkleri = {
 };
 
 export default function DireksiyonDetayScreen() {
-  const { colors, fontSize, fontWeight, spacing, radius } = useTheme();
+  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
   const ders = direksiyonBul(id);
 
@@ -44,7 +44,7 @@ export default function DireksiyonDetayScreen() {
       <Text style={{ color: colors.textMuted, fontSize: fontSize.md, lineHeight: 22 }}>{ders.ozet}</Text>
 
       {/* Adımlar */}
-      <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.bold }}>
+      <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.bold }}>
         Adım Adım Uygulama
       </Text>
       <View style={{ gap: spacing.md }}>
@@ -60,10 +60,10 @@ export default function DireksiyonDetayScreen() {
                 justifyContent: "center",
               }}
             >
-              <Text style={{ color: colors.onPrimary, fontWeight: fontWeight.bold }}>{i + 1}</Text>
+              <Text style={{ color: colors.onPrimary, fontFamily: fontFamily.bold }}>{i + 1}</Text>
             </View>
             <View style={{ flex: 1, gap: 2 }}>
-              <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.semibold }}>
+              <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.semibold }}>
                 {adim.baslik}
               </Text>
               <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 21 }}>
@@ -78,7 +78,7 @@ export default function DireksiyonDetayScreen() {
       <Card style={{ backgroundColor: colors.successSoft, borderColor: colors.success + "44" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm, marginBottom: spacing.md }}>
           <Ionicons name="bulb" size={20} color={colors.success} />
-          <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.bold }}>
+          <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.bold }}>
             İpuçları
           </Text>
         </View>
@@ -95,7 +95,7 @@ export default function DireksiyonDetayScreen() {
       </Card>
 
       {/* Hata kriterleri */}
-      <Text style={{ color: colors.text, fontSize: fontSize.lg, fontWeight: fontWeight.bold }}>
+      <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.bold }}>
         Sınavda Dikkat Edilecek Hatalar
       </Text>
       <View style={{ gap: spacing.md }}>
@@ -107,7 +107,7 @@ export default function DireksiyonDetayScreen() {
             <Card key={seviye} style={{ borderLeftWidth: 4, borderLeftColor: meta.renk }}>
               <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm, marginBottom: spacing.sm }}>
                 <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: meta.renk }} />
-                <Text style={{ color: colors.text, fontSize: fontSize.md, fontWeight: fontWeight.bold }}>
+                <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.bold }}>
                   {meta.ad}
                 </Text>
                 <Text style={{ color: colors.textFaint, fontSize: fontSize.xs }}>· {meta.aciklama}</Text>
