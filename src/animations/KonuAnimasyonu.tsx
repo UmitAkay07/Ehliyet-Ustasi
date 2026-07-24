@@ -9,6 +9,7 @@ import Animated, {
   useSharedValue,
   withRepeat,
   withTiming,
+  type SharedValue,
 } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/theme";
@@ -188,7 +189,7 @@ function YayaGecitAnim() {
   );
 }
 
-function useHighlight(t: Animated.SharedValue<number>, count: number) {
+function useHighlight(t: SharedValue<number>, count: number) {
   const [idx, setIdx] = useState(0);
   useAnimatedReaction(
     () => Math.floor(t.value) % count,

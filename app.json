@@ -57,8 +57,7 @@
           "icon": "./assets/icon-brand.png",
           "color": "#6366F1"
         }
-      ],
-      "expo-video"
+      ]
     ],
     "experiments": {
       "typedRoutes": false
