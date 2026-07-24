@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@/theme";
@@ -11,9 +11,16 @@ import { konularByDers } from "@/data/konular";
 export default function KonularScreen() {
   const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
-  const [openId, setOpenId] = useState<string | null>(null);
+  const params = useLocalSearchParams<{ ders?: string }>();
+  const [openId, setOpenId] = useState<string | null>(params.ders || null);
 
   const okunanKonular = useAppStore((s) => s.okunanKonular);
+  
+  React.useEffect(() => {
+    if (params.ders) {
+      setOpenId(params.ders);
+    }
+  }, [params.ders]);
 
   return (
     <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: colors.background }}>

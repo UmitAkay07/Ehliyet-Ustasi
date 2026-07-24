@@ -59,7 +59,7 @@ export function AppSplashScreen({ onReady }: Props) {
 
         <View style={styles.textBlock}>
           <BrandTitle large />
-          <Text style={styles.tagline}>E-sınav · Direksiyon · 900+ Soru</Text>
+          <Text style={styles.tagline}>E-sınav · Direksiyon · 600+ Soru</Text>
           <View style={styles.badge}>
             <Text style={styles.badgeText}>MEB uyumlu · Çevrimdışı</Text>
           </View>

@@ -9,6 +9,7 @@ import { ThemeProvider, useTheme } from "@/theme";
 import { useAppStore } from "@/store/useAppStore";
 import { useHydration } from "@/store/useHydration";
 import { sinavBildirimleriniKur } from "@/services/notifications";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import {
   useFonts,
   Nunito_400Regular,
@@ -85,7 +86,6 @@ function RootNavigator() {
         <Stack.Screen name="gunun-sorusu" />
         <Stack.Screen name="cezalar" />
         <Stack.Screen name="bilgi-bankasi" />
-        <Stack.Screen name="sinav-rehberi" />
       </Stack>
     </>
   );
@@ -106,11 +106,13 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: "#0F172A" }}>
-      <SafeAreaProvider>
-        <ThemeProvider>
-          <RootNavigator />
-        </ThemeProvider>
-      </SafeAreaProvider>
+      <ErrorBoundary>
+        <SafeAreaProvider>
+          <ThemeProvider>
+            <RootNavigator />
+          </ThemeProvider>
+        </SafeAreaProvider>
+      </ErrorBoundary>
     </GestureHandlerRootView>
   );
 }

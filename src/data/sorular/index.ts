@@ -55,7 +55,7 @@ export function provaSorulariUret(): Soru[] {
     adab: 6,
   };
 
-  const gorselli = (s: Soru) => Boolean(s.gorselIsaretId || s.senaryoAnimId);
+  const gorselli = (s: Soru) => Boolean(s.gorselIsaretId );
   const trafikGorsel = karistir(SORULAR.filter((s) => s.dersId === "trafik" && gorselli(s)));
   const trafikMetin = karistir(SORULAR.filter((s) => s.dersId === "trafik" && !gorselli(s)));
 

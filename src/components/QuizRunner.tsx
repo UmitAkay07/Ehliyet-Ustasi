@@ -34,7 +34,7 @@ export function QuizRunner({ sorular, baslik, altBaslik }: QuizRunnerProps) {
               style={{
                 width: 80,
                 height: 80,
-                borderRadius: radius.full,
+                borderRadius: radius.pill,
                 backgroundColor: colors.infoSoft,
                 alignItems: "center",
                 justifyContent: "center",

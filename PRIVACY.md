@@ -4,7 +4,7 @@ Son güncelleme: Temmuz 2026
 
 ## Özet
 
-Ehliyet Ustası tamamen **çevrimdışı** çalışır. Uygulama hiçbir kişisel veri toplamaz, sunucuya veri göndermez ve internet bağlantısı gerektirmez.
+Ehliyet Ustası tamamen **çevrimdışı** çalışır. Uygulama hiçbir kişisel veri toplamaz ve sunucuya veri göndermez. Sınav hatırlatmaları (bildirimler) dahil tüm işlemler cihazınızda yerel olarak gerçekleşir.
 
 ## Toplanan Veriler
 
@@ -16,8 +16,11 @@ Aşağıdaki bilgiler yalnızca **kendi cihazınızda** (yerel depolama / AsyncS
 
 - Okuduğunuz konular ve çözdüğünüz sorulara ait ilerleme
 - Test ve sınav provası sonuçlarınız
+- Sınav tarihiniz ve bildirim ayarlarınız
 - Hata defteriniz
-- Uygulama ayarlarınız (tema, günlük hedef)
+- Uygulama ayarlarınız (tema)
+
+**Sosyal Paylaşım:** Sınav provası sonucunuzu paylaşmak istediğinizde, oluşturulan ekran görüntüsü tamamen cihazınızda (yerel olarak) üretilir ve doğrudan seçtiğiniz uygulamaya (WhatsApp, Instagram vb.) aktarılır. Görseller hiçbir şekilde sunucularımızda saklanmaz veya işlenmez.
 
 Uygulamayı sildiğinizde veya Profil → “Tüm Verileri Sıfırla” seçeneğini kullandığınızda bu veriler kalıcı olarak silinir.
 
@@ -27,7 +30,7 @@ Uygulama reklam ağı, analiz aracı veya üçüncü taraf takip hizmeti **kulla
 
 ## İzinler
 
-Uygulama kamera, konum, kişiler veya mikrofon gibi hassas izinler istemez.
+Uygulama kamera, konum, kişiler veya mikrofon gibi hassas izinler istemez. Yalnızca **Bildirim İzni** (sınava kaç gün kaldığını size hatırlatabilmek için) ve sonuç ekranını paylaşmak isterseniz cihazınızın standart **Paylaşım İzni** kullanılır.
 
 ## Çocukların Gizliliği
 
@@ -37,7 +40,7 @@ Veri toplanmadığı için uygulama her yaş grubu için gizlilik açısından g
 
 Gizlilik ile ilgili sorularınız için:
 
-- E-posta: **destek@ehliyetustasi.app**
-- (Yayın öncesi bu adresi kendi gerçek destek e-postanızla değiştirin.)
+- E-posta: **[YAYIN ÖNCESİ DEĞİŞTİR: destek e-postanızı buraya yazın]**
+- Gizlilik Politikası URL: **[YAYIN ÖNCESİ DEĞİŞTİR: web sitenizdeki gizlilik politikası linki]**
 
-Bu politika, uygulamanın mağaza sayfasında da yayınlanmalıdır (App Store / Google Play gizlilik URL’si).
+Bu politika metnini uygulamanın mağaza sayfasında (App Store / Google Play gizlilik URL’si) yayınlamayı unutmayın.

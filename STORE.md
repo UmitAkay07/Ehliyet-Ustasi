@@ -60,9 +60,11 @@ Emülatör veya gerçek cihazda şu ekranlardan en az 4–8 görsel alın:
 
 Boyut: Google Play genelde telefon 1080x1920; App Store 6.7" ekran boyutları.
 
-## 6) Gizlilik URL’si
+## 6) Gizlilik URL’si ve Destek
 
 `PRIVACY.md` içeriğini bir web sayfasına (Notion / GitHub Pages / kendi siteniz) koyup mağazada “Privacy Policy URL” alanına yapıştırın.
+
+> [YAYIN ÖNCESİ DEĞİŞTİR: Privacy Policy URL ve Destek E-postası mağaza panelinde mutlaka güncellenmeli.]
 
 ## 7) Yasal uyarı (mağaza açıklamasına ekleyin)
 

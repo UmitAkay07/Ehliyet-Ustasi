@@ -44,7 +44,7 @@ export default function HatalarScreen() {
               style={{
                 width: 80,
                 height: 80,
-                borderRadius: radius.full,
+                borderRadius: radius.pill,
                 backgroundColor: colors.successSoft,
                 alignItems: "center",
                 justifyContent: "center",

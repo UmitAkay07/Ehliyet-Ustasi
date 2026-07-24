@@ -20,7 +20,7 @@ const OZELLIKLER: { ikon: IconName; renk: string; baslik: string; metin: string 
   {
     ikon: "clipboard",
     renk: "#10B981",
-    baslik: "900+ Soru",
+    baslik: "600+ Soru",
     metin: "Konu testleri ve açıklamalı cevaplar.",
   },
   {
@@ -33,7 +33,7 @@ const OZELLIKLER: { ikon: IconName; renk: string; baslik: string; metin: string 
     ikon: "car-sport",
     renk: "#F59E0B",
     baslik: "Direksiyon",
-    metin: "Park, rampa ve manevra videoları.",
+    metin: "Animasyonlu manevra dersleri.",
   },
 ];
 
@@ -192,6 +192,9 @@ export default function OnboardingScreen() {
               </View>
             ))}
           </View>
+          <Text style={{ color: colors.textFaint, fontSize: 10, textAlign: "center", marginTop: spacing.md }}>
+            Bu uygulama resmi bir devlet kurumu (MEB vb.) uygulaması değildir.
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>

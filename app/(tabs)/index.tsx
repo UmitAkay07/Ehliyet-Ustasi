@@ -360,7 +360,7 @@ export default function HomeScreen() {
                       %{Math.round(ilerleme.konuOrani * 100)}
                     </Text>
                   </View>
-                  <ProgressBar progress={ilerleme.konuOrani} color={ders.renk} height={10} style={{ borderRadius: radius.pill }} />
+                  <ProgressBar progress={ilerleme.konuOrani} color={ders.renk} height={10} />
                 </View>
               </Pressable>
             );

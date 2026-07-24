@@ -45,23 +45,23 @@ export default function TabLayout() {
     >
       <Tabs.Screen
         name="index"
-        options={{ title: "Ana Sayfa", ...ikon("home", "home-outline") }}
+        options={{ title: "Ana Sayfa", tabBarAccessibilityLabel: "Ana Sayfa sekmesi", ...ikon("home", "home-outline") }}
       />
       <Tabs.Screen
         name="konular"
-        options={{ title: "Konular", ...ikon("book", "book-outline") }}
+        options={{ title: "Konular", tabBarAccessibilityLabel: "Konular sekmesi", ...ikon("book", "book-outline") }}
       />
       <Tabs.Screen
         name="testler"
-        options={{ title: "Testler", ...ikon("clipboard", "clipboard-outline") }}
+        options={{ title: "Testler", tabBarAccessibilityLabel: "Testler sekmesi", ...ikon("clipboard", "clipboard-outline") }}
       />
       <Tabs.Screen
         name="direksiyon"
-        options={{ title: "Direksiyon", ...ikon("car-sport", "car-sport-outline") }}
+        options={{ title: "Direksiyon", tabBarAccessibilityLabel: "Direksiyon sekmesi", ...ikon("car-sport", "car-sport-outline") }}
       />
       <Tabs.Screen
         name="profil"
-        options={{ title: "Profil", ...ikon("person", "person-outline") }}
+        options={{ title: "Profil", tabBarAccessibilityLabel: "Profil sekmesi", ...ikon("person", "person-outline") }}
       />
     </Tabs>
   );

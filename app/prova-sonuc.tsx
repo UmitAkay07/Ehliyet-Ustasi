@@ -54,7 +54,9 @@ export default function ProvaSonucScreen() {
       <Screen>
         <ScreenHeader title="Sonuç" showBack={false} />
         <Card>
-          <Text style={{ color: colors.textMuted }}>Sonuç bulunamadı.</Text>
+          <Text style={{ color: colors.textMuted }}>
+            Sonuç verisi bellekte bulunamadı. Uygulama yeniden başlatılmış olabilir. Lütfen yeni bir prova başlatın.
+          </Text>
         </Card>
         <Button label="Ana Sayfa" onPress={() => router.replace("/(tabs)")} />
       </Screen>
@@ -71,7 +73,7 @@ export default function ProvaSonucScreen() {
         <View style={{ backgroundColor: colors.background, paddingBottom: spacing.md }}>
           <View style={{ alignItems: "center", marginBottom: spacing.md, paddingVertical: spacing.md, backgroundColor: colors.primary, borderRadius: radius.xl }}>
             <Text style={{ color: "#FFF", fontSize: fontSize.xl, fontFamily: fontFamily.extrabold }}>
-              iboMoto Sınav Provası
+              Ehliyet Ustası Sınav Provası
             </Text>
             <Text style={{ color: "rgba(255,255,255,0.8)", fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
               Sürücü Adayı Ehliyet Sınavı Denemesi

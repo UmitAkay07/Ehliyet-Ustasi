@@ -11,12 +11,12 @@ export interface ProvaDetay {
   sureSaniye: number;
 }
 
-let sonDetay: ProvaDetay | null = null;
+import { useAppStore } from "@/store/useAppStore";
 
 export function provaDetayKaydet(detay: ProvaDetay) {
-  sonDetay = detay;
+  useAppStore.getState().setSonProvaDetayi(detay);
 }
 
 export function provaDetayAl(): ProvaDetay | null {
-  return sonDetay;
+  return useAppStore.getState().sonProvaDetayi;
 }

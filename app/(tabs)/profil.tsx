@@ -56,7 +56,9 @@ export default function ProfilScreen() {
   };
 
   const toggleTema = () => {
-    setThemeMode(settings.themeMode === "dark" ? "light" : "dark");
+    if (settings.themeMode === "auto") setThemeMode("light");
+    else if (settings.themeMode === "light") setThemeMode("dark");
+    else setThemeMode("auto");
   };
 
   return (
@@ -235,17 +237,12 @@ export default function ProfilScreen() {
             })}
           >
             <View style={{ width: 40, height: 40, borderRadius: radius.xl, backgroundColor: colors.infoSoft, alignItems: "center", justifyContent: "center" }}>
-              <Ionicons name="moon" size={20} color={colors.info} />
+              <Ionicons name={settings.themeMode === "auto" ? "color-wand" : settings.themeMode === "dark" ? "moon" : "sunny"} size={20} color={colors.info} />
             </View>
             <Text style={{ flex: 1, color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
-              Tema (Koyu / Açık)
+              Tema ({settings.themeMode === "auto" ? "Sistem" : settings.themeMode === "dark" ? "Koyu" : "Açık"})
             </Text>
-            <Switch
-              value={settings.themeMode === "dark"}
-              onValueChange={toggleTema}
-              trackColor={{ false: colors.border, true: colors.primarySoft }}
-              thumbColor={settings.themeMode === "dark" ? colors.primary : "#f4f3f4"}
-            />
+            <Ionicons name="chevron-forward" size={16} color={colors.textFaint} />
           </Pressable>
           <Pressable
             onPress={() => router.push("/bilgi-bankasi")}
@@ -328,7 +325,7 @@ export default function ProfilScreen() {
                         alignItems: 'center'
                      }
                   }
-                }}
+               } as any}
               />
               <Pressable
                 onPress={() => setTarihSeciciAcik(false)}
@@ -357,7 +354,7 @@ export default function ProfilScreen() {
         >
           <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.6)", justifyContent: "center", alignItems: "center", padding: spacing.xl }}>
             <View style={{ backgroundColor: colors.surface, borderRadius: radius["3xl"], padding: spacing.xl, width: "100%", alignItems: "center" }}>
-              <View style={{ width: 64, height: 64, borderRadius: radius.full, backgroundColor: colors.dangerSoft, alignItems: "center", justifyContent: "center", marginBottom: spacing.lg }}>
+              <View style={{ width: 64, height: 64, borderRadius: radius.pill, backgroundColor: colors.dangerSoft, alignItems: "center", justifyContent: "center", marginBottom: spacing.lg }}>
                 <Ionicons name="warning" size={32} color={colors.danger} />
               </View>
               <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.extrabold, textAlign: "center", marginBottom: spacing.sm }}>

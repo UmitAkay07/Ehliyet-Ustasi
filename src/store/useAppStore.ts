@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import * as Notifications from "expo-notifications";
 import type { DersId, Soru } from "@/types";
 
 export type ThemeMode = "auto" | "light" | "dark";
@@ -45,6 +46,7 @@ interface AppState {
   gunlukAktivite: Record<string, number>; // YYYY-MM-DD -> çözülen soru sayısı
   /** Günün sorusu cevaplandı mı: YYYY-MM-DD -> soruId */
   gununSorusuCevap: Record<string, string>;
+  sonProvaDetayi: any | null;
 
   setThemeMode: (mode: ThemeMode) => void;
   setSinavTarihi: (tarih: string | null) => void;
@@ -54,6 +56,7 @@ interface AppState {
   soruCevapla: (soru: Soru, secilenIndex: number) => boolean;
   hataSil: (soruId: string) => void;
   provaKaydet: (sonuc: Omit<ProvaSonucu, "id" | "tarih">) => void;
+  setSonProvaDetayi: (detay: any | null) => void;
   herseyiSifirla: () => void;
 }
 
@@ -79,6 +82,7 @@ export const useAppStore = create<AppState>()(
       provaGecmisi: [],
       gunlukAktivite: {},
       gununSorusuCevap: {},
+      sonProvaDetayi: null,
 
       setThemeMode: (mode) =>
         set((s) => ({ settings: { ...s.settings, themeMode: mode } })),
@@ -154,7 +158,10 @@ export const useAppStore = create<AppState>()(
           ].slice(0, 50),
         })),
 
-      herseyiSifirla: () =>
+      setSonProvaDetayi: (detay) => set({ sonProvaDetayi: detay }),
+
+      herseyiSifirla: () => {
+        Notifications.cancelAllScheduledNotificationsAsync().catch(() => {});
         set((s) => ({
           okunanKonular: {},
           cozulenSorular: {},
@@ -162,8 +169,10 @@ export const useAppStore = create<AppState>()(
           provaGecmisi: [],
           gunlukAktivite: {},
           gununSorusuCevap: {},
+          sonProvaDetayi: null,
           settings: { ...baslangicSettings, themeMode: s.settings.themeMode },
-        })),
+        }));
+      },
     }),
     {
       name: "ehliyet-ustasi-store-v1",
@@ -176,6 +185,7 @@ export const useAppStore = create<AppState>()(
         provaGecmisi: s.provaGecmisi,
         gunlukAktivite: s.gunlukAktivite,
         gununSorusuCevap: s.gununSorusuCevap,
+        sonProvaDetayi: s.sonProvaDetayi,
       }),
       merge: (persisted, current) => {
         const p = (persisted ?? {}) as Partial<AppState>;

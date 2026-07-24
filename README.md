@@ -10,7 +10,7 @@ MEB 2026 e-sınav müfredatına uygun, tamamen **çevrimdışı** çalışan ehl
 - **Hata Defteri** — Yanlış yapılan sorular otomatik toplanır; konu anlatımına bağlanır ve tekrar çözülebilir.
 - **Direksiyon Dersleri** — Paralel park, L park, rampa kalkışı, ani fren, U dönüşü, sinyal/şerit değiştirme için adım adım anlatım ve 2D kuş bakışı animasyonlar. Kırmızı/sarı/mavi hata kriterleri.
 - **Trafik İşaretleri Kütüphanesi** — Kategorilere ayrılmış işaretler ve anlamları.
-- **İlerleme ve İstatistik** — Günlük hedef, seri (streak), ders bazlı başarı; tüm veriler cihazda (AsyncStorage) saklanır.
+- **İlerleme ve İstatistik** — Seri (streak), ders bazlı başarı; tüm veriler cihazda (AsyncStorage) saklanır.
 - **Açık / Koyu tema** desteği.
 
 ## Teknoloji

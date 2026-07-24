@@ -25,6 +25,8 @@ interface ButtonProps {
   loading?: boolean;
   fullWidth?: boolean;
   style?: StyleProp<ViewStyle>;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 }
 
 export function Button({
@@ -38,6 +40,8 @@ export function Button({
   loading,
   fullWidth = true,
   style,
+  accessibilityLabel,
+  accessibilityHint,
 }: ButtonProps) {
   const { colors, radius, fontFamily, fontSize, fontWeight, spacing } = useTheme();
 
@@ -67,6 +71,10 @@ export function Button({
     <Pressable
       onPress={onPress}
       disabled={disabled || loading}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel || label}
+      accessibilityHint={accessibilityHint}
+      accessibilityState={{ disabled: disabled || loading }}
       style={({ pressed }) => [
         {
           height: heights[size],

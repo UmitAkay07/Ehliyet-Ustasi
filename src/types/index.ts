@@ -48,8 +48,8 @@ export interface Soru {
   zorluk: Zorluk;
   /** Trafik işaretleri kütüphanesindeki işaret id'si (görselli sorular) */
   gorselIsaretId?: string;
-  /** Animasyonlu trafik senaryosu (kuş bakışı SVG) */
-  senaryoAnimId?: SenaryoAnimId;
+
+
 }
 
 export type SenaryoAnimId =

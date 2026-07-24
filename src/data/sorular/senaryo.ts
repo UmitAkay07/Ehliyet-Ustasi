@@ -7,7 +7,7 @@ export const SENARYO_SORULARI: Soru[] = [
     dersId: "trafik",
     konuId: "gecis-ustunlugu",
     metin:
-      "Animasyonda yeşil araç kavşağa yaklaşırken sağdan gelen kırmızı araç da kavşağa giriyor. Yeşil araç ne yapmalıdır?",
+      "Senaryoda yeşil araç kavşağa yaklaşırken sağdan gelen kırmızı araç da kavşağa giriyor. Yeşil araç ne yapmalıdır?",
     secenekler: [
       "Hızlanıp önce geçmeli",
       "Korna çalıp geçmeli",
@@ -18,13 +18,13 @@ export const SENARYO_SORULARI: Soru[] = [
     aciklama:
       "Kavşaklarda geçiş hakkı kuralları ve dikkat esastır. Çarpışma riski varsa yavaşlamak veya durmak gerekir.",
     zorluk: "orta",
-    senaryoAnimId: "kavsakOncelik",
+
   },
   {
     id: "sen-02",
     dersId: "trafik",
     konuId: "sollama",
-    metin: "Animasyonda yeşil araç öndeki aracı sollamaya çalışıyor. Devamlı çizgi / yasak bölgede sollama hakkında doğru olan hangisidir?",
+    metin: "Senaryoda yeşil araç öndeki aracı sollamaya çalışıyor. Devamlı çizgi / yasak bölgede sollama hakkında doğru olan hangisidir?",
     secenekler: [
       "Tehlikeli değilse her yerde sollanabilir",
       "Yasak yerde sollama yapılmaz",
@@ -34,13 +34,13 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Devamlı çizgi, kavşak, köprü, viraj gibi yasak yerlerde sollama yapılmaz.",
     zorluk: "kolay",
-    senaryoAnimId: "sollama",
+
   },
   {
     id: "sen-03",
     dersId: "trafik",
     konuId: "duraklama-park",
-    metin: "Animasyonda yeşil araç turuncu yasak alana (ör. durak / engelli / kavşak yakını) yanaşıyor. Doğru davranış nedir?",
+    metin: "Senaryoda yeşil araç turuncu yasak alana (ör. durak / engelli / kavşak yakını) yanaşıyor. Doğru davranış nedir?",
     secenekler: [
       "Kısa süre park edilebilir",
       "Sadece gece park edilebilir",
@@ -50,13 +50,13 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 2,
     aciklama: "Yasak park alanlarında duraklama veya park kural ihlalidir; ceza ve çekici riski vardır.",
     zorluk: "kolay",
-    senaryoAnimId: "parkYasak",
+
   },
   {
     id: "sen-04",
     dersId: "trafik",
     konuId: "yaya-gecit",
-    metin: "Animasyonda yaya geçidinde yaya geçerken yeşil araç yaklaşıyor. Sürücü ne yapmalıdır?",
+    metin: "Senaryoda yaya geçidinde yaya geçerken yeşil araç yaklaşıyor. Sürücü ne yapmalıdır?",
     secenekler: [
       "Hızlanıp geçitten önce geçmeli",
       "Yayaya yol vermeli / gerekirse durmalı",
@@ -66,13 +66,13 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Yaya geçidinde yayaya öncelik verilir; geçitteki yayaya yol vermek zorunludur.",
     zorluk: "kolay",
-    senaryoAnimId: "yayaGecidi",
+
   },
   {
     id: "sen-05",
     dersId: "trafik",
     konuId: "aydinlatma-sinyal",
-    metin: "Animasyonda yeşil araç şerit değiştirirken diğer araçlara yaklaşıyor. Doğru sıra hangisidir?",
+    metin: "Senaryoda yeşil araç şerit değiştirirken diğer araçlara yaklaşıyor. Doğru sıra hangisidir?",
     secenekler: [
       "Direkt şerit değiştir, sonra sinyal ver",
       "Ayna — sinyal — omuz kontrolü — uygun boşlukta geç",
@@ -82,13 +82,13 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Şerit değişiminde ayna, sinyal, kör nokta (omuz) kontrolü ve güvenli boşluk şarttır.",
     zorluk: "orta",
-    senaryoAnimId: "seritDegisim",
+
   },
   {
     id: "sen-06",
     dersId: "trafik",
     konuId: "gecis-ustunlugu",
-    metin: "Kavşak animasyonunda iki araç aynı anda yaklaşıyor. Genel güvenlik ilkesi nedir?",
+    metin: "Kavşak senaryosunda iki araç aynı anda yaklaşıyor. Genel güvenlik ilkesi nedir?",
     secenekler: [
       "Kim önce görürse o geçer",
       "Her zaman sağdakine yol verilir, istisnasız",
@@ -98,13 +98,13 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 2,
     aciklama: "Işık ve levhalar önceliklidir; kural net değilse veya risk varsa yavaşlamak en güvenli yaklaşımdır.",
     zorluk: "orta",
-    senaryoAnimId: "kavsakOncelik",
+
   },
   {
     id: "sen-07",
     dersId: "trafik",
     konuId: "sollama",
-    metin: "Sollama animasyonunda karşı yönden veya önden risk varsa sürücü ne yapmalıdır?",
+    metin: "Sollama senaryosunda karşı yönden veya önden risk varsa sürücü ne yapmalıdır?",
     secenekler: [
       "Sollamayı tamamlamak zorundadır",
       "Sollamadan vazgeçip güvenli şeritte kalmalıdır",
@@ -114,13 +114,13 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Sollama güvenli değilse vazgeçilir; yarım kalan tehlikeli sollama kazaya açıktır.",
     zorluk: "orta",
-    senaryoAnimId: "sollama",
+
   },
   {
     id: "sen-08",
     dersId: "trafik",
     konuId: "yaya-gecit",
-    metin: "Yaya geçidi animasyonunda yaya henüz geçide basmamış ama geçmek üzere görünüyor. En doğru yaklaşım?",
+    metin: "Yaya geçidi senaryosunda yaya henüz geçide basmamış ama geçmek üzere görünüyor. En doğru yaklaşım?",
     secenekler: [
       "Hızlanıp önce geçmek",
       "Yavaşlamak, hazır olmak ve gerekirse durmak",
@@ -130,13 +130,13 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Geçitteki veya geçmek üzere olan yayaya karşı dikkat ve öncelik esastır.",
     zorluk: "orta",
-    senaryoAnimId: "yayaGecidi",
+
   },
   {
     id: "sen-09",
     dersId: "trafik",
     konuId: "gecis-ustunlugu",
-    metin: "Kavşak animasyonunda yeşil araç ana yolda, kırmızı araç tali yoldan çıkıyor. Tali yoldaki sürücü ne yapmalıdır?",
+    metin: "Kavşak senaryosunda yeşil araç ana yolda, kırmızı araç tali yoldan çıkıyor. Tali yoldaki sürücü ne yapmalıdır?",
     secenekler: [
       "Hızlanıp önce geçmeli",
       "Ana yoldaki araçlara yol vermeli",
@@ -146,13 +146,13 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Tali yoldan ana yola çıkarken ana yoldaki araçlara yol verilir.",
     zorluk: "kolay",
-    senaryoAnimId: "anaYolTali",
+
   },
   {
     id: "sen-10",
     dersId: "trafik",
     konuId: "sollama",
-    metin: "Sollama animasyonunda karşı şeritten araç yaklaşıyor. Yeşil araç sollamaya devam ederse ne olabilir?",
+    metin: "Sollama senaryosunda karşı şeritten araç yaklaşıyor. Yeşil araç sollamaya devam ederse ne olabilir?",
     secenekler: [
       "Ceza puanı düşer",
       "Karşıdan çarpışma riski oluşur",
@@ -162,13 +162,13 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Karşıdan araç varken sollama yapmak ölümcül kafa kafaya çarpışma riski taşır.",
     zorluk: "orta",
-    senaryoAnimId: "sollama",
+
   },
   {
     id: "sen-11",
     dersId: "trafik",
     konuId: "duraklama-park",
-    metin: "Park yasağı animasyonunda sürücü kavşak yakınına park etmeye çalışıyor. Doğru davranış?",
+    metin: "Park yasağı senaryosunda sürücü kavşak yakınına park etmeye çalışıyor. Doğru davranış?",
     secenekler: [
       "Flaşör yakıp park edebilir",
       "Kavşak yakınında park etmemeli, uygun yere gitmeli",
@@ -178,13 +178,13 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Kavşak, durak ve yaya geçidi yakınlarında park yasaktır.",
     zorluk: "kolay",
-    senaryoAnimId: "parkYasak",
+
   },
   {
     id: "sen-12",
     dersId: "trafik",
     konuId: "yaya-gecit",
-    metin: "Yaya geçidi animasyonunda yaya geçitte yürürken araç hızlanıyor. Bu davranış?",
+    metin: "Yaya geçidi senaryosunda yaya geçitte yürürken araç hızlanıyor. Bu davranış?",
     secenekler: [
       "Uygun, yaya hızlı yürüyorsa",
       "Kural ihlali; yayaya yol verilmeli",
@@ -194,13 +194,13 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Yaya geçidindeki yayaya mutlaka yol verilir; hızlanmak ağır ihlaldir.",
     zorluk: "kolay",
-    senaryoAnimId: "yayaGecidi",
+
   },
   {
     id: "sen-13",
     dersId: "trafik",
     konuId: "aydinlatma-sinyal",
-    metin: "Şerit değişim animasyonunda sürücü aynayı kontrol etmeden geçiş yapıyor. Risk nedir?",
+    metin: "Şerit değişim senaryosunda sürücü aynayı kontrol etmeden geçiş yapıyor. Risk nedir?",
     secenekler: [
       "Yakıt artar",
       "Kör noktadaki araca çarpma riski",
@@ -210,13 +210,13 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Ayna ve omuz kontrolü olmadan şerit değişimi kör nokta kazasına yol açar.",
     zorluk: "orta",
-    senaryoAnimId: "seritDegisim",
+
   },
   {
     id: "sen-14",
     dersId: "trafik",
     konuId: "gecis-ustunlugu",
-    metin: "Dönel kavşak animasyonunda ada etrafında dönme kuralı geçerliyse sürücü ne yapmalı?",
+    metin: "Dönel kavşak senaryosunda ada etrafında dönme kuralı geçerliyse sürücü ne yapmalı?",
     secenekler: [
       "Düz geçmeli",
       "Adanın etrafında belirtilen yönde dönmeli",
@@ -226,7 +226,7 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Dönel kavşakta ada etrafında dönme zorunludur; ters yönde gidilmez.",
     zorluk: "kolay",
-    senaryoAnimId: "donelKavsak",
+
   },
   {
     id: "sen-15",
@@ -242,7 +242,7 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Devamlı çizgi karşı yönden geleni göremeyeceğiniz tehlikeli bölgelerde çizilir.",
     zorluk: "orta",
-    senaryoAnimId: "sollama",
+
   },
   {
     id: "sen-16",
@@ -258,7 +258,7 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Engelli park yerine yetkisiz park ciddi idari yaptırımlara tabidir.",
     zorluk: "kolay",
-    senaryoAnimId: "parkYasak",
+
   },
   {
     id: "sen-17",
@@ -274,7 +274,7 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Okul geçidinde hız düşürülür; çocuklara mutlak öncelik verilir.",
     zorluk: "kolay",
-    senaryoAnimId: "yayaGecidi",
+
   },
   {
     id: "sen-18",
@@ -290,7 +290,7 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 0,
     aciklama: "Sinyal, diğer yol kullanıcılarına niyetinizi bildirir; manevra öncesi verilir.",
     zorluk: "kolay",
-    senaryoAnimId: "seritDegisim",
+
   },
   {
     id: "sen-19",
@@ -306,7 +306,7 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "DUR levhasında tam durulur; güvenli ise geçilir.",
     zorluk: "kolay",
-    senaryoAnimId: "durLevhasi",
+
   },
   {
     id: "sen-20",
@@ -322,6 +322,6 @@ export const SENARYO_SORULARI: Soru[] = [
     dogruIndex: 1,
     aciklama: "Sollama bitince sinyal kapatılır ve sağ şeride güvenle dönülür.",
     zorluk: "orta",
-    senaryoAnimId: "sollama",
+
   },
 ];

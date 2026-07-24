@@ -103,6 +103,9 @@ export function SoruBileseni({
               key={i}
               disabled={cevaplandi && geriBildirimGoster}
               onPress={() => onSecim(i)}
+              accessibilityRole="radio"
+              accessibilityState={{ checked: secili, disabled: cevaplandi && geriBildirimGoster }}
+              accessibilityLabel={`${SIKLAR[i]} şıkkı: ${secenek}`}
               style={{
                 flexDirection: "row",
                 alignItems: "center",
