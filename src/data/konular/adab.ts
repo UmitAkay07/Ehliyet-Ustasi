@@ -173,7 +173,7 @@ export const ADAB_KONULARI: Konu[] = [
       {
         baslik: "Yasal sınırlar ve yaptırımlar",
         metin:
-          "Alkollü araç kullanmak yasaktır ve belirlenen promil sınırının üzerinde tespit edilen sürücüye idari para cezası, sürücü belgesinin geçici geri alınması gibi yaptırımlar uygulanır. Yeni sürücülerde ve toplu taşıma/ticari araç sürücülerinde alkol sınırı sıfırdır; bu gruplar hiç alkol almadan araç kullanmalıdır. Alkol seviyesi arttıkça yaptırımlar da ağırlaşır.",
+          "Alkollü araç kullanmak yasaktır ve belirlenen promil sınırının üzerinde tespit edilen sürücüye idari para cezası, sürücü belgesinin geçici geri alınması gibi yaptırımlar uygulanır. Yeni sürücülerde ve toplu taşıma/ticari araç sürücülerinde alkol sınırı 0.20 promildir; bu gruplar kesinlikle belirlenen bu çok düşük sınırın üstünde alkol almadan araç kullanmalıdır. Alkol seviyesi arttıkça yaptırımlar da ağırlaşır.",
       },
       {
         baslik: "İlaç kullanımı ve sürüş",
@@ -198,7 +198,7 @@ export const ADAB_KONULARI: Konu[] = [
     ],
     anahtarNoktalar: [
       "Alkol refleksleri yavaşlatır, dikkati bozar ve yanlış özgüven yaratır.",
-      "Alkollü araç kullanmak yasaktır; yeni ve ticari sürücülerde sınır sıfırdır.",
+      "Alkollü araç kullanmak yasaktır; yeni ve ticari sürücülerde sınır 0.20 promildir.",
       "Bazı ilaçlar uyku hâli yaparak sürüşü tehlikeli kılar, prospektüs okunmalıdır.",
       "Yorgunluk ve uykusuzluk alkol kadar tehlikeli kabul edilir.",
       "Mikro uyku, fark edilmeden oluşan kısa uyuma anlarıdır ve çok risklidir.",

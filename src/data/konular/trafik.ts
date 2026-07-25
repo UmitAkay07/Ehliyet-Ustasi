@@ -277,13 +277,13 @@ export const TRAFIK_KONULARI: Konu[] = [
       {
         baslik: "Otomobil için azami hız sınırları",
         metin:
-          "Otomobiller için Karayolu Trafik Yönetmeliği'nde belirlenen genel azami hızlar şöyledir:\n• Yerleşim yeri içi: 50 km/s\n• Yerleşim yeri dışı, şehirler arası çift yönlü (bölünmemiş) yol: 90 km/s\n• Bölünmüş yol (yön ayrımı yapılmış yol): 110 km/s\n• Otoyol: 120 km/s\nBu sınırlar 'azami', yani en fazla izin verilen hızlardır; hava, yol ve trafik durumu kötüyse (sis, yağmur, kar, yoğun trafik) bu sınırların altına inilmesi zorunludur.",
+          "Otomobiller için Karayolu Trafik Yönetmeliği'nde belirlenen genel azami hızlar şöyledir:\n• Yerleşim yeri içi: 50 km/s\n• Yerleşim yeri dışı, şehirler arası çift yönlü (bölünmemiş) yol: 90 km/s\n• Bölünmüş yol (yön ayrımı yapılmış yol): 110 km/s\n• Otoyol: 130 km/s\nBu sınırlar 'azami', yani en fazla izin verilen hızlardır; hava, yol ve trafik durumu kötüyse (sis, yağmur, kar, yoğun trafik) bu sınırların altına inilmesi zorunludur.",
         gorsel: "hiz-tablosu",
       },
       {
         baslik: "Diğer araç türlerinde hız",
         metin:
-          "Minibüs, kamyonet gibi araçlarda hız sınırları otomobile göre biraz daha düşük olabilir; kamyon, otobüs ve römork çeken araçlarda ise otoyol ve bölünmüş yollarda daha da düşük sınırlar uygulanır çünkü bu araçların durma mesafesi ve devrilme riski daha yüksektir. Motosikletler otomobil ile aynı genel sınırlara tabidir. Yeni sürücüler (ilk 1 yıl) için bazı hız sınırları daha da düşük tutulabilir.",
+          "Minibüs, kamyonet gibi araçlarda hız sınırları otomobile göre biraz daha düşük olabilir; kamyon, otobüs ve römork çeken araçlarda ise otoyol ve bölünmüş yollarda daha da düşük sınırlar uygulanır çünkü bu araçların durma mesafesi ve devrilme riski daha yüksektir. Motosikletler için sınırlar otomobillere göre daha düşüktür (örneğin otoyol 100 km/s). Yeni sürücüler (ilk 1 yıl) için bazı hız sınırları daha da düşük tutulabilir.",
       },
       {
         baslik: "Asgari (minimum) hız sınırı",
@@ -609,7 +609,7 @@ export const TRAFIK_KONULARI: Konu[] = [
       {
         baslik: "Alkol ve madde kullanımı sınırları",
         metin:
-          "Alkollü araç kullanmak trafik güvenliğini doğrudan tehdit eder ve yasaktır; belirlenen promil sınırının üzerinde alkol tespit edilen sürücüye idari para cezası uygulanır, belgesi geçici olarak geri alınır ve tekrarında ceza ağırlaşır. Yeni sürücülerde (belirli bir süre) ve toplu taşıma/ticari araç sürücülerinde alkol sınırı sıfırdır, yani hiç alkol tespit edilmemelidir. Uyuşturucu/uyarıcı madde etkisinde araç kullanmak ise çok daha ağır yaptırımlara (belge iptali, cezai kovuşturma) tabidir.",
+          "Alkollü araç kullanmak trafik güvenliğini doğrudan tehdit eder ve yasaktır; belirlenen promil sınırının üzerinde alkol tespit edilen sürücüye idari para cezası uygulanır, belgesi geçici olarak geri alınır ve tekrarında ceza ağırlaşır. Hususi otomobillerde sınır 0.50 promildir. Yeni sürücülerde (belirli bir süre) ve toplu taşıma/ticari araç sürücülerinde alkol sınırı 0.20 promildir. Uyuşturucu/uyarıcı madde etkisinde araç kullanmak ise çok daha ağır yaptırımlara (belge iptali, cezai kovuşturma) tabidir.",
       },
       {
         baslik: "Belge iptali ve geri alma süreci",
@@ -626,7 +626,7 @@ export const TRAFIK_KONULARI: Konu[] = [
       "Ehliyet, ruhsat ve trafik sigortası her zaman araçta bulundurulmalıdır.",
       "Sürücü belgesi sınıfları kullanılan araç türüne göre değişir.",
       "Bir yılda 100 ceza puanı dolunca belge belirli süre geri alınır.",
-      "Alkollü araç kullanmak yasaktır; yeni ve ticari sürücülerde sınır sıfırdır.",
+      "Alkollü araç kullanmak yasaktır; hususi araçlarda sınır 0.50, yeni ve ticari sürücülerde sınır 0.20 promildir.",
       "Uyuşturucu etkisinde araç kullanmak çok ağır yaptırımlara tabidir.",
       "Ağır ihlallerde sürücü belgesi iptal edilebilir.",
       "Muayenesi geçmiş araç trafiğe çıkarılamaz.",

@@ -1,4 +1,4 @@
-﻿export interface EhliyetSinifi {
+export interface EhliyetSinifi {
   kod: string;
   ad: string;
   minYas: string;
@@ -107,14 +107,14 @@ export const HIZ_SINIRLARI = [
     yerlesim: "50",
     ciftYon: "90",
     bolunmus: "110",
-    otoyol: "120",
+    otoyol: "130",
   },
   {
     arac: "Motosiklet",
     yerlesim: "50",
-    ciftYon: "80–90*",
-    bolunmus: "100–110*",
-    otoyol: "100–120*",
+    ciftYon: "80",
+    bolunmus: "90",
+    otoyol: "100",
   },
   {
     arac: "Otobüs",
