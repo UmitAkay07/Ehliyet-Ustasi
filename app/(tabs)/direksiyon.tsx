@@ -2,6 +2,7 @@ import React from "react";
 import { Pressable, Text, View, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { ManevraIcon } from "@/components/ManevraIcons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@/theme";
 import { DIREKSIYON_DERSLERI } from "@/data/direksiyon";
@@ -81,8 +82,11 @@ export default function DireksiyonScreen() {
             Manevralar
           </Text>
           <View style={{ gap: spacing.sm }}>
-            {DIREKSIYON_DERSLERI.map((manevra) => {
+            {DIREKSIYON_DERSLERI.map((manevra, index) => {
               const diffColors = getDifficultyColors(manevra.zorluk, colors);
+              const cardColors = [colors.primary, colors.success, colors.info, colors.warning, colors.danger];
+              const cardColor = cardColors[index % cardColors.length];
+              
               return (
                 <Pressable
                   key={manevra.id}
@@ -93,7 +97,7 @@ export default function DireksiyonScreen() {
                     gap: spacing.md,
                     backgroundColor: colors.surface,
                     borderRadius: radius["3xl"],
-                    padding: spacing.lg,
+                    padding: spacing.md,
                     borderWidth: 1,
                     borderColor: colors.border,
                     opacity: pressed ? 0.9 : 1,
@@ -102,15 +106,15 @@ export default function DireksiyonScreen() {
                 >
                   <View
                     style={{
-                      width: 48,
-                      height: 48,
-                      borderRadius: radius.xl,
-                      backgroundColor: colors.infoSoft,
+                      width: 64,
+                      height: 64,
+                      borderRadius: radius["2xl"],
+                      backgroundColor: cardColor + "1A", // 10% opacity
                       alignItems: "center",
                       justifyContent: "center",
                     }}
                   >
-                    <Ionicons name={manevra.ikon} size={24} color={colors.info} />
+                    <ManevraIcon type={manevra.id} size={50} color={cardColor} />
                   </View>
                   <View style={{ flex: 1 }}>
                     <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.extrabold }}>

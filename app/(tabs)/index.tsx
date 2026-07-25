@@ -12,10 +12,10 @@ import type { IconName } from "@/types";
 
 function selamla(): string {
   const s = new Date().getHours();
-  if (s < 6) return "İyi geceler";
-  if (s < 12) return "Günaydın";
-  if (s < 18) return "İyi günler";
-  return "İyi akşamlar";
+  if (s >= 5 && s < 12) return "Günaydın";
+  if (s >= 12 && s < 18) return "İyi günler";
+  if (s >= 18 && s < 23) return "İyi akşamlar";
+  return "İyi geceler";
 }
 
 function HizliErisim({
@@ -95,7 +95,7 @@ export default function HomeScreen() {
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingTop: spacing.sm }}>
         <View>
           <Text style={{ color: colors.text, fontSize: fontSize.xxl, fontFamily: fontFamily.extrabold }}>
-            Günaydın!
+            {selamla()}!
           </Text>
           <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
             Bugün de harika gidiyorsun

@@ -1,5 +1,5 @@
-import React from "react";
 import { Text, View, Image } from "react-native";
+import { useTheme } from "@/theme";
 
 type LogoSize = "sm" | "md" | "lg" | "xl" | "hero";
 
@@ -52,12 +52,13 @@ export function AppLogo({
 
 /** Marka başlığı — splash / onboarding */
 export function BrandTitle({ large = false }: { large?: boolean }) {
+  const { colors } = useTheme();
   const mainSize = large ? 36 : 32;
   return (
     <View style={{ flexDirection: "row", alignItems: "baseline", gap: 8 }}>
       <Text
         style={{
-          color: "#F8FAFC",
+          color: colors.text,
           fontSize: mainSize,
           fontWeight: "800",
           letterSpacing: -1.2,
@@ -70,7 +71,7 @@ export function BrandTitle({ large = false }: { large?: boolean }) {
           fontSize: mainSize,
           fontWeight: "800",
           letterSpacing: -1.2,
-          color: "#C4B5FD",
+          color: colors.primary,
         }}
       >
         Ustası
