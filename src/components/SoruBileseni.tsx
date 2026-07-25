@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/theme";
@@ -32,6 +32,28 @@ export function SoruBileseni({
   const gorselIsaret = soru.gorselIsaretId
     ? TRAFIK_ISARETLERI.find((i) => i.id === soru.gorselIsaretId)
     : undefined;
+
+  const { shift, L, uiSecenekler, uiDogruIndex, uiSecilenIndex } = useMemo(() => {
+    // Soru ID'sinden matematiksel bir hash (kaydırma miktarı) üretiyoruz
+    let hash = 0;
+    for (let i = 0; i < soru.id.length; i++) {
+      hash = (hash << 5) - hash + soru.id.charCodeAt(i);
+      hash |= 0;
+    }
+    const L = soru.secenekler.length;
+    const s = Math.abs(hash) % L;
+
+    // Şıkları s kadar kaydır
+    const yeniSecenekler = new Array(L);
+    for (let i = 0; i < L; i++) {
+      yeniSecenekler[(i + s) % L] = soru.secenekler[i];
+    }
+    
+    const yeniDogru = (soru.dogruIndex + s) % L;
+    const yeniSecilen = secilenIndex != null ? (secilenIndex + s) % L : null;
+
+    return { shift: s, L, uiSecenekler: yeniSecenekler, uiDogruIndex: yeniDogru, uiSecilenIndex: yeniSecilen };
+  }, [soru.id, soru.secenekler, soru.dogruIndex, secilenIndex]);
 
   return (
     <View style={{ gap: spacing.lg }}>
@@ -73,9 +95,9 @@ export function SoruBileseni({
       </View>
 
       <View style={{ gap: spacing.md }}>
-        {soru.secenekler.map((secenek, i) => {
-          const secili = secilenIndex === i;
-          const dogruSik = i === soru.dogruIndex;
+        {uiSecenekler.map((secenek, i) => {
+          const secili = uiSecilenIndex === i;
+          const dogruSik = i === uiDogruIndex;
 
           let arkaPlan = colors.surface;
           let kenar = colors.border;
@@ -102,7 +124,10 @@ export function SoruBileseni({
             <Pressable
               key={i}
               disabled={cevaplandi && geriBildirimGoster}
-              onPress={() => onSecim(i)}
+              onPress={() => {
+                const originalIndex = (i - shift + L) % L;
+                onSecim(originalIndex);
+              }}
               accessibilityRole="radio"
               accessibilityState={{ checked: secili, disabled: cevaplandi && geriBildirimGoster }}
               accessibilityLabel={`${SIKLAR[i]} şıkkı: ${secenek}`}
