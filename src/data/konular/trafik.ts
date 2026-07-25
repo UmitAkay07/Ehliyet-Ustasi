@@ -314,7 +314,7 @@ export const TRAFIK_KONULARI: Konu[] = [
     ],
     anahtarNoktalar: [
       "Yerleşim yeri içi otomobil hızı 50 km/s.",
-      "Bölünmüş yolda 110 km/s, otoyolda azami 120 km/s.",
+      "Bölünmüş yolda 110 km/s, otoyolda azami 130 km/s.",
       "Takip mesafesi için pratik yöntem: 2 saniye kuralı.",
       "Duruş mesafesi = tepki mesafesi + fren mesafesi.",
       "Hız iki katına çıkınca çarpma etkisi yaklaşık dört katına çıkar.",
