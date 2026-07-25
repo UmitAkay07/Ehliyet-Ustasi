@@ -4,7 +4,7 @@ import { sinavGunKalan } from "@/utils/gununSorusu";
 
 const SINAV_BILDIRIM_SAAT = 13;
 const SINAV_BILDIRIM_DAKIKA = 0;
-const MAX_GUN = 50;
+const MAX_GUN = 49; // 50 bildirim üretir (i=0 dahil). 50 + 14 = 64 tam sınır!
 
 const MOTIVASYON_SAAT = 10;
 const MOTIVASYON_DAKIKA = 0;
