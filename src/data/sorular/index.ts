@@ -3,8 +3,6 @@ import { TRAFIK_SORULARI } from "./trafik";
 import { ILKYARDIM_SORULARI } from "./ilkyardim";
 import { MOTOR_SORULARI } from "./motor";
 import { ADAB_SORULARI } from "./adab";
-import { GENIS_HAVUZ } from "./genis-havuz";
-import { KONU_HAVUZ } from "./konu-havuz";
 import { SENARYO_SORULARI } from "./senaryo";
 import { ISARET_SORULARI } from "./isaret-sorulari";
 import { EKSTRA_SORULAR } from "./ekstra";
@@ -14,8 +12,6 @@ export const SORULAR: Soru[] = [
   ...ILKYARDIM_SORULARI,
   ...MOTOR_SORULARI,
   ...ADAB_SORULARI,
-  ...GENIS_HAVUZ,
-  ...KONU_HAVUZ,
   ...SENARYO_SORULARI,
   ...ISARET_SORULARI,
   ...EKSTRA_SORULAR,

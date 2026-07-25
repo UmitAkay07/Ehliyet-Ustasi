@@ -52,15 +52,7 @@ export interface Soru {
 
 }
 
-export type SenaryoAnimId =
-  | "kavsakOncelik"
-  | "anaYolTali"
-  | "donelKavsak"
-  | "durLevhasi"
-  | "sollama"
-  | "parkYasak"
-  | "yayaGecidi"
-  | "seritDegisim";
+
 
 
 export type ManevraTipi =

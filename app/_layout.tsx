@@ -8,7 +8,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { ThemeProvider, useTheme } from "@/theme";
 import { useAppStore } from "@/store/useAppStore";
 import { useHydration } from "@/store/useHydration";
-import { sinavBildirimleriniKur } from "@/services/notifications";
+import { tumBildirimleriKur } from "@/services/notifications";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import {
   useFonts,
@@ -60,7 +60,7 @@ function RootNavigator() {
 
   useEffect(() => {
     if (!hazir || !onboardingTamam) return;
-    sinavBildirimleriniKur(sinavTarihi).catch(() => {});
+    tumBildirimleriKur(sinavTarihi).catch(() => {});
   }, [hazir, onboardingTamam, sinavTarihi]);
 
   return (
