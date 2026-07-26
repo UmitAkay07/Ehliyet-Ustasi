@@ -15,7 +15,7 @@ MEB 2026 e-sınav müfredatına uygun, tamamen **çevrimdışı** çalışan ehl
 
 ## Teknoloji
 
-- Expo SDK 52 + TypeScript
+- Expo SDK 54 + TypeScript
 - expo-router (dosya tabanlı navigasyon)
 - Zustand + AsyncStorage (offline durum yönetimi)
 - react-native-svg + react-native-reanimated (animasyonlar ve grafikler)

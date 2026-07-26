@@ -40,7 +40,7 @@ Veri toplanmadığı için uygulama her yaş grubu için gizlilik açısından g
 
 Gizlilik ile ilgili sorularınız için:
 
-- E-posta: **[YAYIN ÖNCESİ DEĞİŞTİR: destek e-postanızı buraya yazın]**
-- Gizlilik Politikası URL: **[YAYIN ÖNCESİ DEĞİŞTİR: web sitenizdeki gizlilik politikası linki]**
+- E-posta: **iletisim@ehliyetustasi.com**
+- Gizlilik Politikası URL: **https://ehliyetustasi.com/gizlilik**
 
 Bu politika metnini uygulamanın mağaza sayfasında (App Store / Google Play gizlilik URL’si) yayınlamayı unutmayın.

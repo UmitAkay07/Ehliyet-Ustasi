@@ -50,15 +50,25 @@ export function AppLogo({
   );
 }
 
-/** Marka başlığı — splash / onboarding */
-export function BrandTitle({ large = false }: { large?: boolean }) {
+/** Marka başlığı — splash / onboarding.
+ *  Marka perdesi her zaman koyu olduğu için varsayılan renkler temadan bağımsızdır. */
+export function BrandTitle({
+  large = false,
+  onDark = true,
+}: {
+  large?: boolean;
+  onDark?: boolean;
+}) {
   const { colors } = useTheme();
   const mainSize = large ? 36 : 32;
+  const titleColor = onDark ? "#F8FAFC" : colors.text;
+  const accentColor = onDark ? "#A5B4FC" : colors.primary;
+
   return (
     <View style={{ flexDirection: "row", alignItems: "baseline", gap: 8 }}>
       <Text
         style={{
-          color: colors.text,
+          color: titleColor,
           fontSize: mainSize,
           fontWeight: "800",
           letterSpacing: -1.2,
@@ -71,7 +81,7 @@ export function BrandTitle({ large = false }: { large?: boolean }) {
           fontSize: mainSize,
           fontWeight: "800",
           letterSpacing: -1.2,
-          color: colors.primary,
+          color: accentColor,
         }}
       >
         Ustası

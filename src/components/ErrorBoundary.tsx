@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Button } from "@/components/ui/Button";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 
 interface Props {
   children: React.ReactNode;
@@ -37,7 +36,12 @@ export class ErrorBoundary extends React.Component<Props, State> {
           <Text style={styles.description}>
             Beklenmeyen bir durumla karşılaştık. Lütfen tekrar deneyin.
           </Text>
-          <Button label="Ana Sayfaya Dön" onPress={this.handleReset} variant="primary" />
+          <Pressable
+            onPress={this.handleReset}
+            style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
+          >
+            <Text style={styles.buttonLabel}>Ana Sayfaya Dön</Text>
+          </Pressable>
         </View>
       );
     }
@@ -65,5 +69,19 @@ const styles = StyleSheet.create({
     color: "#9CA3AF",
     textAlign: "center",
     marginBottom: 20,
+  },
+  button: {
+    backgroundColor: "#6366F1",
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    borderRadius: 999,
+  },
+  buttonPressed: {
+    opacity: 0.85,
+  },
+  buttonLabel: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "700",
   },
 });

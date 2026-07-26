@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, ScrollView, Text, View, Switch, Platform, Modal } from "react-native";
+import { Pressable, ScrollView, Text, View, Switch, Platform, Modal, Linking } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -156,7 +156,7 @@ export default function ProfilScreen() {
                 Akıllı Tavsiye
               </Text>
               <Text style={{ color: colors.warning, fontSize: 12, fontFamily: fontFamily.bold, marginTop: 2 }}>
-                Yapay Zeka Destekli Analiz
+                Gelişmiş Performans Analizi
               </Text>
             </View>
           </View>
@@ -225,7 +225,7 @@ export default function ProfilScreen() {
         {/* Settings */}
         <View style={{ backgroundColor: colors.surface, borderRadius: radius["3xl"], overflow: "hidden", borderWidth: 1, borderColor: colors.border }}>
           <Pressable
-            onPress={toggleTema}
+            onPress={() => Linking.openURL("https://ehliyetustasi.com/gizlilik")}
             style={({ pressed }) => ({
               flexDirection: "row",
               alignItems: "center",
@@ -237,12 +237,12 @@ export default function ProfilScreen() {
             })}
           >
             <View style={{ width: 40, height: 40, borderRadius: radius.xl, backgroundColor: colors.infoSoft, alignItems: "center", justifyContent: "center" }}>
-              <Ionicons name={settings.themeMode === "auto" ? "color-wand" : settings.themeMode === "dark" ? "moon" : "sunny"} size={20} color={colors.info} />
+              <Ionicons name="shield-checkmark" size={20} color={colors.info} />
             </View>
             <Text style={{ flex: 1, color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
-              Tema ({settings.themeMode === "auto" ? "Sistem" : settings.themeMode === "dark" ? "Koyu" : "Açık"})
+              Gizlilik Politikası
             </Text>
-            <Ionicons name="chevron-forward" size={16} color={colors.textFaint} />
+            <Ionicons name="open-outline" size={16} color={colors.textFaint} />
           </Pressable>
           <Pressable
             onPress={() => router.push("/bilgi-bankasi")}
@@ -282,6 +282,13 @@ export default function ProfilScreen() {
             </Text>
             <Ionicons name="chevron-forward" size={20} color={colors.textFaint} />
           </Pressable>
+        </View>
+
+        {/* Legal Disclaimer */}
+        <View style={{ marginTop: spacing.md, paddingHorizontal: spacing.md, opacity: 0.7 }}>
+          <Text style={{ color: colors.textMuted, fontSize: 11, fontFamily: fontFamily.medium, textAlign: "center", lineHeight: 16 }}>
+            Bu uygulama resmi bir MEB uygulaması değildir. Sınavlara hazırlık amacıyla oluşturulmuş özgün bir eğitim aracıdır.
+          </Text>
         </View>
 
         <Modal

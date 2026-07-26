@@ -298,7 +298,7 @@ export default function HomeScreen() {
             <HizliErisim
               ikon="cash"
               baslik="Trafik Cezaları"
-              altBaslik="Güncel liste"
+              altBaslik="Ceza oranları"
               bgRenk={colors.warning}
               textRenk={colors.background === "#0F172A" ? "#1E293B" : "#FFFFFF"} // Koyu temada uyumlu olsun
               onPress={() => router.push("/cezalar")}
