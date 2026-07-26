@@ -4,7 +4,8 @@ import { sinavGunKalan } from "@/utils/gununSorusu";
 
 const SINAV_BILDIRIM_SAAT = 13;
 const SINAV_BILDIRIM_DAKIKA = 0;
-const MAX_GUN = 49; // 50 bildirim üretir (i=0 dahil). 50 + 14 = 64 tam sınır!
+/** i=0…MAX_GUN → en fazla 40 sınav bildirimi. 40 + 14 motivasyon = 54 (< iOS ~64 limiti). */
+const MAX_GUN = 39;
 
 const MOTIVASYON_SAAT = 10;
 const MOTIVASYON_DAKIKA = 0;
@@ -13,7 +14,7 @@ const MOTIVASYON_GUN_SAYISI = 14;
 const MOTIVASYON_MESAJLARI = [
   "Günaydın! Sınavına hazırlık için bugün biraz soru çözmeye ne dersin?",
   "Ehliyet Ustası seni bekliyor! Hadi bugün motor konularını tekrar edelim.",
-  "Direksiyon sınavı simülasyonunu denemek için harika bir gün! 🚗",
+  "Direksiyon sınavı simülasyonunu denemek için harika bir gün!",
   "Zaman daralıyor! Günde 10 dakika çalışarak başarıyı garantile.",
   "Bugün trafik kurallarından bir deneme çözüp kendini test et!",
   "İlk yardım konularına göz atmaya ne dersin? Hayat kurtaran bilgiler içeride!",
@@ -22,7 +23,7 @@ const MOTIVASYON_MESAJLARI = [
   "Hadi konu tekrarı yap! Dün öğrendiklerini pekiştirmek her zaman iyidir.",
   "Haydi biraz simülasyon çalışalım! Pratik yapmak direksiyon sınavının anahtarıdır.",
   "Trafik işaretlerini ne kadar iyi biliyorsun? Küçük bir teste var mısın?",
-  "Uyanma vakti! Güne taze bilgilerle başlamak için Ehliyet Ustası seni bekliyor."
+  "Uyanma vakti! Güne taze bilgilerle başlamak için Ehliyet Ustası seni bekliyor.",
 ];
 
 Notifications.setNotificationHandler({
@@ -35,6 +36,29 @@ Notifications.setNotificationHandler({
   }),
 });
 
+async function androidKanallariKur(): Promise<void> {
+  if (Platform.OS !== "android") return;
+  await Notifications.setNotificationChannelAsync("sinav-geri-sayim", {
+    name: "Sınav Geri Sayımı",
+    importance: Notifications.AndroidImportance.DEFAULT,
+    vibrationPattern: [0, 200],
+  });
+  await Notifications.setNotificationChannelAsync("gunluk-motivasyon", {
+    name: "Günlük Motivasyon",
+    importance: Notifications.AndroidImportance.HIGH,
+    vibrationPattern: [0, 250, 250, 250],
+    lightColor: "#6366F1",
+  });
+}
+
+/** İzin durumunu sorgular; sistem diyaloğu açmaz. */
+export async function bildirimIzniVarMi(): Promise<boolean> {
+  if (Platform.OS === "web") return false;
+  const mevcut = await Notifications.getPermissionsAsync();
+  return mevcut.status === "granted";
+}
+
+/** Sistem bildirim izni diyaloğunu açar (yalnızca kullanıcı eylemi sonrası çağır). */
 export async function bildirimIzniIste(): Promise<boolean> {
   if (Platform.OS === "web") return false;
 
@@ -46,20 +70,7 @@ export async function bildirimIzniIste(): Promise<boolean> {
   }
   if (durum !== "granted") return false;
 
-  if (Platform.OS === "android") {
-    await Notifications.setNotificationChannelAsync("sinav-geri-sayim", {
-      name: "Sınav Geri Sayımı",
-      importance: Notifications.AndroidImportance.DEFAULT,
-      vibrationPattern: [0, 200],
-    });
-    
-    await Notifications.setNotificationChannelAsync("gunluk-motivasyon", {
-      name: "Günlük Motivasyon",
-      importance: Notifications.AndroidImportance.HIGH,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#6366F1',
-    });
-  }
+  await androidKanallariKur();
   return true;
 }
 
@@ -70,29 +81,40 @@ function kalanMesaj(kalan: number): string {
   return "Sınav tarihiniz geçti. Yeni tarih ekleyebilirsiniz.";
 }
 
-/** 
- * Genel bildirim kurma fonksiyonu.
- * Hem sabah 10'daki rastgele motivasyonları, hem de varsa sınav geri sayımını (saat 13'te) ayarlar.
+export type BildirimKurSecenekleri = {
+  /** true ise izin yoksa sistem diyaloğu açılır. Varsayılan: false (soğuk açılışta sorma). */
+  izinIste?: boolean;
+};
+
+/**
+ * Motivasyon (14 gün × 10:00) + varsa sınav geri sayımı (max 40 gün × 13:00).
+ * Açılışta izinIste=false ile çağır; izin diyaloğunu yalnızca kullanıcı bağlamında aç.
  */
-export async function tumBildirimleriKur(sinavTarihi: string | null): Promise<void> {
+export async function tumBildirimleriKur(
+  sinavTarihi: string | null,
+  options?: BildirimKurSecenekleri
+): Promise<void> {
   if (Platform.OS === "web") return;
 
-  // İzinleri başlangıçta sorarız (kullanıcının isteği: "bildirim iznini başta isteyelim")
-  const izin = await bildirimIzniIste();
+  const izinIste = options?.izinIste ?? false;
+  let izin = await bildirimIzniVarMi();
+  if (!izin && izinIste) {
+    izin = await bildirimIzniIste();
+  }
   if (!izin) return;
 
-  // Önceki tüm bildirimleri temizle (Çakışmaları önlemek için)
+  await androidKanallariKur();
   await Notifications.cancelAllScheduledNotificationsAsync();
 
   const simdi = new Date();
 
-  // 1. MOTİVASYON BİLDİRİMLERİNİ KUR (Gelecek 14 gün için sabah 10:00)
   for (let i = 1; i <= MOTIVASYON_GUN_SAYISI; i++) {
     const tetik = new Date(simdi);
     tetik.setDate(simdi.getDate() + i);
     tetik.setHours(MOTIVASYON_SAAT, MOTIVASYON_DAKIKA, 0, 0);
 
-    const rastgeleMesaj = MOTIVASYON_MESAJLARI[Math.floor(Math.random() * MOTIVASYON_MESAJLARI.length)];
+    const rastgeleMesaj =
+      MOTIVASYON_MESAJLARI[Math.floor(Math.random() * MOTIVASYON_MESAJLARI.length)];
 
     await Notifications.scheduleNotificationAsync({
       content: {
@@ -108,7 +130,6 @@ export async function tumBildirimleriKur(sinavTarihi: string | null): Promise<vo
     });
   }
 
-  // 2. SINAV GERİ SAYIM BİLDİRİMLERİNİ KUR (Varsa, öğlen 13:00)
   if (sinavTarihi) {
     const toplamKalan = sinavGunKalan(sinavTarihi);
     if (toplamKalan != null && toplamKalan >= 0) {

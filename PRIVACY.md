@@ -30,7 +30,7 @@ Uygulama reklam ağı, analiz aracı veya üçüncü taraf takip hizmeti **kulla
 
 ## İzinler
 
-Uygulama kamera, konum, kişiler veya mikrofon gibi hassas izinler istemez. Yalnızca **Bildirim İzni** (sınava kaç gün kaldığını size hatırlatabilmek için) ve sonuç ekranını paylaşmak isterseniz cihazınızın standart **Paylaşım İzni** kullanılır.
+Uygulama kamera, konum, kişiler veya mikrofon gibi hassas izinler istemez. Yalnızca **Bildirim İzni** (Profil’de sınav tarihi seçtiğinizde, geri sayım ve çalışma hatırlatmaları için) ve sonuç ekranını paylaşmak isterseniz cihazınızın standart **Paylaşım İzni** kullanılır. Bildirim izni uygulama açılışında otomatik istenmez.
 
 ## Çocukların Gizliliği
 

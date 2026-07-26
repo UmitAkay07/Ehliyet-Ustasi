@@ -64,7 +64,7 @@ function HizTablosu() {
         ["Yerleşim yeri", "50 km/s", 40],
         ["Çift yönlü yol", "90 km/s", 70],
         ["Bölünmüş yol", "110 km/s", 100],
-        ["Otoyol", "120 km/s", 130],
+        ["Otoyol", "130 km/s", 130],
       ].map(([a, b, y]) => (
         <G key={a as string}>
           <SvgText x={24} y={y as number} fill="#E2E8F0" fontSize={13}>

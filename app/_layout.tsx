@@ -61,9 +61,10 @@ function RootNavigator() {
     return () => clearTimeout(t);
   }, [hydrated]);
 
+  // İzin varsa yeniden planla; soğuk açılışta sistem diyaloğu açma (Apple 5.1.1)
   useEffect(() => {
     if (!hazir || !onboardingTamam) return;
-    tumBildirimleriKur(sinavTarihi).catch(() => {});
+    tumBildirimleriKur(sinavTarihi, { izinIste: false }).catch(() => {});
   }, [hazir, onboardingTamam, sinavTarihi]);
 
   return (
@@ -89,6 +90,7 @@ function RootNavigator() {
         <Stack.Screen name="gunun-sorusu" />
         <Stack.Screen name="cezalar" />
         <Stack.Screen name="bilgi-bankasi" />
+        <Stack.Screen name="pratik-sinav-simulasyonu" />
       </Stack>
     </>
   );

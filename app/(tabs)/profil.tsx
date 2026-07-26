@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, ScrollView, Text, View, Modal, Linking } from "react-native";
+import { Alert, Pressable, ScrollView, Text, View, Modal, Linking } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -8,6 +8,7 @@ import { useTheme } from "@/theme";
 import { useAppStore, seriHesapla } from "@/store/useAppStore";
 import { genelIlerleme } from "@/utils/progress";
 import { tarihGoster } from "@/utils/gununSorusu";
+import { bildirimIzniVarMi, tumBildirimleriKur } from "@/services/notifications";
 
 LocaleConfig.locales['tr'] = {
   monthNames: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
@@ -49,10 +50,33 @@ export default function ProfilScreen() {
     router.replace("/");
   };
 
-  const setTarih = (day: any) => {
-    // day.timestamp returns the UTC timestamp, we can just use day.dateString (YYYY-MM-DD)
-    setSinavTarihi(new Date(day.dateString).toISOString());
+  const setTarih = async (day: any) => {
+    const iso = new Date(day.dateString).toISOString();
+    setSinavTarihi(iso);
     setTarihSeciciAcik(false);
+
+    // Bildirim iznini yalnızca sınav tarihi seçilince (bağlamlı) iste — Apple 5.1.1
+    const izinVar = await bildirimIzniVarMi();
+    if (izinVar) {
+      tumBildirimleriKur(iso, { izinIste: false }).catch(() => {});
+      return;
+    }
+    Alert.alert(
+      "Sınav hatırlatması",
+      "Sınav gününüze yaklaşırken ve günlük çalışma için bildirim gönderebiliriz. İzin vermek ister misiniz?",
+      [
+        {
+          text: "Şimdi değil",
+          style: "cancel",
+        },
+        {
+          text: "İzin ver",
+          onPress: () => {
+            tumBildirimleriKur(iso, { izinIste: true }).catch(() => {});
+          },
+        },
+      ]
+    );
   };
 
   const toggleTema = () => {
@@ -145,7 +169,7 @@ export default function ProfilScreen() {
           </View>
         </View>
 
-        {/* Akıllı Analiz (Zayıf Nokta Tespiti) */}
+        {/* Hata defterine dayalı çalışma önerisi */}
         <View style={{ backgroundColor: colors.surfaceAlt, borderRadius: radius["3xl"], padding: spacing.xl, borderWidth: 1, borderColor: colors.border }}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md, marginBottom: spacing.md }}>
             <View style={{ width: 44, height: 44, borderRadius: radius.xl, backgroundColor: colors.warningSoft, alignItems: "center", justifyContent: "center" }}>
@@ -153,10 +177,10 @@ export default function ProfilScreen() {
             </View>
             <View style={{ flex: 1 }}>
               <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.extrabold }}>
-                Akıllı Tavsiye
+                Çalışma Önerisi
               </Text>
               <Text style={{ color: colors.warning, fontSize: 12, fontFamily: fontFamily.bold, marginTop: 2 }}>
-                Gelişmiş Performans Analizi
+                Hata defterine göre
               </Text>
             </View>
           </View>
@@ -243,6 +267,26 @@ export default function ProfilScreen() {
               Tema ({settings.themeMode === "auto" ? "Sistem" : settings.themeMode === "dark" ? "Koyu" : "Açık"})
             </Text>
             <Ionicons name="chevron-forward" size={16} color={colors.textFaint} />
+          </Pressable>
+          <Pressable
+            onPress={() => Linking.openURL("mailto:iletisim@ehliyetustasi.com")}
+            style={({ pressed }) => ({
+              flexDirection: "row",
+              alignItems: "center",
+              gap: spacing.md,
+              padding: spacing.lg,
+              borderBottomWidth: 1,
+              borderBottomColor: colors.border,
+              backgroundColor: pressed ? "rgba(0,0,0,0.02)" : "transparent",
+            })}
+          >
+            <View style={{ width: 40, height: 40, borderRadius: radius.xl, backgroundColor: colors.warningSoft, alignItems: "center", justifyContent: "center" }}>
+              <Ionicons name="mail" size={20} color={colors.warning} />
+            </View>
+            <Text style={{ flex: 1, color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
+              Destek / İletişim
+            </Text>
+            <Ionicons name="open-outline" size={16} color={colors.textFaint} />
           </Pressable>
           <Pressable
             onPress={() => Linking.openURL("https://ehliyetustasi.com/gizlilik")}

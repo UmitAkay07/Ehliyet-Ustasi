@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { router } from "expo-router";
 
 interface Props {
   children: React.ReactNode;
@@ -25,7 +26,13 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   handleReset = () => {
-    this.setState({ hasError: false, error: null });
+    this.setState({ hasError: false, error: null }, () => {
+      try {
+        router.replace("/(tabs)");
+      } catch {
+        // Router henüz hazır değilse sadece state temizliği yeterli
+      }
+    });
   };
 
   render() {
