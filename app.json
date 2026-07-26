@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon-brand.png",
     "scheme": "ehliyetustasi",
-    "userInterfaceStyle": "dark",
+    "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-brand.png",
