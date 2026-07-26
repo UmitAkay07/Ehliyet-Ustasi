@@ -3,7 +3,6 @@ import { Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { Screen, ScreenHeader, Card } from "@/components/ui";
-import { ManevraAnimasyonu } from "@/animations/ManevraAnimasyonu";
 import { DireksiyonVideoOynatici } from "@/components/DireksiyonVideoOynatici";
 import { useTheme } from "@/theme";
 import { direksiyonBul } from "@/data/direksiyon";
@@ -16,7 +15,7 @@ const hataRenkleri = {
 };
 
 export default function DireksiyonDetayScreen() {
-  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
+  const { colors, fontSize, fontFamily, spacing } = useTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
   const ders = direksiyonBul(id);
 

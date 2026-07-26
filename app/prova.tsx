@@ -19,7 +19,7 @@ function sureBicimle(saniye: number): string {
 }
 
 export default function ProvaScreen() {
-  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
   const soruCevapla = useAppStore((s) => s.soruCevapla);
   const provaKaydet = useAppStore((s) => s.provaKaydet);

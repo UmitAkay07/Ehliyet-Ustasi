@@ -22,7 +22,7 @@ function Frame({
   title?: string;
   height?: number;
 }) {
-  const { colors, fontFamily, radius, spacing, fontSize, fontWeight } = useTheme();
+  const { colors, fontFamily, radius, spacing, fontSize } = useTheme();
   return (
     <View
       style={{

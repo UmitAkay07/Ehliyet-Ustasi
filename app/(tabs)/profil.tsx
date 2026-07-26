@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, ScrollView, Text, View, Switch, Platform, Modal, Linking } from "react-native";
+import { Pressable, ScrollView, Text, View, Modal, Linking } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -19,7 +19,7 @@ LocaleConfig.locales['tr'] = {
 LocaleConfig.defaultLocale = 'tr';
 
 export default function ProfilScreen() {
-  const { colors, fontSize, fontFamily, spacing, radius, scheme } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
 
   const okunanKonular = useAppStore((s) => s.okunanKonular);

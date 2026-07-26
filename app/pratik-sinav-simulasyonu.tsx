@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { View, Text, Pressable } from "react-native";
-import { Stack, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { Screen, ScreenHeader, Card, Button, ProgressBar } from "@/components/ui";
 import { useTheme } from "@/theme";
@@ -53,7 +53,7 @@ const SINAV_ADIMLARI: SinavAdimi[] = [
 ];
 
 export default function PratikSinavSimulasyonuScreen() {
-  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const [oynuyor, setOynuyor] = useState(false);
   const [adimIndex, setAdimIndex] = useState(0);
   const [bitti, setBitti] = useState(false);

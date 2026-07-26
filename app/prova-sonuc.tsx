@@ -12,7 +12,7 @@ import ViewShot from "react-native-view-shot";
 import * as Sharing from "expo-sharing";
 
 export default function ProvaSonucScreen() {
-  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
   const detay = provaDetayAl();
   const viewShotRef = React.useRef<ViewShot>(null);

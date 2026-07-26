@@ -38,10 +38,6 @@ function karistir<T>(arr: T[]): T[] {
   return kopya;
 }
 
-export function rastgeleSorular(dersId: DersId, adet: number): Soru[] {
-  return karistir(sorularByDers(dersId)).slice(0, adet);
-}
-
 /** MEB sınav dağılımı: 23/12/9/6 — en az 12 görselli soru içerir */
 export function provaSorulariUret(): Soru[] {
   const dagilim: Record<DersId, number> = {

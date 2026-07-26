@@ -8,12 +8,19 @@ web-build/
 expo-env.d.ts
 
 # Native
+android/
+ios/
 *.orig.*
 *.jks
 *.p8
 *.p12
 *.key
 *.mobileprovision
+*.apk
+*.aab
+*.ipa
+google-services.json
+GoogleService-Info.plist
 
 # Metro
 .metro-health-check*
@@ -22,12 +29,23 @@ expo-env.d.ts
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+*.log
 
-# macOS
+# OS
 .DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
 
 # Env
-.env*.local
+.env
+.env.*
+!.env.example
 
 # EAS
 credentials.json
+.eas/

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import Svg, { Path, Rect, Circle, G, Line, Defs, LinearGradient, Stop } from 'react-native-svg';
+import Svg, { Path, Rect, Circle, G, Line } from 'react-native-svg';
 import Animated, {
   useSharedValue,
   useAnimatedProps,
@@ -15,7 +15,6 @@ import Animated, {
 const AnimatedG = Animated.createAnimatedComponent(G);
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedRect = Animated.createAnimatedComponent(Rect);
-const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 // ==========================================
 // Reusable Car Shapes

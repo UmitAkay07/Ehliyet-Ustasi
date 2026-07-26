@@ -8,7 +8,7 @@ import { ISARET_IMAGE_ATTRIBUTION } from "@/data/isaretImageMap";
 import type { IsaretKategori, TrafikIsareti } from "@/types";
 
 export default function IsaretlerScreen() {
-  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const [aktif, setAktif] = useState<IsaretKategori | "hepsi">("hepsi");
   const [arama, setArama] = useState("");
 

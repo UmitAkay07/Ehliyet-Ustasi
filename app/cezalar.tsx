@@ -6,7 +6,7 @@ import { CEZA_KATEGORILERI, TRAFIK_CEZALARI } from "@/data/cezalar";
 import type { TrafikCezasi } from "@/data/cezalar";
 
 export default function CezalarScreen() {
-  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const [arama, setArama] = useState("");
   const [kategori, setKategori] = useState<string | "hepsi">("hepsi");
 
@@ -89,7 +89,7 @@ function KategoriChip({
   renk: string;
   onPress: () => void;
 }) {
-  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   return (
     <Pressable
       onPress={onPress}
@@ -110,7 +110,7 @@ function KategoriChip({
 }
 
 function CezaKart({ ceza }: { ceza: TrafikCezasi }) {
-  const { colors, fontSize, fontWeight, fontFamily, spacing } = useTheme();
+  const { colors, fontSize, fontFamily, spacing } = useTheme();
   const kat = CEZA_KATEGORILERI.find((k) => k.id === ceza.kategori);
   return (
     <Card>

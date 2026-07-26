@@ -9,7 +9,7 @@ import type { IconName } from "@/types";
 type Sekme = "siniflar" | "hiz" | "plaka";
 
 export default function BilgiBankasiScreen() {
-  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const [sekme, setSekme] = useState<Sekme>("siniflar");
   const [plakaArama, setPlakaArama] = useState("");
 
@@ -195,7 +195,7 @@ export default function BilgiBankasiScreen() {
 }
 
 function HizBaslik() {
-  const { colors, fontSize, fontWeight, fontFamily } = useTheme();
+  const { colors, fontSize, fontFamily } = useTheme();
   const stil = {
     flex: 1,
     color: colors.textFaint,

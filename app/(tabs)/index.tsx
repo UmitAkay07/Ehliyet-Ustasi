@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { Screen, Card, ProgressRing, ProgressBar, Badge, SectionTitle } from "@/components/ui";
+import { Screen, ProgressRing, ProgressBar } from "@/components/ui";
 import { useTheme } from "@/theme";
 import { useAppStore, seriHesapla, bugunAnahtar } from "@/store/useAppStore";
 import { genelIlerleme, dersIlerlemesi } from "@/utils/progress";

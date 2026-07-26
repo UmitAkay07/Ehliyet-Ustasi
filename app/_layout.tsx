@@ -5,7 +5,6 @@ import { StatusBar } from "expo-status-bar";
 import * as SystemUI from "expo-system-ui";
 import { Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { LogBox } from "react-native";
 import { ThemeProvider, useTheme } from "@/theme";
 import { useAppStore } from "@/store/useAppStore";
 import { useHydration } from "@/store/useHydration";
@@ -21,8 +20,6 @@ import {
 } from "@expo-google-fonts/nunito";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
-SystemUI.setBackgroundColorAsync("#030712").catch(() => {});
-
 /** Native splash en az bu kadar görünsün (marka anı) */
 const SPLASH_MIN_MS = 1400;
 
@@ -35,6 +32,11 @@ function RootNavigator() {
   const segments = useSegments();
   const mountTime = useRef(Date.now());
   const [hazir, setHazir] = useState(false);
+
+  // Tema değiştiğinde sistem arkaplanını da güncelle (Light modda koyu flash önler)
+  useEffect(() => {
+    SystemUI.setBackgroundColorAsync(colors.background).catch(() => {});
+  }, [colors.background]);
 
   // Hydration bitince doğru rotaya git — hepsi native splash perdesinin altında olur
   useEffect(() => {
@@ -106,7 +108,7 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1, backgroundColor: "#0F172A" }}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <ErrorBoundary>
         <SafeAreaProvider>
           <ThemeProvider>

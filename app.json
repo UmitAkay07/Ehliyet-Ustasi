@@ -14,7 +14,8 @@
       "backgroundColor": "#030712"
     },
     "assetBundlePatterns": [
-      "**/*"
+      "assets/**/*.png",
+      "**/*.ttf"
     ],
     "ios": {
       "supportsTablet": true,
@@ -50,7 +51,6 @@
         }
       ],
       "expo-asset",
-      "@react-native-community/datetimepicker",
       [
         "expo-notifications",
         {

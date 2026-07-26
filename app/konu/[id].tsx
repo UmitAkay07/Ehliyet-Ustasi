@@ -13,7 +13,7 @@ import { sorularByKonu } from "@/data/sorular";
 import { KONU_KAPAK_RESIMLERI } from "@/data/konuKapakResimleri";
 
 export default function KonuDetayScreen() {
-  const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
+  const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
   const konu = konuBul(id);

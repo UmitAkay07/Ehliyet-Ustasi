@@ -5,4 +5,4 @@ export { ProgressRing } from "./ProgressRing";
 export { ProgressBar } from "./ProgressBar";
 export { Screen } from "./Screen";
 export { ScreenHeader } from "./ScreenHeader";
-export { Title, Subtitle, Body, Caption, SectionTitle } from "./Typography";
+export { SectionTitle } from "./Typography";
