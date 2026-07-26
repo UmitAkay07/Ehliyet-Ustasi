@@ -225,6 +225,26 @@ export default function ProfilScreen() {
         {/* Settings */}
         <View style={{ backgroundColor: colors.surface, borderRadius: radius["3xl"], overflow: "hidden", borderWidth: 1, borderColor: colors.border }}>
           <Pressable
+            onPress={toggleTema}
+            style={({ pressed }) => ({
+              flexDirection: "row",
+              alignItems: "center",
+              gap: spacing.md,
+              padding: spacing.lg,
+              borderBottomWidth: 1,
+              borderBottomColor: colors.border,
+              backgroundColor: pressed ? "rgba(0,0,0,0.02)" : "transparent",
+            })}
+          >
+            <View style={{ width: 40, height: 40, borderRadius: radius.xl, backgroundColor: colors.primarySoft, alignItems: "center", justifyContent: "center" }}>
+              <Ionicons name={settings.themeMode === "auto" ? "color-wand" : settings.themeMode === "dark" ? "moon" : "sunny"} size={20} color={colors.primary} />
+            </View>
+            <Text style={{ flex: 1, color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
+              Tema ({settings.themeMode === "auto" ? "Sistem" : settings.themeMode === "dark" ? "Koyu" : "Açık"})
+            </Text>
+            <Ionicons name="chevron-forward" size={16} color={colors.textFaint} />
+          </Pressable>
+          <Pressable
             onPress={() => Linking.openURL("https://ehliyetustasi.com/gizlilik")}
             style={({ pressed }) => ({
               flexDirection: "row",
