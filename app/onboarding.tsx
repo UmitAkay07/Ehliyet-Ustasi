@@ -187,12 +187,12 @@ export default function OnboardingScreen() {
               { ikon: "gift-outline" as IconName, metin: "Ücretsiz" },
             ].map((b) => (
               <View key={b.metin} style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-                <Ionicons name={b.ikon} size={13} color="#94A3B8" />
-                <Text style={{ color: "#94A3B8", fontSize: fontSize.xs }}>{b.metin}</Text>
+                <Ionicons name={b.ikon} size={13} color="#CBD5E1" />
+                <Text style={{ color: "#CBD5E1", fontSize: fontSize.xs }}>{b.metin}</Text>
               </View>
             ))}
           </View>
-          <Text style={{ color: "#94A3B8", fontSize: 10, textAlign: "center", marginTop: spacing.md }}>
+          <Text style={{ color: "rgba(255,255,255,0.5)", fontSize: 10, textAlign: "center", marginTop: spacing.md }}>
             Bu uygulama resmi bir devlet kurumu (MEB vb.) uygulaması değildir.
           </Text>
         </View>
