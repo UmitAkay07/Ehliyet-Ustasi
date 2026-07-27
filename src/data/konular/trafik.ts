@@ -621,6 +621,11 @@ export const TRAFIK_KONULARI: Konu[] = [
         metin:
           "Araçların periyodik teknik muayeneden geçmesi zorunludur; muayenesi geçmiş araç trafiğe çıkarılamaz ve idari para cezası uygulanır. Denetimlerde sürücü belgesi, ruhsat, sigorta poliçesi ve muayene durumu birlikte kontrol edilir.",
       },
+      {
+        baslik: "Sık Karşılaşılan Trafik Cezaları ve Puanları",
+        metin:
+          "Sınavlarda sıkça sorulan bazı trafik cezaları ve ceza puanları şunlardır:\n- Kırmızı ışıkta geçmek: 20 ceza puanı (1 yıl içinde 3 defa ihlal edilirse ehliyete 15 gün el konulur).\n- Seyir halindeyken cep telefonuyla konuşmak: 10 ceza puanı.\n- Emniyet kemeri takmamak: 15 ceza puanı.\n- Hız sınırını aşmak: Aşım miktarına göre 10 ile 15 ceza puanı arası değişir.\n- Hatalı sollama yapmak (geçme yasağına uymamak): 20 ceza puanı.\n- Muayenesiz araçla trafiğe çıkmak: 10 ceza puanı.",
+      },
     ],
     anahtarNoktalar: [
       "Ehliyet, ruhsat ve trafik sigortası her zaman araçta bulundurulmalıdır.",
@@ -629,6 +634,7 @@ export const TRAFIK_KONULARI: Konu[] = [
       "Yasal sınır üstü alkollü araç kullanmak yasaktır; hususi 0.50, stajyer ve ticari sürücülerde 0.20 promildir.",
       "Uyuşturucu etkisinde araç kullanmak çok ağır yaptırımlara tabidir.",
       "Ağır ihlallerde sürücü belgesi iptal edilebilir.",
+      "Kırmızı ışık ihlali ve hatalı sollama 20, emniyet kemeri takmamak 15, cep telefonuyla konuşmak 10 ceza puanıdır.",
       "Muayenesi geçmiş araç trafiğe çıkarılamaz.",
     ],
   },
