@@ -13,25 +13,25 @@ import type { IconName } from "@/types";
 const OZELLIKLER: { ikon: IconName; renk: string; baslik: string; metin: string }[] = [
   {
     ikon: "book",
-    renk: "#3B82F6",
+    renk: "#60A5FA",
     baslik: "Konu Anlatımları",
     metin: "4 ders, sade anlatım ve görseller.",
   },
   {
     ikon: "clipboard",
-    renk: "#10B981",
+    renk: "#34D399",
     baslik: "600+ Soru",
     metin: "Konu testleri ve açıklamalı cevaplar.",
   },
   {
     ikon: "ribbon",
-    renk: "#6366F1",
+    renk: "#818CF8",
     baslik: "Gerçek Prova",
     metin: "50 soru · 45 dk · MEB formatı.",
   },
   {
     ikon: "car-sport",
-    renk: "#F59E0B",
+    renk: "#FBBF24",
     baslik: "Direksiyon",
     metin: "Animasyonlu manevra dersleri.",
   },
