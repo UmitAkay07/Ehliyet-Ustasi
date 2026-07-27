@@ -64,7 +64,7 @@ Boyut: Google Play genelde telefon 1080x1920; App Store 6.7" ekran boyutları.
 
 `PRIVACY.md` içeriğini bir web sayfasına (Notion / GitHub Pages / kendi siteniz) koyup mağazada “Privacy Policy URL” alanına yapıştırın.
 
-> Not: Gizlilik URL'si ve Destek e-postası mağaza panelinde formlara doğru girilmelidir (Örn: iletisim@ehliyetustasi.com ve https://ehliyetustasi.com/gizlilik).
+> Not: Gizlilik URL'si ve Destek e-postası mağaza panelinde formlara doğru girilmelidir (Örn: ehliyetustasi.destek@gmail.com ve https://sites.google.com/view/ehliyetustasi-gizlilik/ana-sayfa).
 
 ## 7) Yasal uyarı (mağaza açıklamasına ekleyin)
 

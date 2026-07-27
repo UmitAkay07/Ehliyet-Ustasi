@@ -19,8 +19,8 @@ LocaleConfig.locales['tr'] = {
 };
 LocaleConfig.defaultLocale = 'tr';
 
-const DESTEK_EMAIL = "iletisim@ehliyetustasi.com";
-const GIZLILIK_URL = "https://ehliyetustasi.com/gizlilik";
+const DESTEK_EMAIL = "ehliyetustasi.destek@gmail.com";
+const GIZLILIK_URL = "https://sites.google.com/view/ehliyetustasi-gizlilik/ana-sayfa";
 
 async function destekAc() {
   const mailto = `mailto:${DESTEK_EMAIL}`;
