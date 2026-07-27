@@ -137,7 +137,7 @@ export const ADAB_KONULARI: Konu[] = [
       {
         baslik: "Fermuar sistemi",
         metin:
-          "Sıkışık trafikte, özellimle şerit daralması veya birleşmesi olan noktalarda, 'fermuar sistemi' denilen nezaket kuralı uygulanır: araçlar sırayla, bir sizden bir karşı şeritten olacak şekilde geçiş yapar. Bu sistem, tüm sürücülerin son ana kadar kendi şeridinde kalıp sırayla geçiş yapmasını, erken şerit değiştirerek öne geçmeye çalışmamayı gerektirir; bu sayede trafik akışı daha düzenli ve hızlı ilerler.",
+          "Sıkışık trafikte, özellikle şerit daralması veya birleşmesi olan noktalarda, 'fermuar sistemi' denilen nezaket kuralı uygulanır: araçlar sırayla, bir sizden bir karşı şeritten olacak şekilde geçiş yapar. Bu sistem, tüm sürücülerin son ana kadar kendi şeridinde kalıp sırayla geçiş yapmasını, erken şerit değiştirerek öne geçmeye çalışmamayı gerektirir; bu sayede trafik akışı daha düzenli ve hızlı ilerler.",
       },
       {
         baslik: "Toplu taşıma ve ağır araçlara karşı davranış",
@@ -173,7 +173,7 @@ export const ADAB_KONULARI: Konu[] = [
       {
         baslik: "Yasal sınırlar ve yaptırımlar",
         metin:
-          "Alkollü araç kullanmak yasaktır ve belirlenen promil sınırının üzerinde tespit edilen sürücüye idari para cezası, sürücü belgesinin geçici geri alınması gibi yaptırımlar uygulanır. Hususi otomobil sürücüleri için yasal sınır 0.50 promildir. Yeni sürücülerde (stajyer) ve toplu taşıma/ticari araç sürücülerinde alkol sınırı 0.20 promildir; bu gruplar belirlenen bu düşük sınırın üstünde araç kullanmamalıdır. Alkol seviyesi arttıkça yaptırımlar da ağırlaşır.",
+          "Yasal promil sınırının üzerinde alkollü araç kullanmak yasaktır; tespit edilen sürücüye idari para cezası, sürücü belgesinin geçici geri alınması gibi yaptırımlar uygulanır. Hususi otomobil sürücüleri için yasal sınır 0.50 promildir. Yeni sürücülerde (stajyer) ve toplu taşıma/ticari araç sürücülerinde alkol sınırı 0.20 promildir; bu gruplar belirlenen bu düşük sınırın üstünde araç kullanmamalıdır. Alkol seviyesi arttıkça yaptırımlar da ağırlaşır.",
       },
       {
         baslik: "İlaç kullanımı ve sürüş",
@@ -224,7 +224,7 @@ export const ADAB_KONULARI: Konu[] = [
       {
         baslik: "Olay yerinde güvenlik önlemleri",
         metin:
-          "Kaza sonrası hemen dörtlü flaşör yakılmalı ve ikaz üçgeni (reflektör) aracın arkasına, şehir içinde en az 50 metre, şehir dışında 100-150 metre mesafeye yerleştirilmelidir. Bu, arkadan gelen araçların zamanında fark edip yavaşlamasını sağlar ve zincirleme kazaları önler. Gece veya sisli havada bu mesafeler daha da artırılmalıdır.",
+          "Kaza sonrası hemen dörtlü flaşör yakılmalı ve ikaz üçgeni (reflektör) aracın arkasına, yerleşim yeri içinde en az 30 metre, yerleşim yeri dışında en az 150 metre mesafeye yerleştirilmelidir. Bu, arkadan gelen araçların zamanında fark edip yavaşlamasını sağlar ve zincirleme kazaları önler. Gece veya sisli havada bu mesafeler daha da artırılmalıdır.",
       },
       {
         baslik: "Yaralı varsa yapılması gerekenler",
@@ -249,7 +249,7 @@ export const ADAB_KONULARI: Konu[] = [
     ],
     anahtarNoktalar: [
       "Kaza sonrası önce sakin kalınır, güvenlik alınır (flaşör, reflektör).",
-      "Reflektör şehir içi ~50 m, şehir dışı ~100-150 m mesafeye konur.",
+      "Reflektör yerleşim içi en az 30 m, yerleşim dışı en az 150 m mesafeye konur.",
       "Yaralı varsa 112 aranır, yaralı zorunlu olmadıkça hareket ettirilmez.",
       "Maddi hasarda anlaşmaya varılırsa tutanak doldurulup araçlar çekilir.",
       "Yaralanmalı/ölümlü kazada araç yeri değiştirilmez, yetkili beklenir.",

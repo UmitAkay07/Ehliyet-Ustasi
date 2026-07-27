@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
@@ -10,6 +11,7 @@ import { useAppStore } from "@/store/useAppStore";
 import { useHydration } from "@/store/useHydration";
 import { tumBildirimleriKur } from "@/services/notifications";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { BrandBootScreen } from "@/components/BrandBootScreen";
 import {
   useFonts,
   Nunito_400Regular,
@@ -20,8 +22,10 @@ import {
 } from "@expo-google-fonts/nunito";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
-/** Native splash en az bu kadar görünsün (marka anı) */
-const SPLASH_MIN_MS = 1400;
+SystemUI.setBackgroundColorAsync("#030712").catch(() => {});
+/** Native splash / marka boot en az bu kadar görünsün */
+const SPLASH_MIN_MS = 1600;
+const BRAND_BG = "#030712";
 
 function RootNavigator() {
   const { colors, scheme } = useTheme();
@@ -35,8 +39,12 @@ function RootNavigator() {
 
   // Tema değiştiğinde sistem arkaplanını da güncelle (Light modda koyu flash önler)
   useEffect(() => {
+    if (!hazir) {
+      SystemUI.setBackgroundColorAsync(BRAND_BG).catch(() => {});
+      return;
+    }
     SystemUI.setBackgroundColorAsync(colors.background).catch(() => {});
-  }, [colors.background]);
+  }, [colors.background, hazir]);
 
   // Hydration bitince doğru rotaya git — hepsi native splash perdesinin altında olur
   useEffect(() => {
@@ -66,6 +74,16 @@ function RootNavigator() {
     if (!hazir || !onboardingTamam) return;
     tumBildirimleriKur(sinavTarihi, { izinIste: false }).catch(() => {});
   }, [hazir, onboardingTamam, sinavTarihi]);
+
+  // Expo Go native splash'i göstermez; JS yüklenene kadar / hazır olana kadar kendi marka ekranımız.
+  if (!hazir) {
+    return (
+      <>
+        <StatusBar style="light" />
+        <BrandBootScreen />
+      </>
+    );
+  }
 
   return (
     <>
@@ -105,12 +123,17 @@ export default function RootLayout() {
     Nunito_800ExtraBold,
   });
 
+  // null dönme → sistem/Expo Go beyaz ekran gösterir. Font beklerken koyu marka ekranı.
   if (!fontsLoaded) {
-    return null;
+    return (
+      <View style={{ flex: 1, backgroundColor: BRAND_BG }}>
+        <BrandBootScreen />
+      </View>
+    );
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: BRAND_BG }}>
       <ErrorBoundary>
         <SafeAreaProvider>
           <ThemeProvider>

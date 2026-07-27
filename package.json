@@ -12,6 +12,8 @@
     "isaretler:download": "node scripts/download-all-isaretler.js",
     "isaretler:sorular": "node scripts/generate-isaret-sorulari.mjs",
     "images:optimize": "node scripts/optimize-lesson-images.mjs",
+    "splash:build": "node scripts/build-splash-brand.mjs",
+    "icon:fix": "node scripts/fix-icon-corners.mjs",
     "postinstall": "node scripts/patch-expo-speech.js"
   },
   "dependencies": {

@@ -76,7 +76,7 @@ export const TRAFIK_KONULARI: Konu[] = [
       {
         baslik: "Tehlike uyarı işaretleri",
         metin:
-          "Tehlike uyarı işaretleri, yolda ileride karşılaşılabilecek bir tehlikeyi önceden bildirir; sürücüyü yavaşlamaya, dikkatli olmaya ve gerektiğinde durmaya hazır olmaya çağırır. Yaygın örnekler: kasisli yol, kaygan yol, sağa/sola tehlikeli viraj, öndeyaya geçidi, okul geçidi, yayaların dolaştığı yol, gizli buzlanma, taşıt trafiğine kapalı yol devamı. Şehir dışı yollarda bu levhalar tehlikenin başlangıcından belirli bir mesafe önce (genellikle 150-250 m), şehir içinde daha yakın mesafede konulur.",
+          "Tehlike uyarı işaretleri, yolda ileride karşılaşılabilecek bir tehlikeyi önceden bildirir; sürücüyü yavaşlamaya, dikkatli olmaya ve gerektiğinde durmaya hazır olmaya çağırır. Yaygın örnekler: kasisli yol, kaygan yol, sağa/sola tehlikeli viraj, önde yaya geçidi, okul geçidi, yayaların dolaştığı yol, gizli buzlanma, taşıt trafiğine kapalı yol devamı. Şehir dışı yollarda bu levhalar tehlikenin başlangıcından belirli bir mesafe önce (genellikle 150-250 m), şehir içinde daha yakın mesafede konulur.",
       },
       {
         baslik: "Trafik tanzim (yasaklama) işaretleri",
@@ -609,7 +609,7 @@ export const TRAFIK_KONULARI: Konu[] = [
       {
         baslik: "Alkol ve madde kullanımı sınırları",
         metin:
-          "Alkollü araç kullanmak trafik güvenliğini doğrudan tehdit eder ve yasaktır; belirlenen promil sınırının üzerinde alkol tespit edilen sürücüye idari para cezası uygulanır, belgesi geçici olarak geri alınır ve tekrarında ceza ağırlaşır. Hususi otomobillerde sınır 0.50 promildir. Yeni sürücülerde (belirli bir süre) ve toplu taşıma/ticari araç sürücülerinde alkol sınırı 0.20 promildir. Uyuşturucu/uyarıcı madde etkisinde araç kullanmak ise çok daha ağır yaptırımlara (belge iptali, cezai kovuşturma) tabidir.",
+          "Yasal promil sınırının üzerinde alkollü araç kullanmak trafik güvenliğini doğrudan tehdit eder ve yasaktır; sınırın üzerinde alkol tespit edilen sürücüye idari para cezası uygulanır, belgesi geçici olarak geri alınır ve tekrarında ceza ağırlaşır. Hususi otomobillerde sınır 0.50 promildir. Yeni sürücülerde (belirli bir süre) ve toplu taşıma/ticari araç sürücülerinde alkol sınırı 0.20 promildir. Uyuşturucu/uyarıcı madde etkisinde araç kullanmak ise çok daha ağır yaptırımlara (belge iptali, cezai kovuşturma) tabidir.",
       },
       {
         baslik: "Belge iptali ve geri alma süreci",
@@ -626,7 +626,7 @@ export const TRAFIK_KONULARI: Konu[] = [
       "Ehliyet, ruhsat ve trafik sigortası her zaman araçta bulundurulmalıdır.",
       "Sürücü belgesi sınıfları kullanılan araç türüne göre değişir.",
       "Bir yılda 100 ceza puanı dolunca belge belirli süre geri alınır.",
-      "Alkollü araç kullanmak yasaktır; hususi araçlarda sınır 0.50, yeni ve ticari sürücülerde sınır 0.20 promildir.",
+      "Yasal sınır üstü alkollü araç kullanmak yasaktır; hususi 0.50, stajyer ve ticari sürücülerde 0.20 promildir.",
       "Uyuşturucu etkisinde araç kullanmak çok ağır yaptırımlara tabidir.",
       "Ağır ihlallerde sürücü belgesi iptal edilebilir.",
       "Muayenesi geçmiş araç trafiğe çıkarılamaz.",

@@ -43,7 +43,8 @@ export default function ProvaScreen() {
       setKalan((k) => {
         if (k <= 1) {
           clearInterval(timer);
-          bitir(true);
+          // bitir'i updater içinde çağırma — render/setState sırasında yan etki olmasın
+          queueMicrotask(() => bitir(true));
           return 0;
         }
         return k - 1;

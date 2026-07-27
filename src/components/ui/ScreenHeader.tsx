@@ -25,6 +25,7 @@ export function ScreenHeader({
   const handleBack = () => {
     if (onBack) return onBack();
     if (router.canGoBack()) router.back();
+    else router.replace("/(tabs)");
   };
 
   return (

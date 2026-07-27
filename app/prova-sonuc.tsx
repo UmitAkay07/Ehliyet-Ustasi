@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { Screen, ScreenHeader, Button, Card, ProgressRing } from "@/components/ui";
@@ -19,18 +19,23 @@ export default function ProvaSonucScreen() {
 
   const paylas = async () => {
     try {
-      if (viewShotRef.current?.capture) {
-        const uri = await viewShotRef.current.capture();
-        const isAvailable = await Sharing.isAvailableAsync();
-        if (isAvailable) {
-          await Sharing.shareAsync(uri, {
-            dialogTitle: "Sınav Sonucumu Paylaş",
-            mimeType: "image/jpeg",
-          });
-        }
+      if (!viewShotRef.current?.capture) {
+        Alert.alert("Paylaşım", "Sonuç görseli henüz hazır değil. Biraz sonra tekrar dene.");
+        return;
       }
+      const uri = await viewShotRef.current.capture();
+      const isAvailable = await Sharing.isAvailableAsync();
+      if (!isAvailable) {
+        Alert.alert("Paylaşım", "Bu cihazda paylaşım desteklenmiyor.");
+        return;
+      }
+      await Sharing.shareAsync(uri, {
+        dialogTitle: "Sınav Sonucumu Paylaş",
+        mimeType: "image/jpeg",
+      });
     } catch (err) {
       console.error("Paylaşım hatası:", err);
+      Alert.alert("Paylaşım", "Sonuç paylaşılamadı. Lütfen tekrar dene.");
     }
   };
 

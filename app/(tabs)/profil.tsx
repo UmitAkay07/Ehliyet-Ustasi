@@ -19,6 +19,44 @@ LocaleConfig.locales['tr'] = {
 };
 LocaleConfig.defaultLocale = 'tr';
 
+const DESTEK_EMAIL = "iletisim@ehliyetustasi.com";
+const GIZLILIK_URL = "https://ehliyetustasi.com/gizlilik";
+
+async function destekAc() {
+  const mailto = `mailto:${DESTEK_EMAIL}`;
+  try {
+    const acilabilir = await Linking.canOpenURL(mailto);
+    if (acilabilir) {
+      await Linking.openURL(mailto);
+      return;
+    }
+  } catch {
+    // Emülatör / mail uygulaması yok — aşağıda adresi göster
+  }
+  Alert.alert(
+    "Destek e-postası",
+    `Bu cihazda e-posta uygulaması açılamadı.\n\nBize yazın:\n${DESTEK_EMAIL}`,
+    [{ text: "Tamam" }]
+  );
+}
+
+async function gizlilikAc() {
+  try {
+    const acilabilir = await Linking.canOpenURL(GIZLILIK_URL);
+    if (acilabilir) {
+      await Linking.openURL(GIZLILIK_URL);
+      return;
+    }
+  } catch {
+    // Site henüz yayında değilse veya tarayıcı yoksa
+  }
+  Alert.alert(
+    "Gizlilik politikası",
+    `Sayfa şu an açılamadı.\n\nAdres:\n${GIZLILIK_URL}`,
+    [{ text: "Tamam" }]
+  );
+}
+
 export default function ProfilScreen() {
   const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
@@ -269,7 +307,9 @@ export default function ProfilScreen() {
             <Ionicons name="chevron-forward" size={16} color={colors.textFaint} />
           </Pressable>
           <Pressable
-            onPress={() => Linking.openURL("mailto:iletisim@ehliyetustasi.com")}
+            onPress={() => {
+              destekAc().catch(() => {});
+            }}
             style={({ pressed }) => ({
               flexDirection: "row",
               alignItems: "center",
@@ -289,7 +329,9 @@ export default function ProfilScreen() {
             <Ionicons name="open-outline" size={16} color={colors.textFaint} />
           </Pressable>
           <Pressable
-            onPress={() => Linking.openURL("https://ehliyetustasi.com/gizlilik")}
+            onPress={() => {
+              gizlilikAc().catch(() => {});
+            }}
             style={({ pressed }) => ({
               flexDirection: "row",
               alignItems: "center",

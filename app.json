@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-brand.png",
+      "image": "./assets/icon-brand.png",
       "resizeMode": "contain",
       "backgroundColor": "#030712"
     },
@@ -45,9 +45,13 @@
         "expo-splash-screen",
         {
           "backgroundColor": "#030712",
-          "image": "./assets/splash-brand.png",
+          "image": "./assets/icon-brand.png",
           "imageWidth": 200,
-          "resizeMode": "contain"
+          "resizeMode": "contain",
+          "dark": {
+            "backgroundColor": "#030712",
+            "image": "./assets/icon-brand.png"
+          }
         }
       ],
       "expo-asset",
@@ -61,6 +65,13 @@
     ],
     "experiments": {
       "typedRoutes": false
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "0ac5b87e-b70d-408c-ad4c-5ea9f14c7023"
+      }
+    },
+    "owner": "umitakay07s-team"
   }
 }

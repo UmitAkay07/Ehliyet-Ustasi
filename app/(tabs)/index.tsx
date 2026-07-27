@@ -255,7 +255,7 @@ export default function HomeScreen() {
             <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
               <Ionicons name="book" size={16} color={colors.success} />
               <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
-                {genel.okunanKonu} ders okundu
+                {genel.okunanKonu} konu okundu
               </Text>
             </View>
           </View>

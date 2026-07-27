@@ -72,7 +72,7 @@ export const ILKYARDIM_KONULARI: Konu[] = [
       {
         baslik: "Kendi güvenliğini sağlama adımları",
         metin:
-          "Olay yerine yaklaşırken şu adımlar izlenir:\n1. Aracınızı olay yerinden güvenli bir mesafede, yol kenarına, mümkünse görüş açısı yeterli bir yere park edin.\n2. Kontağı kapatın ve el frenini çekin.\n3. Dörtlü flaşörü yakın.\n4. Reflektör (ikaz üçgeni) uzağa (şehir içi 50 m, şehir dışı 100-150 m) yerleştirerek diğer sürücüleri uyarın.\n5. Yangın/patlama riski nedeniyle olay yerinde asla sigara içmeyin veya ateş yakmayın.",
+          "Olay yerine yaklaşırken şu adımlar izlenir:\n1. Aracınızı olay yerinden güvenli bir mesafede, yol kenarına, mümkünse görüş açısı yeterli bir yere park edin.\n2. Kontağı kapatın ve el frenini çekin.\n3. Dörtlü flaşörü yakın.\n4. Reflektör (ikaz üçgeni) uzağa (yerleşim içi en az 30 m, yerleşim dışı en az 150 m) yerleştirerek diğer sürücüleri uyarın.\n5. Yangın/patlama riski nedeniyle olay yerinde asla sigara içmeyin veya ateş yakmayın.",
       },
       {
         baslik: "Olay yerini güvenli hâle getirme",
