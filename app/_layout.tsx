@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { View, LogBox } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
@@ -22,6 +22,7 @@ import {
 } from "@expo-google-fonts/nunito";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
+LogBox.ignoreLogs(["expo-notifications: Android Push notifications"]);
 SystemUI.setBackgroundColorAsync("#030712").catch(() => {});
 /** Native splash / marka boot en az bu kadar görünsün */
 const SPLASH_MIN_MS = 1600;

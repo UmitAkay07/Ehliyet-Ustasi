@@ -1165,9 +1165,9 @@ export const TRAFIK_ISARETLERI: TrafikIsareti[] = [
   },
   {
     id: "kgm-b-12d",
-    ad: "Bilgi levhası (B-12d)",
+    ad: "Turistik Mahal",
     kategori: "bilgi",
-    anlam: "KGM B-12d kodlu trafik işaret levhasıdır.",
+    anlam: "Turistik öneme sahip bir yere yaklaşıldığını bildirir.",
   },
   {
     id: "kgm-b-12e",
@@ -1501,9 +1501,9 @@ export const TRAFIK_ISARETLERI: TrafikIsareti[] = [
   },
   {
     id: "kgm-b-61a",
-    ad: "Bilgi levhası (B-61a)",
+    ad: "Ortalama Hız Denetimi",
     kategori: "bilgi",
-    anlam: "KGM B-61a kodlu trafik işaret levhasıdır.",
+    anlam: "Yolda ortalama hız denetimi yapıldığını bildirir.",
   },
   {
     id: "kgm-b-61b",
@@ -1513,9 +1513,9 @@ export const TRAFIK_ISARETLERI: TrafikIsareti[] = [
   },
   {
     id: "kgm-b-61c",
-    ad: "Bilgi levhası (B-61c)",
+    ad: "Elektronik Denetleme Sistemi (EDS)",
     kategori: "bilgi",
-    anlam: "KGM B-61c kodlu trafik işaret levhasıdır.",
+    anlam: "Yolda elektronik denetleme yapıldığını bildirir.",
   },
   {
     id: "kgm-b-61d",
@@ -1591,9 +1591,9 @@ export const TRAFIK_ISARETLERI: TrafikIsareti[] = [
   },
   {
     id: "kgm-b-5a-05",
-    ad: "Bilgi levhası (B-5a-05)",
+    ad: "Kavşak İçi Yön Levhası",
     kategori: "bilgi",
-    anlam: "KGM B-5a-05 kodlu trafik işaret levhasıdır.",
+    anlam: "Kavşak içinde gidilecek yönleri bildirir.",
   },
   {
     id: "kgm-b-5a-06",

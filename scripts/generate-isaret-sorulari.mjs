@@ -157,6 +157,12 @@ function parseSigns() {
   const re = /id:\s*"([^"]+)"[\s\S]*?ad:\s*"([^"]+)"[\s\S]*?kategori:\s*"([^"]+)"[\s\S]*?anlam:\s*"([^"]+)"/g;
   let m;
   while ((m = re.exec(src))) {
+    const ad = m[2];
+    const anlam = m[4];
+    // Jenerik levhaları testlerden ve şıklardan tamamen çıkar
+    if (/\([BTP]+-/.test(ad) || anlam.includes("kodlu trafik")) {
+      continue;
+    }
     signs.push({ id: m[1], ad: m[2], kategori: m[3], anlam: m[4] });
   }
   return signs;

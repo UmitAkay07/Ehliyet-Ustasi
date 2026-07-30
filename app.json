@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "com.ehliyetustasi.app",
-      "versionCode": 1,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon-brand.png",
         "backgroundColor": "#030712"

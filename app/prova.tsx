@@ -150,9 +150,33 @@ export default function ProvaScreen() {
       {/* Üst bar: süre + ilerleme */}
       <View style={{ paddingHorizontal: spacing.lg, paddingTop: spacing.sm, gap: spacing.sm }}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
-            {cevaplananSayisi}/{sorular.length} cevaplandı
-          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
+            <Pressable
+              onPress={() => {
+                Alert.alert(
+                  "Sınavdan Çık",
+                  "Sınavı yarıda bırakmak istediğinize emin misiniz? İlerlemeniz kaydedilmeyecek.",
+                  [
+                    { text: "İptal", style: "cancel" },
+                    { text: "Çık", style: "destructive", onPress: () => router.back() },
+                  ]
+                );
+              }}
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: 16,
+                backgroundColor: colors.surfaceAlt,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Ionicons name="close" size={20} color={colors.text} />
+            </Pressable>
+            <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
+              {cevaplananSayisi}/{sorular.length} cevaplandı
+            </Text>
+          </View>
           <View
             style={{
               flexDirection: "row",
