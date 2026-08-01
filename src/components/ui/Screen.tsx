@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, StyleProp, View, ViewStyle } from "react-native";
-import { SafeAreaView, Edge } from "react-native-safe-area-context";
+import { SafeAreaView, Edge, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "@/theme";
 
 interface ScreenProps {
@@ -21,6 +21,7 @@ export function Screen({
   footer,
 }: ScreenProps) {
   const { colors, spacing } = useTheme();
+  const insets = useSafeAreaInsets();
 
   const inner = (
     <View
@@ -53,7 +54,11 @@ export function Screen({
       ) : (
         <View style={{ flex: 1 }}>{inner}</View>
       )}
-      {footer}
+      {footer && (
+        <View style={{ paddingBottom: insets.bottom > 0 ? insets.bottom + 5 : 0 }}>
+          {footer}
+        </View>
+      )}
     </SafeAreaView>
   );
 }

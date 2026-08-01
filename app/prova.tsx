@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Alert, Pressable, ScrollView, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Screen, ScreenHeader, Button, Card, ProgressBar } from "@/components/ui";
 import { SoruBileseni } from "@/components/SoruBileseni";
 import { useTheme } from "@/theme";
@@ -21,6 +21,7 @@ function sureBicimle(saniye: number): string {
 export default function ProvaScreen() {
   const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const soruCevapla = useAppStore((s) => s.soruCevapla);
   const provaKaydet = useAppStore((s) => s.provaKaydet);
 
@@ -264,6 +265,7 @@ export default function ProvaScreen() {
           gap: spacing.md,
           padding: spacing.lg,
           paddingTop: spacing.md,
+          paddingBottom: insets.bottom > 0 ? insets.bottom + 5 : spacing.lg,
           borderTopWidth: 1,
           borderTopColor: colors.border,
         }}

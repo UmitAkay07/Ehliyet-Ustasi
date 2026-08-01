@@ -2,11 +2,13 @@ import React from "react";
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "@/theme";
 import type { IconName } from "@/types";
 
 export default function TabLayout() {
   const { colors, fontSize } = useTheme();
+  const insets = useSafeAreaInsets();
 
   const ikon = (aktif: IconName, pasif: IconName) => ({
     tabBarIcon: ({ focused, color, size }: { focused: boolean; color: string; size: number }) => (
@@ -35,8 +37,8 @@ export default function TabLayout() {
           backgroundColor: colors.surface,
           borderTopColor: colors.border,
           borderTopWidth: 1,
-          height: 68,
-          paddingBottom: 10,
+          height: 58 + (insets.bottom > 0 ? insets.bottom + 5 : 10),
+          paddingBottom: insets.bottom > 0 ? insets.bottom + 5 : 10,
           paddingTop: 8,
           elevation: 0,
         },
