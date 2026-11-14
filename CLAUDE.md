@@ -303,7 +303,7 @@ npm run isaretler:sorular
 
 ### Version Code Yonetimi
 
-`app.json` -> `expo.android.versionCode` her production build'de artirilmalidir. `eas.json` dosyasinda `"autoIncrement": true` ayari vardir ancak bazen manuel artirim gerekebilir. **Guncel: version 1.1.0, versionCode 9** (production build autoIncrement ile artirir).
+`app.json` -> `expo.android.versionCode` her production build'de artirilmalidir. `eas.json` dosyasinda `"autoIncrement": true` ayari vardir ancak bazen manuel artirim gerekebilir. **Guncel: version 1.1.0, versionCode 10** (production build autoIncrement ile artirir).
 
 `runtimeVersion` politikasi `appVersion`: native paket eklenen her surumde `expo.version` artirilmalidir, yoksa eski kurulumlara uyumsuz OTA gidebilir.
 
