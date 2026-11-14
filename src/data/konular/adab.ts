@@ -122,7 +122,6 @@ export const ADAB_KONULARI: Konu[] = [
         baslik: "2 saniye kuralının uygulanışı",
         metin:
           "2 saniye kuralı, hıza bağlı olmayan, pratik ve her koşulda uygulanabilen bir yöntemdir:\n1. Öndeki aracın sabit bir referans noktayı (levha, direk, yol çizgisi) geçtiği anı belirleyin.\n2. Zihninizden 'bin bir, bin iki' diye sayın (yaklaşık 2 saniye).\n3. Kendi aracınız o referans noktaya bu süre dolmadan ulaşıyorsa, takip mesafeniz yetersizdir ve mesafeyi artırmalısınız.\nBu yöntem hem şehir içinde hem şehirler arası yolda kolayca uygulanabilir ve sürücüye objektif bir geri bildirim sağlar.",
-        gorsel: "2-saniye",
       },
       {
         baslik: "Koşullara göre mesafe artırma",

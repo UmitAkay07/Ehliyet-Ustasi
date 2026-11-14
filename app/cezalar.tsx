@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
-import { Screen, ScreenHeader, Card, SectionTitle } from "@/components/ui";
+import { Screen, ScreenHeader } from "@/components/ui";
 import { useTheme } from "@/theme";
 import { CEZA_KATEGORILERI, TRAFIK_CEZALARI } from "@/data/cezalar";
 import type { TrafikCezasi } from "@/data/cezalar";
@@ -26,12 +26,10 @@ export default function CezalarScreen() {
     <Screen>
       <ScreenHeader title="Trafik Cezaları" subtitle="Bilgilendirme rehberi" />
 
-      <Card>
-        <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>
-          Tutarlar ve puanlar yıldan yıla değişebilir. Güncel resmi bilgi için ilgili kurum
-          duyurularını kontrol et. Bu liste eğitim amaçlıdır.
-        </Text>
-      </Card>
+      <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>
+        Tutarlar ve puanlar yıldan yıla değişebilir. Güncel resmi bilgi için ilgili kurum
+        duyurularını kontrol et. Bu liste eğitim amaçlıdır.
+      </Text>
 
       <TextInput
         value={arama}
@@ -68,10 +66,12 @@ export default function CezalarScreen() {
         ))}
       </View>
 
-      <SectionTitle title={`${liste.length} ihlal`} />
-      <View style={{ gap: spacing.md }}>
-        {liste.map((c) => (
-          <CezaKart key={c.id} ceza={c} />
+      <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.bold }}>
+        {liste.length} ihlal
+      </Text>
+      <View>
+        {liste.map((c, i) => (
+          <CezaKart key={c.id} ceza={c} first={i === 0} />
         ))}
       </View>
     </Screen>
@@ -109,25 +109,31 @@ function KategoriChip({
   );
 }
 
-function CezaKart({ ceza }: { ceza: TrafikCezasi }) {
+function CezaKart({ ceza, first }: { ceza: TrafikCezasi; first?: boolean }) {
   const { colors, fontSize, fontFamily, spacing } = useTheme();
   const kat = CEZA_KATEGORILERI.find((k) => k.id === ceza.kategori);
   return (
-    <Card>
-      <View style={{ gap: spacing.sm }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
-          <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: kat?.renk ?? colors.primary }} />
-          <Text style={{ color: colors.textFaint, fontSize: fontSize.xs }}>{kat?.ad}</Text>
-        </View>
-        <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.bold }}>{ceza.ihlal}</Text>
-        <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>{ceza.aciklama}</Text>
-        <Text style={{ color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
-          Tipik sonuç: {ceza.tipikSonuc}
-        </Text>
-        {ceza.cezaPuani ? (
-          <Text style={{ color: colors.warning, fontSize: fontSize.xs }}>Puan: {ceza.cezaPuani}</Text>
-        ) : null}
+    <View
+      style={{
+        gap: spacing.sm,
+        paddingVertical: spacing.md,
+        borderTopWidth: first ? 1 : 0,
+        borderBottomWidth: 1,
+        borderColor: colors.border,
+      }}
+    >
+      <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
+        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: kat?.renk ?? colors.primary }} />
+        <Text style={{ color: colors.textFaint, fontSize: fontSize.xs }}>{kat?.ad}</Text>
       </View>
-    </Card>
+      <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.bold }}>{ceza.ihlal}</Text>
+      <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>{ceza.aciklama}</Text>
+      <Text style={{ color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
+        Tipik sonuç: {ceza.tipikSonuc}
+      </Text>
+      {ceza.cezaPuani ? (
+        <Text style={{ color: colors.warning, fontSize: fontSize.xs }}>Puan: {ceza.cezaPuani}</Text>
+      ) : null}
+    </View>
   );
 }

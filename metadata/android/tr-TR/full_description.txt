@@ -1,0 +1,41 @@
+Ehliyet sınav soruları, e-sınav formatında deneme sınavı ve 2D direksiyon dersleri tek uygulamada! Ehliyet Ustası ile B sınıfı ehliyet sınavını 2026 formatında çalış, ilk seferde geç.
+
+Sıkıcı, kalın kitapları bir kenara bırak! Sürücü kursuna gitmeden önce ya da sınav gecesi, ihtiyacın olan her şey cebinde. Ehliyet Ustası sadece yazılı e-sınava değil, en çok korkulan direksiyon sınavına da hazırlar.
+
+🚀 ÖNE ÇIKAN ÖZELLİKLER
+
+📝 Ehliyet Soruları ve Deneme Sınavı
+595 ehliyet sınav sorusunu konulara göre çöz, her sorunun açıklamasını oku. "Sınav Provası" ile gerçek e-sınav formatında deneme sınavına gir: 50 soru, 45 dakika, 70 puan geçme barajı. Soru dağılımı sınavdaki gibidir: Trafik 23, İlk Yardım 12, Motor 9, Trafik Adabı 6.
+
+🚗 2D Direksiyon Sınavı Animasyonları
+Paralel park, L (dik) park, rampada kalkış, U dönüşü, ani fren, sinyal-ayna-şerit değiştirme ve geri manevra dahil 9 direksiyon dersini kuşbakışı 2D animasyonlarla adım adım izle. "Tam Sınav Simülasyonu" ile sınav güzergâhını baştan sona dene, sınav heyecanını yen.
+
+📘 Görsel Konu Anlatımları
+Trafik ve Çevre Bilgisi, İlk Yardım, Motor (Araç Tekniği) ve Trafik Adabı için 32 konu: nokta atışı özetler, akılda kalıcı görseller ve interaktif animasyonlar. "Dinle" özelliğiyle konuları sesli dinleyebilirsin.
+
+🚦 Trafik İşaretleri (Levhalar)
+300'den fazla trafik levhasını anlamlarıyla incele, görsel levha sorularıyla ezberini pekiştir.
+
+❌ Akıllı Hata Defteri
+Yanlış yaptığın sorular otomatik olarak Hata Defteri'ne kaydedilir. Sınavdan önce sadece eksiklerine odaklan.
+
+🎯 Günün Sorusu ve Sınav Geri Sayımı
+Sınav tarihini gir, kalan günü ana ekrandan takip et. Günün Sorusu ve hatırlatmalarla her gün çalış, ilerlemeni istatistiklerle gör.
+
+💸 Trafik Cezaları
+Trafik cezaları listesi her an elinin altında.
+
+📴 Çevrimdışı, Kayıtsız, Ücretsiz
+İnternetsiz çalışır, üyelik gerektirmez. Göz yormayan karanlık tema (Dark Mode) ile saatlerce rahatça çalışabilirsin.
+
+Neden Ehliyet Ustası?
+Klasik ehliyet soru uygulamalarından farklı olarak sadece test çözmezsin: direksiyon sınavı manevralarını da görerek öğrenirsin. Ehliyet sınavını şansa bırakma, hemen indir ve direksiyonun başına özgüvenle geç!
+
+Ehliyet sınavı hazırlık, e-sınav soruları, ehliyet deneme sınavı, direksiyon sınavı, direksiyon dersi, paralel park, L park, rampa kalkışı, trafik işaretleri, trafik kuralları, ilk yardım, motor bilgisi ve trafik adabı konularında kendini test et.
+
+⚠️ ÖNEMLİ YASAL UYARI VE SORUMLULUK REDDİ BEYANI ⚠️
+- Ehliyet Ustası uygulaması, herhangi bir devlet kurumunu (T.C. Millî Eğitim Bakanlığı, Karayolları Genel Müdürlüğü, Emniyet Genel Müdürlüğü vb.) temsil etmemektedir.
+- Uygulama, resmi bir devlet hizmeti veya uygulaması DEĞİLDİR. Sürücü adaylarının sınavlarına hazırlanmasına yardımcı olmak amacıyla özel ve bağımsız olarak geliştirilmiş bir eğitim aracıdır.
+
+ℹ️ BİLGİ KAYNAKLARI:
+Uygulama içerisinde yer alan trafik kuralları ve trafik işaretleri ile ilgili temel bilgiler, herkesin erişimine açık olan Karayolları Genel Müdürlüğü'nün (https://www.kgm.gov.tr) ve T.C. Millî Eğitim Bakanlığı'nın (https://www.meb.gov.tr) kamuya açık yayınlarından ve internet materyallerinden derlenmiştir.

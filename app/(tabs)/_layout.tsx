@@ -11,18 +11,10 @@ export default function TabLayout() {
   const insets = useSafeAreaInsets();
 
   const ikon = (aktif: IconName, pasif: IconName) => ({
-    tabBarIcon: ({ focused, color, size }: { focused: boolean; color: string; size: number }) => (
-      <View
-        style={{
-          width: 48,
-          height: 32,
-          borderRadius: 16,
-          backgroundColor: focused ? colors.primarySoft : "transparent",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Ionicons name={focused ? aktif : pasif} size={22} color={color} />
+    tabBarIcon: ({ focused, color }: { focused: boolean; color: string; size: number }) => (
+      <View style={{ alignItems: "center", gap: 5 }}>
+        <Ionicons name={focused ? aktif : pasif} size={21} color={color} />
+        <View style={{ width: 14, height: 2, borderRadius: 1, backgroundColor: focused ? colors.primary : "transparent" }} />
       </View>
     ),
   });
@@ -31,6 +23,8 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        // Geniş ekranda (tablet, yan çevrilmiş) ortalanan içeriğin iki yanı da koyu kalsın
+        sceneStyle: { backgroundColor: colors.background },
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textMuted,
         tabBarStyle: {

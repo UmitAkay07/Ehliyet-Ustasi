@@ -1,196 +1,288 @@
-import React, { useEffect, useState } from "react";
-import { Pressable, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { View } from "react-native";
 import Animated, {
   Easing,
+  Extrapolation,
   cancelAnimation,
   interpolate,
+  runOnJS,
+  useAnimatedReaction,
   useAnimatedStyle,
   useSharedValue,
+  withDelay,
   withRepeat,
+  withSequence,
   withTiming,
-  Extrapolation,
 } from "react-native-reanimated";
-import Svg, { Rect, Path, Circle, G, Ellipse } from "react-native-svg";
+import type { SharedValue } from "react-native-reanimated";
+import { SvgXml } from "react-native-svg";
+import { useFocusEffect } from "expo-router";
 import type { ManevraTipi } from "@/types";
 import { useTheme } from "@/theme";
+import { simSes } from "@/services/simSes";
 import { DESIGN_H, DESIGN_W, MANEVRALAR } from "./keyframes";
-import { ManevraSahnesi } from "./ManevraSahnesi";
+import { ilkGorunurKare, rotaNoktalari, surusVerisi } from "./manevraVerisi";
+import { TUVAL_H, TUVAL_W, manevraZeminSvg } from "./simGorsel";
+import { SimArac } from "./SimArac";
 
-const CAR_W = 28;
-const CAR_H = 50;
+/** Sinyalin bir yanıp sönme turu; sinyal rölesi sesi de bu ritimdedir (assets/sesler/sinyal.wav) */
+const SINYAL_TURU_MS = 700;
+/** Döngüde manevra bitince araba son konumunda bu kadar bekler, sonra baştan başlar */
+const DONGU_BEKLEME_MS = 700;
+const KILIT = Extrapolation.CLAMP;
 
-function AnimatedCar({ tip }: { tip: ManevraTipi }) {
-  const tanim = MANEVRALAR[tip];
-  const t = useSharedValue(0);
-  const pulse = useSharedValue(0);
-  const segments = tanim.keyframes.length - 1;
-
-  useEffect(() => {
-    t.value = 0;
-    // Sinyal yanıp sönmesi için sürekli pulse
-    pulse.value = withRepeat(withTiming(1, { duration: 350 }), -1, true);
-
-    t.value = withRepeat(
-      withTiming(segments, { duration: tanim.sureMs, easing: Easing.linear }),
-      -1,
-      tanim.yoyo
-    );
-    return () => {
-      cancelAnimation(t);
-      cancelAnimation(pulse);
-    };
-  }, [tip]);
-
-  const inputRange = tanim.keyframes.map((_, i) => i);
-  const xs = tanim.keyframes.map((k) => k.x);
-  const ys = tanim.keyframes.map((k) => k.y);
-  const as = tanim.keyframes.map((k) => k.a);
-  const brake = tanim.keyframes.map((k) => k.brake);
-  const sigL = tanim.keyframes.map((k) => k.signalLeft);
-  const sigR = tanim.keyframes.map((k) => k.signalRight);
-
-  const style = useAnimatedStyle(() => {
-    const cx = interpolate(t.value, inputRange, xs, Extrapolation.CLAMP);
-    const cy = interpolate(t.value, inputRange, ys, Extrapolation.CLAMP);
-    const angle = interpolate(t.value, inputRange, as, Extrapolation.CLAMP);
-    return {
-      transform: [
-        { translateX: cx - CAR_W / 2 },
-        { translateY: cy - CAR_H / 2 },
-        { rotate: `${angle}deg` },
-      ],
-    };
-  });
-
-  const brakeStyle = useAnimatedStyle(() => {
-    const isBraking = interpolate(t.value, inputRange, brake, Extrapolation.CLAMP);
-    return { opacity: isBraking > 0.5 ? 1 : 0.3 };
-  });
-
-  const leftSignalStyle = useAnimatedStyle(() => {
-    const isOn = interpolate(t.value, inputRange, sigL, Extrapolation.CLAMP);
-    return { opacity: isOn > 0.5 && pulse.value > 0.5 ? 1 : 0 };
-  });
-
-  const rightSignalStyle = useAnimatedStyle(() => {
-    const isOn = interpolate(t.value, inputRange, sigR, Extrapolation.CLAMP);
-    return { opacity: isOn > 0.5 && pulse.value > 0.5 ? 1 : 0 };
-  });
-
-  // SVG Animasyonlu sarmalayıcı (Bileşenleri ayırmak için Animated.createAnimatedComponent kullanabilirdik ama G yerine doğrudan View sarmalıyoruz)
-  return (
-    <Animated.View
-      style={[
-        {
-          position: "absolute",
-          left: 0,
-          top: 0,
-          width: CAR_W,
-          height: CAR_H,
-          alignItems: "center",
-          justifyContent: "center",
-        },
-        style,
-      ]}
-    >
-      <Svg width={CAR_W + 10} height={CAR_H + 10} viewBox={`-5 -5 ${CAR_W + 10} ${CAR_H + 10}`}>
-        {/* Gölgelik */}
-        <Rect x={-2} y={-2} width={CAR_W + 4} height={CAR_H + 4} rx={10} fill="rgba(0,0,0,0.3)" />
-        
-        {/* Tekerlekler */}
-        <Rect x={-3} y={8} width={4} height={10} rx={1} fill="#111" />
-        <Rect x={CAR_W - 1} y={8} width={4} height={10} rx={1} fill="#111" />
-        <Rect x={-3} y={CAR_H - 16} width={4} height={10} rx={1} fill="#111" />
-        <Rect x={CAR_W - 1} y={CAR_H - 16} width={4} height={10} rx={1} fill="#111" />
-        
-        {/* Ana Gövde */}
-        <Rect x={0} y={0} width={CAR_W} height={CAR_H} rx={8} fill="#2563EB" />
-        
-        {/* Ön Cam */}
-        <Path d={`M 3 12 Q ${CAR_W / 2} 8 ${CAR_W - 3} 12 L ${CAR_W - 4} 20 L 4 20 Z`} fill="#0F172A" />
-        
-        {/* Arka Cam */}
-        <Path d={`M 4 38 L ${CAR_W - 4} 38 L ${CAR_W - 5} 44 Q ${CAR_W / 2} 46 5 44 Z`} fill="#0F172A" />
-        
-        {/* Tavan Çizgisi */}
-        <Rect x={4} y={20} width={CAR_W - 8} height={18} fill="#1D4ED8" />
-
-        {/* Aynalar */}
-        <Ellipse cx={-2} cy={16} rx={2} ry={4} fill="#1E3A8A" transform="rotate(-15 -2 16)" />
-        <Ellipse cx={CAR_W + 2} cy={16} rx={2} ry={4} fill="#1E3A8A" transform="rotate(15 30 16)" />
-
-        {/* Farlar (Beyaz) */}
-        <Circle cx={4} cy={2} r={2} fill="#F8FAFC" />
-        <Circle cx={CAR_W - 4} cy={2} r={2} fill="#F8FAFC" />
-      </Svg>
-
-      {/* Ön ve Arka Işıklar (View ile overlay yapıyoruz çünkü opacity animasyonu reanimated ile SVG içinde zorlanabilir) */}
-      
-      {/* Sol Sinyaller (Ön ve Arka) */}
-      <Animated.View style={[{ position: "absolute", left: 1, top: -1, width: 4, height: 4, borderRadius: 2, backgroundColor: "#FBBF24" }, leftSignalStyle]} />
-      <Animated.View style={[{ position: "absolute", left: 1, bottom: -1, width: 4, height: 4, borderRadius: 2, backgroundColor: "#FBBF24" }, leftSignalStyle]} />
-      
-      {/* Sağ Sinyaller (Ön ve Arka) */}
-      <Animated.View style={[{ position: "absolute", right: 1, top: -1, width: 4, height: 4, borderRadius: 2, backgroundColor: "#FBBF24" }, rightSignalStyle]} />
-      <Animated.View style={[{ position: "absolute", right: 1, bottom: -1, width: 4, height: 4, borderRadius: 2, backgroundColor: "#FBBF24" }, rightSignalStyle]} />
-
-      {/* Fren Lambaları (Arka Sol ve Arka Sağ) */}
-      <Animated.View style={[{ position: "absolute", left: 4, bottom: -1, width: 5, height: 3, borderTopLeftRadius: 2, borderBottomLeftRadius: 2, backgroundColor: "#EF4444" }, brakeStyle]} />
-      <Animated.View style={[{ position: "absolute", right: 4, bottom: -1, width: 5, height: 3, borderTopRightRadius: 2, borderBottomRightRadius: 2, backgroundColor: "#EF4444" }, brakeStyle]} />
-
-    </Animated.View>
-  );
+export interface ManevraAnimasyonuProps {
+  tip: ManevraTipi;
+  /** false iken araba olduğu yerde durur */
+  oynuyor?: boolean;
+  /** true: bitince baştan başlar */
+  dongu?: boolean;
+  /** Ses efektleri (genel ses ayarı da açık olmalı) */
+  sesli?: boolean;
+  /** Değiştikçe manevra baştan başlar */
+  yenidenBaslat?: number;
+  /** Oynatma ilerlemesi 0..1 (dışarıdaki ilerleme çubuğu için) */
+  ilerleme?: SharedValue<number>;
+  /** Döngü kapalıyken manevra bitince */
+  onBitti?: () => void;
+  /** Manevra her tamamlandığında (döngüde her turun sonunda da) */
+  onTurBitti?: () => void;
+  /** Henüz oynatılmadıysa arabayı ilk göründüğü karede gösterir (oynatıcı kapağı) */
+  kapak?: boolean;
 }
 
-export function ManevraAnimasyonu({ tip }: { tip: ManevraTipi }) {
-  const { colors, radius } = useTheme();
-  const [genislik, setGenislik] = useState(DESIGN_W);
-  const [nonce, setNonce] = useState(0);
+/**
+ * Direksiyon manevrasının kuşbakışı simülasyonu: ortak sahne ve araba çizimi, dönen ön tekerlekler,
+ * sinyal/fren/geri vites lambaları ve hareketle eşzamanlı ses efektleri.
+ */
+export function ManevraAnimasyonu({
+  tip,
+  oynuyor = true,
+  dongu = true,
+  sesli = false,
+  yenidenBaslat = 0,
+  ilerleme,
+  onBitti,
+  onTurBitti,
+  kapak = false,
+}: ManevraAnimasyonuProps) {
+  const { radius } = useTheme();
+  const tanim = MANEVRALAR[tip];
+  const kareler = tanim.keyframes;
+  const sonKare = kareler.length - 1;
+  const veri = useMemo(() => surusVerisi(kareler), [kareler]);
+  const zemin = useMemo(() => manevraZeminSvg(tip, rotaNoktalari(kareler, DESIGN_W, DESIGN_H)), [tip, kareler]);
 
-  const scale = Math.min(1, genislik / DESIGN_W);
+  const [genislik, setGenislik] = useState(DESIGN_W);
+  const k = genislik / DESIGN_W;
+  const aracW = TUVAL_W * k;
+  const aracH = TUVAL_H * k;
+
+  const dizi = useMemo(
+    () => ({
+      i: kareler.map((_, i) => i),
+      x: kareler.map((f) => f.x),
+      y: kareler.map((f) => f.y),
+      a: kareler.map((f) => f.a),
+      fren: kareler.map((f) => f.brake),
+      sol: kareler.map((f) => f.signalLeft),
+      sag: kareler.map((f) => f.signalRight),
+      geri: veri.geri,
+      teker: veri.teker,
+    }),
+    [kareler, veri]
+  );
+
+  const t = useSharedValue(kapak ? ilkGorunurKare(kareler, DESIGN_W, DESIGN_H) : 0);
+  const yanip = useSharedValue(0);
+
+  const ayar = useRef({ dongu, onBitti, onTurBitti, sesAktif: sesli && oynuyor });
+  ayar.current = { dongu, onBitti, onTurBitti, sesAktif: sesli && oynuyor };
+  /**
+   * Ekran odakta ve bağlı mı. Geri tuşuyla çıkılırken animasyondan gelen son bir kare, susturulmuş
+   * sinyal/geri döngüsünü yeniden başlatıyor ve ses ekran kapandıktan sonra da sürüyordu.
+   */
+  const sesIzinli = useRef(true);
+  const sonDurum = useRef({ sinyal: -1, geri: -1, fren: -1, hiz: 0 });
+
+  const yanipBaslat = useCallback(() => {
+    yanip.value = 0;
+    yanip.value = withRepeat(withTiming(1, { duration: SINYAL_TURU_MS, easing: Easing.linear }), -1, false);
+  }, [yanip]);
+
+  useEffect(() => {
+    yanipBaslat();
+    return () => cancelAnimation(yanip);
+  }, [yanipBaslat, yanip]);
+
+  const kareDegisti = useCallback(
+    (ham: number) => {
+      const i = Math.max(0, Math.min(sonKare, ham));
+      const kare = kareler[i];
+      const geri = veri.geri[i];
+
+      const s = sonDurum.current;
+      const a = ayar.current;
+      if (!a.sesAktif || !sesIzinli.current) return;
+      const sinyal = kare.signalLeft || kare.signalRight ? 1 : 0;
+      if (sinyal !== s.sinyal) {
+        if (sinyal) yanipBaslat();
+        simSes.sinyal(sinyal === 1);
+      }
+      if (geri !== s.geri) {
+        if (geri && s.geri === 0) simSes.efekt("vites");
+        simSes.geri(geri === 1);
+      }
+      if (tip === "aniFren" && kare.brake && s.fren === 0 && s.hiz > 0.3) simSes.efekt("lastik");
+      sonDurum.current = { sinyal, geri, fren: kare.brake, hiz: veri.hiz[i] };
+    },
+    [kareler, sonKare, veri, tip, yanipBaslat]
+  );
+
+  useAnimatedReaction(
+    () => Math.floor(t.value),
+    (i, onceki) => {
+      if (i !== onceki) runOnJS(kareDegisti)(i);
+    },
+    [kareDegisti]
+  );
+
+  useAnimatedReaction(
+    () => t.value / sonKare,
+    (v) => {
+      if (ilerleme) ilerleme.value = v;
+    },
+    [ilerleme, sonKare]
+  );
+
+  const turBittiRef = useRef<() => void>(() => {});
+  const turBittiCagir = useCallback(() => turBittiRef.current(), []);
+
+  /**
+   * bastan: manevrayı 0'dan başlatır. Başa sarma da aynı animasyonun ilk adımıdır; önce `t.value = 0`
+   * yazıp hemen ardından `t.value` okumak eski değeri (son kareyi) döndürüyordu, bu yüzden döngü
+   * hiç başa dönmüyor ve araba manevranın sonunda kalıyordu.
+   */
+  const oynat = useCallback(
+    (bastan = false, bekleMs = 0) => {
+      const mevcut = t.value;
+      const sondaMi = sonKare - mevcut <= 1e-3;
+      if (sondaMi && !bastan && !ayar.current.dongu) return;
+      const sifirdan = bastan || sondaMi;
+      const kalan = sifirdan ? sonKare : sonKare - mevcut;
+      const tur = withTiming(
+        sonKare,
+        { duration: Math.max(1, (tanim.sureMs * kalan) / sonKare), easing: Easing.linear },
+        (bitti) => {
+          if (bitti) runOnJS(turBittiCagir)();
+        }
+      );
+      t.value = sifirdan ? withSequence(withDelay(bekleMs, withTiming(0, { duration: 0 })), tur) : tur;
+    },
+    [sonKare, t, tanim.sureMs, turBittiCagir]
+  );
+
+  turBittiRef.current = () => {
+    ayar.current.onTurBitti?.();
+    if (ayar.current.dongu) {
+      sonDurum.current = { sinyal: -1, geri: -1, fren: -1, hiz: 0 };
+      oynat(true, DONGU_BEKLEME_MS);
+    } else {
+      simSes.sustur();
+      ayar.current.onBitti?.();
+    }
+  };
+
+  const oncekiBaslatma = useRef({ yenidenBaslat, tip });
+  useEffect(() => {
+    const o = oncekiBaslatma.current;
+    const bastan = o.yenidenBaslat !== yenidenBaslat || o.tip !== tip;
+    if (bastan) {
+      oncekiBaslatma.current = { yenidenBaslat, tip };
+      cancelAnimation(t);
+      t.value = 0;
+      sonDurum.current = { sinyal: -1, geri: -1, fren: -1, hiz: 0 };
+    }
+    if (!oynuyor) {
+      cancelAnimation(t);
+      return;
+    }
+    // Bileşen ekrana bağlanırken atanan animasyon Reanimated'da hiç başlamıyordu; bir kare sonra başlatılır
+    const kare = requestAnimationFrame(() => oynat(bastan));
+    return () => cancelAnimationFrame(kare);
+  }, [oynuyor, yenidenBaslat, tip, oynat, t]);
+
+  useEffect(() => {
+    if (sesli && oynuyor) {
+      sonDurum.current = { sinyal: -1, geri: -1, fren: -1, hiz: 0 };
+      kareDegisti(Math.floor(t.value));
+    } else {
+      simSes.sustur();
+    }
+  }, [sesli, oynuyor, kareDegisti, t]);
+
+  // Ekrandan çıkılınca (geri tuşu dahil, geçiş animasyonunu beklemeden) ses hemen kesilir
+  useFocusEffect(
+    useCallback(() => {
+      sesIzinli.current = true;
+      sonDurum.current = { sinyal: -1, geri: -1, fren: -1, hiz: 0 };
+      return () => {
+        sesIzinli.current = false;
+        simSes.sustur();
+      };
+    }, [])
+  );
+
+  useEffect(
+    () => () => {
+      sesIzinli.current = false;
+      cancelAnimation(t);
+      simSes.sustur();
+    },
+    [t]
+  );
+
+  const aracStili = useAnimatedStyle(() => {
+    const cx = interpolate(t.value, dizi.i, dizi.x, KILIT);
+    const cy = interpolate(t.value, dizi.i, dizi.y, KILIT);
+    const aci = interpolate(t.value, dizi.i, dizi.a, KILIT);
+    return {
+      transform: [{ translateX: cx * k - aracW / 2 }, { translateY: cy * k - aracH / 2 }, { rotate: `${aci}deg` }],
+    };
+  });
+  const tekerStili = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${interpolate(t.value, dizi.i, dizi.teker, KILIT)}deg` }],
+  }));
+  const acikMi = (deger: number) => {
+    "worklet";
+    return deger > 0.5;
+  };
+  const frenStili = useAnimatedStyle(() => ({ opacity: acikMi(interpolate(t.value, dizi.i, dizi.fren, KILIT)) ? 1 : 0 }));
+  const geriStili = useAnimatedStyle(() => ({ opacity: acikMi(interpolate(t.value, dizi.i, dizi.geri, KILIT)) ? 1 : 0 }));
+  const solStili = useAnimatedStyle(() => ({
+    opacity: acikMi(interpolate(t.value, dizi.i, dizi.sol, KILIT)) && yanip.value < 0.5 ? 1 : 0,
+  }));
+  const sagStili = useAnimatedStyle(() => ({
+    opacity: acikMi(interpolate(t.value, dizi.i, dizi.sag, KILIT)) && yanip.value < 0.5 ? 1 : 0,
+  }));
 
   return (
     <View
       onLayout={(e) => setGenislik(e.nativeEvent.layout.width)}
-      style={{
-        width: "100%",
-        height: DESIGN_H * scale + 8,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+      style={{ width: "100%", height: DESIGN_H * k, borderRadius: radius.lg, overflow: "hidden" }}
     >
-      <View
-        style={{
-          width: DESIGN_W,
-          height: DESIGN_H,
-          transform: [{ scale }],
-          borderRadius: radius.lg,
-          overflow: "hidden",
-        }}
-      >
-        <ManevraSahnesi tip={tip} />
-        <AnimatedCar key={`${tip}-${nonce}`} tip={tip} />
-      </View>
-
-      <Pressable
-        onPress={() => setNonce((n) => n + 1)}
-        style={{
-          position: "absolute",
-          right: 10,
-          bottom: 10,
-          width: 40,
-          height: 40,
-          borderRadius: 20,
-          backgroundColor: colors.surface,
-          borderWidth: 1,
-          borderColor: colors.border,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Ionicons name="refresh" size={20} color={colors.text} />
-      </Pressable>
+      <SvgXml xml={zemin} width={DESIGN_W * k} height={DESIGN_H * k} />
+      <Animated.View style={[{ position: "absolute", left: 0, top: 0, width: aracW, height: aracH }, aracStili]}>
+        <SimArac
+          olcekX={k}
+          olcekY={k}
+          tekerStili={tekerStili}
+          frenStili={frenStili}
+          geriStili={geriStili}
+          solSinyalStili={solStili}
+          sagSinyalStili={sagStili}
+        />
+      </Animated.View>
     </View>
   );
 }

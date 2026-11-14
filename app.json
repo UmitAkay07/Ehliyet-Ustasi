@@ -2,37 +2,55 @@
   "expo": {
     "name": "Ehliyet Ustası",
     "slug": "ehliyet-ustasi",
-    "version": "1.0.0",
-    "orientation": "portrait",
+    "version": "1.1.0",
+    "orientation": "default",
     "icon": "./assets/icon-brand.png",
     "scheme": "ehliyetustasi",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/0ac5b87e-b70d-408c-ad4c-5ea9f14c7023",
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    },
     "splash": {
       "image": "./assets/icon-brand.png",
+      "imageWidth": 150,
       "resizeMode": "contain",
-      "backgroundColor": "#030712"
+      "backgroundColor": "#131313"
     },
     "assetBundlePatterns": [
       "assets/**/*.png",
       "**/*.ttf"
     ],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
+      "icon": "./assets/icon-ios.png",
       "bundleIdentifier": "com.ehliyetustasi.app",
       "buildNumber": "1",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"]
       }
     },
     "android": {
       "package": "com.ehliyetustasi.app",
-      "versionCode": 3,
+      "versionCode": 9,
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.SYSTEM_ALERT_WINDOW"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon-brand.png",
-        "backgroundColor": "#030712"
+        "backgroundColor": "#131313"
       },
-      "backgroundColor": "#030712"
+      "backgroundColor": "#131313"
     },
     "web": {
       "bundler": "metro",
@@ -44,12 +62,12 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#030712",
+          "backgroundColor": "#131313",
           "image": "./assets/icon-brand.png",
-          "imageWidth": 200,
+          "imageWidth": 150,
           "resizeMode": "contain",
           "dark": {
-            "backgroundColor": "#030712",
+            "backgroundColor": "#131313",
             "image": "./assets/icon-brand.png"
           }
         }
@@ -59,7 +77,50 @@
         "expo-notifications",
         {
           "icon": "./assets/icon-brand.png",
-          "color": "#6366F1"
+          "color": "#7DD0F0"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableMinifyInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true,
+            "extraProguardRules": "-keep class kotlin.Metadata { *; }\n-keepattributes RuntimeVisibleAnnotations,RuntimeVisibleParameterAnnotations,AnnotationDefault,Signature,InnerClasses,EnclosingMethod\n-keep class kotlin.reflect.** { *; }\n-keep class expo.modules.kotlin.records.** { *; }\n-keep class * implements expo.modules.kotlin.records.Record { *; }\n-keepclassmembers class * implements expo.modules.kotlin.records.Record { *; }"
+          }
+        }
+      ],
+      "./plugins/withProguardOptimize.js",
+      "./plugins/withTelefondaDikey.js",
+      "./plugins/withKullanilmayanSesServisleri.js",
+      [
+        "react-native-android-widget",
+        {
+          "fonts": [
+            "./node_modules/@expo-google-fonts/nunito/800ExtraBold/Nunito_800ExtraBold.ttf",
+            "./node_modules/@expo-google-fonts/nunito/700Bold/Nunito_700Bold.ttf"
+          ],
+          "widgets": [
+            {
+              "name": "GunlukDurum",
+              "label": "Ehliyet Ustası",
+              "description": "Sınava kalan gün, bekleyen tekrar ve bugünkü soru hedefi",
+              "minWidth": "110dp",
+              "minHeight": "40dp",
+              "targetCellWidth": 2,
+              "targetCellHeight": 2,
+              "resizeMode": "horizontal|vertical",
+              "previewImage": "./assets/widget/onizleme.png",
+              "updatePeriodMillis": 1800000
+            }
+          ]
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": false,
+          "recordAudioAndroid": false
         }
       ]
     ],

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Text, View } from "react-native";
-import { Screen, ScreenHeader, Button, Card } from "@/components/ui";
+import { Screen, ScreenHeader, Button } from "@/components/ui";
 import { SoruBileseni } from "@/components/SoruBileseni";
 import { useTheme } from "@/theme";
 import { useAppStore, bugunAnahtar } from "@/store/useAppStore";
@@ -33,11 +33,9 @@ export default function GununSorusuScreen() {
     <Screen>
       <ScreenHeader title="Günün Sorusu" subtitle="Her gün bir yeni soru" />
 
-      <Card>
-        <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>
-          Aynı gün içinde soru değişmez. Cevabın ilerlemene ve hata defterine işlenir.
-        </Text>
-      </Card>
+      <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>
+        Aynı gün içinde soru değişmez. Cevabın ilerlemene ve hata defterine işlenir.
+      </Text>
 
       <SoruBileseni
         soru={soru}
@@ -52,25 +50,23 @@ export default function GununSorusuScreen() {
       {!cevaplandi ? (
         <Button label="Cevabı Kontrol Et" onPress={cevapla} disabled={secilen == null} icon="checkmark-circle" />
       ) : (
-        <Card style={{ backgroundColor: dogruMu ? colors.successSoft : colors.dangerSoft }}>
-          <View style={{ gap: spacing.sm }}>
-            <Text
-              style={{
-                color: dogruMu ? colors.success : colors.danger,
-                fontSize: fontSize.lg,
-                fontFamily: fontFamily.extrabold,
-              }}
-            >
-              {dogruMu ? "Doğru!" : "Yanlış"}
-            </Text>
-            {soru.aciklama ? (
-              <Text style={{ color: colors.text, fontSize: fontSize.sm, lineHeight: 20 }}>{soru.aciklama}</Text>
-            ) : null}
-            <Text style={{ color: colors.textMuted, fontSize: fontSize.xs }}>
-              Yarın yeni bir günün sorusu seni bekliyor.
-            </Text>
-          </View>
-        </Card>
+        <View style={{ gap: spacing.sm, paddingTop: spacing.lg, borderTopWidth: 1, borderTopColor: colors.border }}>
+          <Text
+            style={{
+              color: dogruMu ? colors.success : colors.danger,
+              fontSize: fontSize.lg,
+              fontFamily: fontFamily.extrabold,
+            }}
+          >
+            {dogruMu ? "Doğru!" : "Yanlış"}
+          </Text>
+          {soru.aciklama ? (
+            <Text style={{ color: colors.text, fontSize: fontSize.sm, lineHeight: 20 }}>{soru.aciklama}</Text>
+          ) : null}
+          <Text style={{ color: colors.textFaint, fontSize: fontSize.xs }}>
+            Yarın yeni bir günün sorusu seni bekliyor.
+          </Text>
+        </View>
       )}
     </Screen>
   );

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { View, LogBox } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { AppState, View, LogBox } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
@@ -10,8 +10,10 @@ import { ThemeProvider, useTheme } from "@/theme";
 import { useAppStore } from "@/store/useAppStore";
 import { useHydration } from "@/store/useHydration";
 import { tumBildirimleriKur } from "@/services/notifications";
+import { widgetiGuncelle } from "@/widget/widgetiGuncelle";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { BrandBootScreen } from "@/components/BrandBootScreen";
+import { AcilisPerdesi, BrandBootScreen } from "@/components/BrandBootScreen";
+import { PuanIstegi } from "@/components/PuanIstegi";
 import {
   useFonts,
   Nunito_400Regular,
@@ -22,11 +24,16 @@ import {
 } from "@expo-google-fonts/nunito";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
+// Android açılış ekranı, altındaki aynı logolu kendi açılış ekranımıza yumuşak geçsin
+SplashScreen.setOptions({ fade: true, duration: 200 });
 LogBox.ignoreLogs(["expo-notifications: Android Push notifications"]);
-SystemUI.setBackgroundColorAsync("#030712").catch(() => {});
-/** Native splash / marka boot en az bu kadar görünsün */
-const SPLASH_MIN_MS = 1600;
-const BRAND_BG = "#030712";
+SystemUI.setBackgroundColorAsync("#131313").catch(() => {});
+/**
+ * Uygulama hazır olduktan sonra marka ekranı en az bu kadar görünsün (logo bir anlık parlayıp kaybolmasın).
+ * Android'in açılış ekranı JS yüklenirken zaten logoyu gösteriyor; sahibin isteğiyle 1600'den kısaltıldı.
+ */
+const SPLASH_MIN_MS = 600;
+const BRAND_BG = "#131313";
 
 function RootNavigator() {
   const { colors, scheme } = useTheme();
@@ -37,6 +44,8 @@ function RootNavigator() {
   const segments = useSegments();
   const mountTime = useRef(Date.now());
   const [hazir, setHazir] = useState(false);
+  const [perdeAcik, setPerdeAcik] = useState(true);
+  const perdeyiKaldir = useCallback(() => setPerdeAcik(false), []);
 
   // Tema değiştiğinde sistem arkaplanını da güncelle (Light modda koyu flash önler)
   useEffect(() => {
@@ -73,8 +82,22 @@ function RootNavigator() {
   // İzin varsa yeniden planla; soğuk açılışta sistem diyaloğu açma (Apple 5.1.1)
   useEffect(() => {
     if (!hazir || !onboardingTamam) return;
-    tumBildirimleriKur(sinavTarihi, { izinIste: false }).catch(() => {});
+    tumBildirimleriKur(sinavTarihi, { izinIste: false }).catch((e) => console.warn("[bildirim] kurulamadı:", String(e)));
   }, [hazir, onboardingTamam, sinavTarihi]);
+
+  // Uygulama arka plana giderken widget'ı ve plan bildirimlerini güncel veriyle yenile (hata verirse uygulamayı etkilemez)
+  useEffect(() => {
+    const abone = AppState.addEventListener("change", (durum) => {
+      if (durum !== "background") return;
+      widgetiGuncelle().catch(() => {});
+      const { settings } = useAppStore.getState();
+      if (settings.onboardingTamam)
+        tumBildirimleriKur(settings.sinavTarihi, { izinIste: false }).catch((e) =>
+          console.warn("[bildirim] kurulamadı:", String(e))
+        );
+    });
+    return () => abone.remove();
+  }, []);
 
   // Expo Go native splash'i göstermez; JS yüklenene kadar / hazır olana kadar kendi marka ekranımız.
   if (!hazir) {
@@ -104,6 +127,11 @@ function RootNavigator() {
         <Stack.Screen name="prova" options={{ animation: "slide_from_bottom" }} />
         <Stack.Screen name="prova-sonuc" />
         <Stack.Screen name="hatalar" />
+        <Stack.Screen name="tekrar" />
+        <Stack.Screen name="basarilar" />
+        <Stack.Screen name="ara" />
+        <Stack.Screen name="favoriler" />
+        <Stack.Screen name="yol-haritasi" />
         <Stack.Screen name="direksiyon/[id]" />
         <Stack.Screen name="isaretler" />
         <Stack.Screen name="gunun-sorusu" />
@@ -111,12 +139,14 @@ function RootNavigator() {
         <Stack.Screen name="bilgi-bankasi" />
         <Stack.Screen name="pratik-sinav-simulasyonu" />
       </Stack>
+      <PuanIstegi />
+      {perdeAcik && <AcilisPerdesi onBitti={perdeyiKaldir} />}
     </>
   );
 }
 
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontHatasi] = useFonts({
     Nunito_400Regular,
     Nunito_500Medium,
     Nunito_600SemiBold,
@@ -124,8 +154,13 @@ export default function RootLayout() {
     Nunito_800ExtraBold,
   });
 
+  useEffect(() => {
+    if (fontHatasi) console.warn("[font] Nunito yüklenemedi, sistem yazı tipiyle devam ediliyor:", String(fontHatasi));
+  }, [fontHatasi]);
+
   // null dönme → sistem/Expo Go beyaz ekran gösterir. Font beklerken koyu marka ekranı.
-  if (!fontsLoaded) {
+  // Font yüklenemezse sistem yazı tipiyle devam edilir; yoksa açılış ekranında sonsuza dek kalınırdı.
+  if (!fontsLoaded && !fontHatasi) {
     return (
       <View style={{ flex: 1, backgroundColor: BRAND_BG }}>
         <BrandBootScreen />

@@ -1,21 +1,27 @@
 import React, { useMemo, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { Screen, ScreenHeader, Button, Card, Badge } from "@/components/ui";
+import { Screen, ScreenHeader, Button, Card } from "@/components/ui";
+import { SoruOzetKarti } from "@/components/SoruOzetKarti";
 import { QuizRunner } from "@/components/QuizRunner";
 import { useTheme } from "@/theme";
 import { useAppStore } from "@/store/useAppStore";
+import { useTekrarDurumu } from "@/store/useTekrarDurumu";
 import { soruBul } from "@/data/sorular";
-import { konuBul } from "@/data/konular";
-import { dersBul } from "@/data/dersler";
 import type { Soru } from "@/types";
+
+function Ayirici() {
+  const { spacing } = useTheme();
+  return <View style={{ height: spacing.md }} />;
+}
 
 export default function HatalarScreen() {
   const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const router = useRouter();
   const hatalar = useAppStore((s) => s.hatalar);
   const hataSil = useAppStore((s) => s.hataSil);
+  const tekrarBekleyen = useTekrarDurumu().simdiIds.length;
 
   const [mod, setMod] = useState<"liste" | "coz">("liste");
 
@@ -38,38 +44,38 @@ export default function HatalarScreen() {
     return (
       <Screen>
         <ScreenHeader title="Hata Defteri" />
-        <View style={{ flex: 1, justifyContent: "center", paddingBottom: spacing.xxxl }}>
-          <Card style={{ alignItems: "center", gap: spacing.md, paddingVertical: spacing.xxxl, marginHorizontal: spacing.lg, borderRadius: radius["3xl"], borderWidth: 1, borderColor: colors.border, shadowColor: colors.primary, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.1, shadowRadius: 20, elevation: 5 }}>
-            <View
-              style={{
-                width: 80,
-                height: 80,
-                borderRadius: radius.pill,
-                backgroundColor: colors.successSoft,
-                alignItems: "center",
-                justifyContent: "center",
-                marginBottom: spacing.sm,
-              }}
-            >
-              <Ionicons name="checkmark-done" size={40} color={colors.success} />
-            </View>
-            <Text style={{ color: colors.text, fontSize: fontSize.xl, fontFamily: fontFamily.extrabold, textAlign: "center" }}>
-              Hata defterin tertemiz!
-            </Text>
-            <Text style={{ color: colors.textMuted, fontSize: fontSize.md, fontFamily: fontFamily.semibold, textAlign: "center", paddingHorizontal: spacing.md, lineHeight: 22 }}>
-              Mükemmel gidiyorsun. Yanlış yaptığın sorular burada birikir ve sınavdan önce tekrar edebilirsin.
-            </Text>
-            <View style={{ width: "100%", paddingHorizontal: spacing.lg, marginTop: spacing.lg }}>
-              <Button label="Test Çözmeye Başla" icon="clipboard" onPress={() => router.push("/(tabs)/testler")} />
-            </View>
-          </Card>
+        <View style={{ flex: 1, justifyContent: "center", paddingBottom: spacing.xxxl, paddingHorizontal: spacing.lg, gap: spacing.md, alignItems: "center" }}>
+          <Ionicons name="checkmark-done" size={40} color={colors.success} />
+          <Text style={{ color: colors.text, fontSize: fontSize.xl, fontFamily: fontFamily.extrabold, textAlign: "center" }}>
+            Hata defterin tertemiz!
+          </Text>
+          <Text style={{ color: colors.textMuted, fontSize: fontSize.md, fontFamily: fontFamily.semibold, textAlign: "center", lineHeight: 22 }}>
+            Mükemmel gidiyorsun. Yanlış yaptığın sorular burada birikir ve sınavdan önce tekrar edebilirsin.
+          </Text>
+          <View style={{ width: "100%", marginTop: spacing.lg, gap: spacing.sm }}>
+            {tekrarBekleyen > 0 ? (
+              <Button
+                label={`Bugünkü Tekrar (${tekrarBekleyen})`}
+                icon="repeat"
+                onPress={() => router.push("/tekrar")}
+              />
+            ) : null}
+            <Button
+              label="Test Çözmeye Başla"
+              variant={tekrarBekleyen > 0 ? "secondary" : "primary"}
+              onPress={() => router.push("/(tabs)/testler")}
+            />
+          </View>
         </View>
       </Screen>
     );
   }
 
+  // Hata defteri yüzlerce soruya çıkabilir: kartlar ekrana yaklaştıkça çizilir
   return (
     <Screen
+      scroll={false}
+      padded={false}
       footer={
         <View
           style={{
@@ -91,59 +97,52 @@ export default function HatalarScreen() {
         </View>
       }
     >
-      <ScreenHeader title="Hata Defteri" subtitle={`${hataSorulari.length} soru`} />
-      <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold, marginBottom: spacing.sm }}>
-        Doğru cevapladığında soru bu listeden otomatik çıkar.
-      </Text>
+      <FlatList
+        data={hataSorulari}
+        keyExtractor={(soru) => soru.id}
+        ListHeaderComponent={
+          <View style={{ gap: spacing.lg, paddingBottom: spacing.lg }}>
+            <ScreenHeader title="Hata Defteri" subtitle={`${hataSorulari.length} soru`} />
+            <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold, marginBottom: spacing.sm }}>
+              Doğru cevapladığında soru bu listeden çıkar. Unutmaman için yine de belirli aralıklarla tekrar sorulur. Çöp kutusu yalnızca listeden kaldırır, tekrar takvimi sürer.
+            </Text>
 
-      <View style={{ gap: spacing.md }}>
-        {hataSorulari.map((soru) => {
-          const konu = konuBul(soru.konuId);
-          const ders = dersBul(soru.dersId);
-          return (
-            <Card key={soru.id}>
-              <View style={{ gap: spacing.sm }}>
-                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
-                  {ders && (
-                    <Badge label={konu?.baslik ?? ders.kisaAd} color={ders.renk} bg={ders.renk + "22"} icon={ders.ikon} />
-                  )}
-                  <Pressable onPress={() => hataSil(soru.id)} hitSlop={8}>
-                    <Ionicons name="trash-outline" size={18} color={colors.textFaint} />
-                  </Pressable>
-                </View>
-                <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.bold, lineHeight: 22 }} numberOfLines={3}>
-                  {soru.metin}
-                </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    gap: spacing.sm,
-                    backgroundColor: colors.successSoft,
-                    padding: spacing.sm,
-                    borderRadius: 10,
-                  }}
-                >
-                  <Ionicons name="checkmark-circle" size={16} color={colors.success} style={{ marginTop: 1 }} />
-                  <Text style={{ color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.bold, flex: 1 }}>
-                    Doğru cevap: {soru.secenekler[soru.dogruIndex]}
-                  </Text>
-                </View>
-                {konu && (
-                  <Pressable
-                    onPress={() => router.push(`/konu/${konu.id}`)}
-                    style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
-                  >
-                    <Ionicons name="book-outline" size={15} color={colors.primary} />
-                    <Text style={{ color: colors.primary, fontSize: fontSize.sm, fontFamily: fontFamily.extrabold }}>
-                      Konu anlatımını oku
+            {tekrarBekleyen > 0 ? (
+              <Card onPress={() => router.push("/tekrar")}>
+                <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
+                  <Ionicons name="repeat" size={20} color={colors.primary} />
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.extrabold }}>
+                      Bugünkü tekrar: {tekrarBekleyen} soru
                     </Text>
-                  </Pressable>
-                )}
-              </View>
-            </Card>
-          );
-        })}
-      </View>
+                    <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold, marginTop: 2 }}>
+                      Sırası gelen soruları unutmadan pekiştir
+                    </Text>
+                  </View>
+                  <Ionicons name="chevron-forward" size={16} color={colors.textFaint} />
+                </View>
+              </Card>
+            ) : null}
+          </View>
+        }
+        renderItem={({ item }) => (
+          <SoruOzetKarti
+            soru={item}
+            eylemIkon="trash-outline"
+            eylemRenk={colors.textFaint}
+            eylemEtiket="Bu soruyu hata defterinden kaldır"
+            onEylem={hataSil}
+            satirSayisi={3}
+          />
+        )}
+        contentContainerStyle={{ padding: spacing.lg, paddingBottom: spacing.xxxl }}
+        ItemSeparatorComponent={Ayirici}
+        showsVerticalScrollIndicator={false}
+        initialNumToRender={8}
+        maxToRenderPerBatch={8}
+        windowSize={9}
+        style={{ flex: 1 }}
+      />
     </Screen>
   );
 }

@@ -1,11 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Alert, Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { Screen, ScreenHeader, Button, Card, ProgressBar } from "@/components/ui";
+import { Screen, ScreenHeader, Button, ProgressBar, ConfirmDialog } from "@/components/ui";
+import type { DialogButton } from "@/components/ui";
 import { SoruBileseni } from "@/components/SoruBileseni";
-import { useTheme } from "@/theme";
+import { ProvaOzeti } from "@/components/ProvaOzeti";
+import { useTheme, ICERIK_MAX_GENISLIK } from "@/theme";
 import { useAppStore } from "@/store/useAppStore";
 import { provaSorulariUret } from "@/data/sorular";
 import { provaDetayKaydet } from "@/utils/provaSonuc";
@@ -26,30 +28,39 @@ export default function ProvaScreen() {
   const provaKaydet = useAppStore((s) => s.provaKaydet);
 
   const [basladi, setBasladi] = useState(false);
+  const [dialog, setDialog] = useState<{ title: string; message?: string; buttons: DialogButton[] } | null>(null);
   const sorular = useMemo(() => provaSorulariUret(), []);
   const [cevaplar, setCevaplar] = useState<(number | null)[]>(() =>
     new Array(sorular.length).fill(null)
   );
   const [index, setIndex] = useState(0);
+  // Gerçek e-sınavdaki gibi: soruyu işaretleyip sonra dönebilirsin; bitirmeden önce özet gösterilir
+  const [isaretli, setIsaretli] = useState<boolean[]>(() => new Array(sorular.length).fill(false));
+  const [ozetAcik, setOzetAcik] = useState(false);
   const [kalan, setKalan] = useState(SINAV_SANIYE);
   const bitirildi = useRef(false);
   const cevaplarRef = useRef<(number | null)[]>(cevaplar);
   cevaplarRef.current = cevaplar;
   const kalanRef = useRef(kalan);
   kalanRef.current = kalan;
+  /**
+   * Sınavın bitiş anı (gerçek saat). Süre her tikte buradan hesaplanır: JS sayacı uygulama arka
+   * plandayken durduğu için eskiden arka plana alınan sınavda süre işlemiyor, aday fazladan süre alıyordu.
+   */
+  const bitisZamani = useRef<number | null>(null);
 
   useEffect(() => {
     if (!basladi) return;
+    if (bitisZamani.current === null) bitisZamani.current = Date.now() + SINAV_SANIYE * 1000;
+    const bitis = bitisZamani.current;
     const timer = setInterval(() => {
-      setKalan((k) => {
-        if (k <= 1) {
-          clearInterval(timer);
-          // bitir'i updater içinde çağırma — render/setState sırasında yan etki olmasın
-          queueMicrotask(() => bitir(true));
-          return 0;
-        }
-        return k - 1;
-      });
+      const kalanSn = Math.max(0, Math.ceil((bitis - Date.now()) / 1000));
+      setKalan(kalanSn);
+      if (kalanSn <= 0) {
+        clearInterval(timer);
+        // bitir'i setState sırasında değil, hemen ardından çağır
+        queueMicrotask(() => bitir(true));
+      }
     }, 1000);
     return () => clearInterval(timer);
   }, [basladi]);
@@ -85,60 +96,62 @@ export default function ProvaScreen() {
 
     const puan = dogru * 2;
     const gecti = puan >= 70;
-    const sureSaniye = SINAV_SANIYE - kalanRef.current;
+    const gecenSn =
+      bitisZamani.current === null
+        ? SINAV_SANIYE - kalanRef.current
+        : SINAV_SANIYE - Math.max(0, (bitisZamani.current - Date.now()) / 1000);
+    // Süre dolarak bitince tam süre yazılır (eskiden 2699 sn / "44:59" kaydoluyordu)
+    const sureSaniye = otomatik ? SINAV_SANIYE : Math.min(SINAV_SANIYE, Math.round(gecenSn));
 
     provaKaydet({ dogru, yanlis, bos, puan, gecti, sureSaniye });
     provaDetayKaydet({ sorular, cevaplar: anlikCevaplar, dogru, yanlis, bos, puan, gecti, sureSaniye });
     router.replace("/prova-sonuc");
   };
 
-  const bitirOnayi = () => {
-    Alert.alert(
-      "Provayı Bitir",
-      `${cevaplananSayisi}/${sorular.length} soru cevapladın. Bitirmek istediğine emin misin?`,
-      [
-        { text: "Devam Et", style: "cancel" },
-        { text: "Bitir", style: "destructive", onPress: () => bitir(false) },
-      ]
-    );
-  };
+  // Bitirmeden önce özet penceresi açılır (boş / işaretli sorulara dönülebilir)
+  const bitirOnayi = () => setOzetAcik(true);
+
+  const isaretiDegistir = () =>
+    setIsaretli((onceki) => {
+      const kopya = [...onceki];
+      kopya[index] = !kopya[index];
+      return kopya;
+    });
 
   if (!basladi) {
     return (
-      <Screen>
+      <Screen contentStyle={{ gap: spacing.xxl }}>
         <ScreenHeader title="Sınav Provası" />
-        <Card elevated style={{ gap: spacing.md }}>
-          <View style={{ alignItems: "center", gap: spacing.sm, paddingVertical: spacing.md }}>
+        <Text style={{ color: colors.text, fontSize: 26, fontFamily: fontFamily.extrabold, letterSpacing: -0.5 }}>
+          Gerçek Sınav Provası
+        </Text>
+        <View style={{ borderTopWidth: 1, borderTopColor: colors.border }}>
+          {[
+            { ikon: "help-circle", metin: "50 soru (Trafik 23, İlk Yardım 12, Motor 9, Adab 6)", renk: colors.primary },
+            { ikon: "time", metin: "45 dakika süre", renk: colors.warning },
+            { ikon: "trophy", metin: "Geçme barajı: 70 puan (en az 35 doğru)", renk: colors.success },
+            { ikon: "alert-circle", metin: "Yanlış cevaplar doğruyu götürmez", renk: colors.danger },
+          ].map((m, i) => (
             <View
+              key={i}
               style={{
-                width: 72,
-                height: 72,
-                borderRadius: 36,
-                backgroundColor: colors.primarySoft,
+                flexDirection: "row",
                 alignItems: "center",
-                justifyContent: "center",
+                gap: spacing.md,
+                paddingVertical: 15,
+                borderBottomWidth: 1,
+                borderBottomColor: colors.border,
               }}
             >
-              <Ionicons name="ribbon" size={38} color={colors.primary} />
-            </View>
-            <Text style={{ color: colors.text, fontSize: fontSize.xl, fontFamily: fontFamily.extrabold }}>
-              Gerçek Sınav Provası
-            </Text>
-          </View>
-          {[
-            { ikon: "help-circle", metin: "50 soru (Trafik 23, İlk Yardım 12, Motor 9, Adab 6)" },
-            { ikon: "time", metin: "45 dakika süre" },
-            { ikon: "trophy", metin: "Geçme barajı: 70 puan (en az 35 doğru)" },
-            { ikon: "information-circle", metin: "Yanlış cevaplar doğruyu götürmez" },
-          ].map((m, i) => (
-            <View key={i} style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
-              <Ionicons name={m.ikon as any} size={20} color={colors.primary} />
-              <Text style={{ color: colors.text, fontSize: fontSize.md, flex: 1 }}>{m.metin}</Text>
+              <Ionicons name={m.ikon as any} size={19} color={m.renk} />
+              <Text style={{ color: colors.text, fontSize: fontSize.sm, fontFamily: fontFamily.semibold, flex: 1 }}>{m.metin}</Text>
             </View>
           ))}
-        </Card>
-        <Button label="Provaya Başla" icon="play" onPress={() => setBasladi(true)} />
-        <Button label="Vazgeç" variant="ghost" onPress={() => router.back()} />
+        </View>
+        <View style={{ gap: spacing.sm }}>
+          <Button label="Provaya Başla" onPress={() => setBasladi(true)} />
+          <Button label="Vazgeç" variant="ghost" onPress={() => router.back()} />
+        </View>
       </Screen>
     );
   }
@@ -147,53 +160,59 @@ export default function ProvaScreen() {
   const azaldi = kalan <= 5 * 60;
 
   return (
-    <SafeAreaView edges={["top"]} style={{ flex: 1, backgroundColor: colors.background }}>
+    <SafeAreaView edges={["top"]} style={{ flex: 1, width: "100%", maxWidth: ICERIK_MAX_GENISLIK, alignSelf: "center", backgroundColor: colors.background }}>
       {/* Üst bar: süre + ilerleme */}
       <View style={{ paddingHorizontal: spacing.lg, paddingTop: spacing.sm, gap: spacing.sm }}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
             <Pressable
               onPress={() => {
-                Alert.alert(
-                  "Sınavdan Çık",
-                  "Sınavı yarıda bırakmak istediğinize emin misiniz? İlerlemeniz kaydedilmeyecek.",
-                  [
+                setDialog({
+                  title: "Sınavdan Çık",
+                  message: "Sınavı yarıda bırakmak istediğinize emin misiniz? İlerlemeniz kaydedilmeyecek.",
+                  buttons: [
                     { text: "İptal", style: "cancel" },
                     { text: "Çık", style: "destructive", onPress: () => router.back() },
-                  ]
-                );
+                  ],
+                });
               }}
-              style={{
-                width: 32,
-                height: 32,
-                borderRadius: 16,
-                backgroundColor: colors.surfaceAlt,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              hitSlop={8}
+              style={{ width: 24, height: 24, alignItems: "center", justifyContent: "center" }}
             >
-              <Ionicons name="close" size={20} color={colors.text} />
+              <Ionicons name="close" size={22} color={colors.text} />
             </Pressable>
             <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, fontFamily: fontFamily.semibold }}>
               {cevaplananSayisi}/{sorular.length} cevaplandı
             </Text>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 6,
-              backgroundColor: azaldi ? colors.dangerSoft : colors.surfaceAlt,
-              paddingHorizontal: spacing.md,
-              paddingVertical: 6,
-              borderRadius: 999,
-            }}
-          >
-            <Ionicons name="time" size={16} color={azaldi ? colors.danger : colors.text} />
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+            <Pressable
+              onPress={isaretiDegistir}
+              hitSlop={8}
+              accessibilityRole="button"
+              accessibilityLabel={isaretli[index] ? "Soru işaretini kaldır" : "Soruyu işaretle"}
+              style={{ marginRight: 4 }}
+            >
+              <Ionicons
+                name={isaretli[index] ? "bookmark" : "bookmark-outline"}
+                size={20}
+                color={isaretli[index] ? colors.warning : colors.textMuted}
+              />
+            </Pressable>
+            <Pressable
+              onPress={() => setOzetAcik(true)}
+              hitSlop={8}
+              accessibilityRole="button"
+              accessibilityLabel="Sınav özetini aç"
+              style={{ marginRight: 6 }}
+            >
+              <Ionicons name="grid-outline" size={20} color={colors.textMuted} />
+            </Pressable>
+            <Ionicons name="time-outline" size={16} color={azaldi ? colors.danger : colors.textMuted} />
             <Text
               style={{
                 color: azaldi ? colors.danger : colors.text,
-                fontFamily: fontFamily.bold,
+                fontFamily: fontFamily.extrabold,
                 fontVariant: ["tabular-nums"],
               }}
             >
@@ -214,6 +233,7 @@ export default function ProvaScreen() {
         {sorular.map((_, i) => {
           const aktif = i === index;
           const cevaplandi = cevaplar[i] !== null;
+          const isaretliMi = isaretli[i];
           return (
             <Pressable
               key={i}
@@ -225,8 +245,8 @@ export default function ProvaScreen() {
                 alignItems: "center",
                 justifyContent: "center",
                 backgroundColor: aktif ? colors.primary : cevaplandi ? colors.successSoft : colors.surface,
-                borderWidth: 1,
-                borderColor: aktif ? colors.primary : cevaplandi ? colors.success : colors.border,
+                borderWidth: isaretliMi ? 2 : 1,
+                borderColor: aktif ? colors.primary : isaretliMi ? colors.warning : cevaplandi ? colors.success : colors.border,
               }}
             >
               <Text
@@ -290,6 +310,24 @@ export default function ProvaScreen() {
           />
         )}
       </View>
+
+      <ProvaOzeti
+        gorunur={ozetAcik}
+        onKapat={() => setOzetAcik(false)}
+        cevaplar={cevaplar}
+        isaretli={isaretli}
+        aktifIndex={index}
+        onGit={setIndex}
+        onBitir={() => bitir(false)}
+      />
+
+      <ConfirmDialog
+        visible={dialog != null}
+        onRequestClose={() => setDialog(null)}
+        title={dialog?.title ?? ""}
+        message={dialog?.message}
+        buttons={dialog?.buttons ?? [{ text: "Tamam" }]}
+      />
     </SafeAreaView>
   );
 }

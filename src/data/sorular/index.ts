@@ -25,8 +25,12 @@ export function sorularByKonu(konuId: string): Soru[] {
   return SORULAR.filter((s) => s.konuId === konuId);
 }
 
+/** Kimlikten soruya hızlı erişim (hata defteri, favoriler, tekrar yüzlerce kez arar); aynı kimlikte ilki geçerli */
+const SORU_HARITASI = new Map<string, Soru>();
+for (const s of SORULAR) if (!SORU_HARITASI.has(s.id)) SORU_HARITASI.set(s.id, s);
+
 export function soruBul(id: string): Soru | undefined {
-  return SORULAR.find((s) => s.id === id);
+  return SORU_HARITASI.get(id);
 }
 
 function karistir<T>(arr: T[]): T[] {

@@ -54,7 +54,7 @@ export function Button({
 
   const bg: Record<Variant, string> = {
     primary: colors.primary,
-    secondary: colors.surfaceAlt,
+    secondary: "transparent",
     ghost: "transparent",
     danger: colors.danger,
     success: colors.success,
@@ -78,15 +78,15 @@ export function Button({
       style={({ pressed }) => [
         {
           height: heights[size],
-          borderRadius: radius.md,
+          borderRadius: radius.pill,
           backgroundColor: bg[variant],
-          borderWidth: variant === "ghost" ? 1.5 : 0,
+          borderWidth: variant === "secondary" ? 1.5 : 0,
           borderColor: colors.border,
           alignItems: "center",
           justifyContent: "center",
           flexDirection: "row",
           paddingHorizontal: spacing.lg,
-          opacity: disabled ? 0.5 : pressed ? 0.9 : 1,
+          opacity: disabled ? 0.5 : pressed ? 0.85 : 1,
           alignSelf: fullWidth ? "stretch" : "flex-start",
         },
         style,

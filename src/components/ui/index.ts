@@ -6,3 +6,5 @@ export { ProgressBar } from "./ProgressBar";
 export { Screen } from "./Screen";
 export { ScreenHeader } from "./ScreenHeader";
 export { SectionTitle } from "./Typography";
+export { ConfirmDialog } from "./ConfirmDialog";
+export type { DialogButton } from "./ConfirmDialog";

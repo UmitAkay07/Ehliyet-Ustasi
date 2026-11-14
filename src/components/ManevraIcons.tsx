@@ -59,20 +59,22 @@ const CarSideView = ({ color }: { color: string }) => (
 // ==========================================
 // 1. Temel Kumanda (Steering Wheel)
 // ==========================================
-const TemelKumandaIcon = ({ color }: { color: string }) => {
+const TemelKumandaIcon = ({ color, animated }: { color: string; animated: boolean }) => {
   const rotation = useSharedValue(0);
 
   useEffect(() => {
-    rotation.value = withRepeat(
-      withSequence(
-        withTiming(45, { duration: 800, easing: Easing.inOut(Easing.ease) }),
-        withTiming(-45, { duration: 1600, easing: Easing.inOut(Easing.ease) }),
-        withTiming(0, { duration: 800, easing: Easing.inOut(Easing.ease) })
-      ),
-      -1,
-      false
-    );
-  }, []);
+    if (animated) {
+      rotation.value = withRepeat(
+        withSequence(
+          withTiming(45, { duration: 800, easing: Easing.inOut(Easing.ease) }),
+          withTiming(-45, { duration: 1600, easing: Easing.inOut(Easing.ease) }),
+          withTiming(0, { duration: 800, easing: Easing.inOut(Easing.ease) })
+        ),
+        -1,
+        false
+      );
+    }
+  }, [animated]);
 
   const animatedStyle = useAnimatedProps(() => {
     return {
@@ -92,19 +94,21 @@ const TemelKumandaIcon = ({ color }: { color: string }) => {
 // ==========================================
 // 2. Paralel Park
 // ==========================================
-const ParalelParkIcon = ({ color }: { color: string }) => {
-  const progress = useSharedValue(0);
+const ParalelParkIcon = ({ color, animated }: { color: string; animated: boolean }) => {
+  const progress = useSharedValue(animated ? 0 : 1);
 
   useEffect(() => {
-    progress.value = withRepeat(
-      withSequence(
-        withTiming(1, { duration: 2500, easing: Easing.inOut(Easing.ease) }),
-        withDelay(1000, withTiming(0, { duration: 1500, easing: Easing.inOut(Easing.ease) }))
-      ),
-      -1,
-      false
-    );
-  }, []);
+    if (animated) {
+      progress.value = withRepeat(
+        withSequence(
+          withTiming(1, { duration: 2500, easing: Easing.inOut(Easing.ease) }),
+          withDelay(1000, withTiming(0, { duration: 1500, easing: Easing.inOut(Easing.ease) }))
+        ),
+        -1,
+        false
+      );
+    }
+  }, [animated]);
 
   const animatedStyle = useAnimatedProps(() => {
     // Moves back and right
@@ -140,19 +144,21 @@ const ParalelParkIcon = ({ color }: { color: string }) => {
 // ==========================================
 // 3. L Park
 // ==========================================
-const LParkIcon = ({ color }: { color: string }) => {
-  const progress = useSharedValue(0);
+const LParkIcon = ({ color, animated }: { color: string; animated: boolean }) => {
+  const progress = useSharedValue(animated ? 0 : 1);
 
   useEffect(() => {
-    progress.value = withRepeat(
-      withSequence(
-        withTiming(1, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
-        withDelay(1000, withTiming(0, { duration: 0 }))
-      ),
-      -1,
-      false
-    );
-  }, []);
+    if (animated) {
+      progress.value = withRepeat(
+        withSequence(
+          withTiming(1, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+          withDelay(1000, withTiming(0, { duration: 0 }))
+        ),
+        -1,
+        false
+      );
+    }
+  }, [animated]);
 
   const animatedStyle = useAnimatedProps(() => {
     const x = interpolate(progress.value, [0, 0.5, 1], [30, 30, 0]);
@@ -180,20 +186,22 @@ const LParkIcon = ({ color }: { color: string }) => {
 // ==========================================
 // 4. Rampa Kalkış
 // ==========================================
-const RampaKalkisIcon = ({ color }: { color: string }) => {
-  const progress = useSharedValue(0);
+const RampaKalkisIcon = ({ color, animated }: { color: string; animated: boolean }) => {
+  const progress = useSharedValue(animated ? 0 : 0.2);
 
   useEffect(() => {
-    progress.value = withRepeat(
-      withSequence(
-        withTiming(0.2, { duration: 500, easing: Easing.inOut(Easing.ease) }), // Slight rollback
-        withDelay(400, withTiming(1, { duration: 1500, easing: Easing.in(Easing.ease) })), // Zoom up
-        withTiming(0, { duration: 0 }) // Reset
-      ),
-      -1,
-      false
-    );
-  }, []);
+    if (animated) {
+      progress.value = withRepeat(
+        withSequence(
+          withTiming(0.2, { duration: 500, easing: Easing.inOut(Easing.ease) }), // Slight rollback
+          withDelay(400, withTiming(1, { duration: 1500, easing: Easing.in(Easing.ease) })), // Zoom up
+          withTiming(0, { duration: 0 }) // Reset
+        ),
+        -1,
+        false
+      );
+    }
+  }, [animated]);
 
   const animatedStyle = useAnimatedProps(() => {
     const x = interpolate(progress.value, [0, 0.2, 1], [-15, -18, 25]);
@@ -219,19 +227,21 @@ const RampaKalkisIcon = ({ color }: { color: string }) => {
 // ==========================================
 // 5. U Dönüşü
 // ==========================================
-const UDonusuIcon = ({ color }: { color: string }) => {
+const UDonusuIcon = ({ color, animated }: { color: string; animated: boolean }) => {
   const progress = useSharedValue(0);
 
   useEffect(() => {
-    progress.value = withRepeat(
-      withSequence(
-        withTiming(1, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
-        withDelay(500, withTiming(0, { duration: 0 }))
-      ),
-      -1,
-      false
-    );
-  }, []);
+    if (animated) {
+      progress.value = withRepeat(
+        withSequence(
+          withTiming(1, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+          withDelay(500, withTiming(0, { duration: 0 }))
+        ),
+        -1,
+        false
+      );
+    }
+  }, [animated]);
 
   const animatedStyle = useAnimatedProps(() => {
     const x = interpolate(progress.value, [0, 0.25, 0.5, 0.75, 1], [15, 15, 0, -15, -15]);
@@ -257,19 +267,21 @@ const UDonusuIcon = ({ color }: { color: string }) => {
 // ==========================================
 // 6. Ani Fren
 // ==========================================
-const AniFrenIcon = ({ color }: { color: string }) => {
-  const progress = useSharedValue(0);
+const AniFrenIcon = ({ color, animated }: { color: string; animated: boolean }) => {
+  const progress = useSharedValue(animated ? 0 : 0.95);
 
   useEffect(() => {
-    progress.value = withRepeat(
-      withSequence(
-        withTiming(1, { duration: 800, easing: Easing.out(Easing.exp) }),
-        withDelay(1000, withTiming(0, { duration: 0 }))
-      ),
-      -1,
-      false
-    );
-  }, []);
+    if (animated) {
+      progress.value = withRepeat(
+        withSequence(
+          withTiming(1, { duration: 800, easing: Easing.out(Easing.exp) }),
+          withDelay(1000, withTiming(0, { duration: 0 }))
+        ),
+        -1,
+        false
+      );
+    }
+  }, [animated]);
 
   const carStyle = useAnimatedProps(() => {
     const x = interpolate(progress.value, [0, 1], [-30, 10]);
@@ -312,19 +324,21 @@ const AniFrenIcon = ({ color }: { color: string }) => {
 // ==========================================
 // 7. Sinyal, Ayna, Şerit
 // ==========================================
-const SeritDegistirmeIcon = ({ color }: { color: string }) => {
-  const progress = useSharedValue(0);
+const SeritDegistirmeIcon = ({ color, animated }: { color: string; animated: boolean }) => {
+  const progress = useSharedValue(animated ? 0 : 0.5);
 
   useEffect(() => {
-    progress.value = withRepeat(
-      withSequence(
-        withTiming(1, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
-        withDelay(1000, withTiming(0, { duration: 0 }))
-      ),
-      -1,
-      false
-    );
-  }, []);
+    if (animated) {
+      progress.value = withRepeat(
+        withSequence(
+          withTiming(1, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
+          withDelay(1000, withTiming(0, { duration: 0 }))
+        ),
+        -1,
+        false
+      );
+    }
+  }, [animated]);
 
   const carStyle = useAnimatedProps(() => {
     const x = interpolate(progress.value, [0, 0.4, 0.6, 1], [-12, -12, 12, 12]);
@@ -362,19 +376,21 @@ const SeritDegistirmeIcon = ({ color }: { color: string }) => {
 // ==========================================
 // 8. Geri Manevra
 // ==========================================
-const GeriManevraIcon = ({ color }: { color: string }) => {
+const GeriManevraIcon = ({ color, animated }: { color: string; animated: boolean }) => {
   const progress = useSharedValue(0);
 
   useEffect(() => {
-    progress.value = withRepeat(
-      withSequence(
-        withTiming(1, { duration: 2500, easing: Easing.linear }),
-        withTiming(0, { duration: 0 })
-      ),
-      -1,
-      false
-    );
-  }, []);
+    if (animated) {
+      progress.value = withRepeat(
+        withSequence(
+          withTiming(1, { duration: 2500, easing: Easing.linear }),
+          withTiming(0, { duration: 0 })
+        ),
+        -1,
+        false
+      );
+    }
+  }, [animated]);
 
   const carStyle = useAnimatedProps(() => {
     const y = interpolate(progress.value, [0, 1], [-30, 30]);
@@ -405,21 +421,22 @@ interface ManevraIconProps {
   type: string;
   size?: number;
   color?: string;
+  animated?: boolean;
 }
 
-export function ManevraIcon({ type, size = 64, color = '#6366F1' }: ManevraIconProps) {
+export function ManevraIcon({ type, size = 64, color = '#6366F1', animated = true }: ManevraIconProps) {
   // Translate the 100x100 internal coordinate system to the requested size
   return (
     <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
       <Svg width={size} height={size} viewBox="-50 -50 100 100">
-        {type === 'dr-temel-kumanda' && <TemelKumandaIcon color={color} />}
-        {type === 'dr-paralel-park' && <ParalelParkIcon color={color} />}
-        {type === 'dr-l-park' && <LParkIcon color={color} />}
-        {type === 'dr-rampa-kalkis' && <RampaKalkisIcon color={color} />}
-        {type === 'dr-u-donusu' && <UDonusuIcon color={color} />}
-        {type === 'dr-ani-fren' && <AniFrenIcon color={color} />}
-        {type === 'dr-sinyal-ayna' && <SeritDegistirmeIcon color={color} />}
-        {type === 'dr-geri-manevra' && <GeriManevraIcon color={color} />}
+        {type === 'dr-temel-kumanda' && <TemelKumandaIcon color={color} animated={animated} />}
+        {type === 'dr-paralel-park' && <ParalelParkIcon color={color} animated={animated} />}
+        {type === 'dr-l-park' && <LParkIcon color={color} animated={animated} />}
+        {type === 'dr-rampa-kalkis' && <RampaKalkisIcon color={color} animated={animated} />}
+        {type === 'dr-u-donusu' && <UDonusuIcon color={color} animated={animated} />}
+        {type === 'dr-ani-fren' && <AniFrenIcon color={color} animated={animated} />}
+        {type === 'dr-sinyal-ayna' && <SeritDegistirmeIcon color={color} animated={animated} />}
+        {type === 'dr-geri-manevra' && <GeriManevraIcon color={color} animated={animated} />}
       </Svg>
     </View>
   );

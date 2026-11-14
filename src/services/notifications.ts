@@ -1,15 +1,17 @@
 import { Platform } from "react-native";
 import * as Notifications from "expo-notifications";
 import { sinavGunKalan } from "@/utils/gununSorusu";
+import { gunSaati, planBildirimleri } from "@/utils/bildirimPlani";
+import { gunPlanlari } from "./planGunleri";
 
 const SINAV_BILDIRIM_SAAT = 13;
 const SINAV_BILDIRIM_DAKIKA = 0;
-/** i=0…MAX_GUN → en fazla 40 sınav bildirimi. 40 + 14 motivasyon = 54 (< iOS ~64 limiti). */
+/** i=0…MAX_GUN → en fazla 40 sınav bildirimi. 40 + en fazla 16 plan bildirimi = 56 (< iOS ~64 limiti). */
 const MAX_GUN = 39;
 
-const MOTIVASYON_SAAT = 10;
-const MOTIVASYON_DAKIKA = 0;
-const MOTIVASYON_GUN_SAYISI = 14;
+/** Bugün + 14 gün sabah planı, bugün için akşam hatırlatması */
+const PLAN_GUN_SAYISI = 14;
+const GUN_MS = 24 * 60 * 60 * 1000;
 
 const MOTIVASYON_MESAJLARI = [
   "Günaydın! Sınavına hazırlık için bugün biraz soru çözmeye ne dersin?",
@@ -44,10 +46,10 @@ async function androidKanallariKur(): Promise<void> {
     vibrationPattern: [0, 200],
   });
   await Notifications.setNotificationChannelAsync("gunluk-motivasyon", {
-    name: "Günlük Motivasyon",
+    name: "Günlük Plan",
     importance: Notifications.AndroidImportance.HIGH,
     vibrationPattern: [0, 250, 250, 250],
-    lightColor: "#6366F1",
+    lightColor: "#7DD0F0",
   });
 }
 
@@ -86,15 +88,78 @@ export type BildirimKurSecenekleri = {
   izinIste?: boolean;
 };
 
+interface BildirimIstegi {
+  zaman: number;
+  baslik: string;
+  govde: string;
+  kanal: "gunluk-motivasyon" | "sinav-geri-sayim";
+  ses: boolean;
+}
+
+/** Aynı gün hep aynı mesaj (içerik değişmedikçe yeniden kurulum atlanabilsin), günden güne farklı */
+function gununMotivasyonu(simdi: number, gunOfseti: number): string {
+  const gunNo = Math.floor(gunSaati(simdi, gunOfseti, 12) / GUN_MS);
+  return MOTIVASYON_MESAJLARI[gunNo % MOTIVASYON_MESAJLARI.length];
+}
+
+function istekleriHazirla(sinavTarihi: string | null, simdi: number): BildirimIstegi[] {
+  const istekler: BildirimIstegi[] = planBildirimleri(
+    gunPlanlari(simdi, sinavTarihi, PLAN_GUN_SAYISI),
+    simdi,
+    (gunOfseti) => gununMotivasyonu(simdi, gunOfseti)
+  ).map((b) => ({ ...b, kanal: "gunluk-motivasyon" as const, ses: true }));
+
+  if (sinavTarihi) {
+    const toplamKalan = sinavGunKalan(sinavTarihi);
+    if (toplamKalan != null && toplamKalan >= 0) {
+      const gunSayisi = Math.min(toplamKalan, MAX_GUN);
+
+      for (let i = 0; i <= gunSayisi; i++) {
+        const tetik = new Date(simdi);
+        tetik.setDate(tetik.getDate() + i);
+        tetik.setHours(SINAV_BILDIRIM_SAAT, SINAV_BILDIRIM_DAKIKA, 0, 0);
+        if (tetik.getTime() <= simdi + 30_000) continue;
+
+        istekler.push({
+          zaman: tetik.getTime(),
+          baslik: "Ehliyet Ustası",
+          govde: kalanMesaj(toplamKalan - i),
+          kanal: "sinav-geri-sayim",
+          ses: false,
+        });
+      }
+    }
+  }
+  return istekler;
+}
+
 /**
- * Motivasyon (14 gün × 10:00) + varsa sınav geri sayımı (max 40 gün × 13:00).
+ * Günlük plan (bugün + 14 gün × 10:00, bugün hedef bitmediyse 20:00) + varsa sınav geri sayımı (max 40 gün × 13:00).
+ * Plan içeriği kayıtlı ilerlemeden hesaplanır; açılışta, sınav tarihi değişince ve uygulama arka plana geçince çağrılır.
+ * Kurulacak bildirimler son kurulanlarla aynıysa hiçbir şey yapılmaz.
  * Açılışta izinIste=false ile çağır; izin diyaloğunu yalnızca kullanıcı bağlamında aç.
  */
+let isScheduling = false;
+let sonKurulanImza: string | null = null;
+/** Kurulum sürerken gelen en son istek (ör. açılıştaki kurulum sırasında sınav tarihi değişti); atılmaz */
+let bekleyenIstek: { sinavTarihi: string | null; izinIste: boolean } | null = null;
+
 export async function tumBildirimleriKur(
   sinavTarihi: string | null,
   options?: BildirimKurSecenekleri
 ): Promise<void> {
   if (Platform.OS === "web") return;
+
+  if (isScheduling) {
+    bekleyenIstek = {
+      sinavTarihi,
+      izinIste: (bekleyenIstek?.izinIste ?? false) || (options?.izinIste ?? false),
+    };
+    return;
+  }
+  isScheduling = true;
+
+  try {
 
   const izinIste = options?.izinIste ?? false;
   let izin = await bildirimIzniVarMi();
@@ -103,59 +168,46 @@ export async function tumBildirimleriKur(
   }
   if (!izin) return;
 
+  const istekler = istekleriHazirla(sinavTarihi, Date.now());
+  const imza = JSON.stringify(istekler);
+  // Sayı da kontrol edilir: "her şeyi sıfırla" bildirimleri dışarıdan iptal eder
+  if (imza === sonKurulanImza) {
+    const kurulu = await Notifications.getAllScheduledNotificationsAsync();
+    if (kurulu.length === istekler.length) return;
+  }
+
   await androidKanallariKur();
-  await Notifications.cancelAllScheduledNotificationsAsync();
+  // Önce yeniler kurulur, eskiler sonra silinir: arka plana geçerken yarıda kesilirse kullanıcı
+  // bildirimsiz kalmaz (en kötü ihtimalle bir sonraki kuruluma kadar bazıları çift görünür)
+  const eskiler = await Notifications.getAllScheduledNotificationsAsync();
+  sonKurulanImza = null;
 
-  const simdi = new Date();
-
-  for (let i = 1; i <= MOTIVASYON_GUN_SAYISI; i++) {
-    const tetik = new Date(simdi);
-    tetik.setDate(simdi.getDate() + i);
-    tetik.setHours(MOTIVASYON_SAAT, MOTIVASYON_DAKIKA, 0, 0);
-
-    const rastgeleMesaj =
-      MOTIVASYON_MESAJLARI[Math.floor(Math.random() * MOTIVASYON_MESAJLARI.length)];
-
+  for (const istek of istekler) {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "Ehliyet Ustası",
-        body: rastgeleMesaj,
-        sound: true,
-        ...(Platform.OS === "android" ? { channelId: "gunluk-motivasyon" } : {}),
+        title: istek.baslik,
+        body: istek.govde,
+        sound: istek.ses,
+        ...(Platform.OS === "android" ? { channelId: istek.kanal } : {}),
       },
       trigger: {
         type: Notifications.SchedulableTriggerInputTypes.DATE,
-        date: tetik,
+        date: new Date(istek.zaman),
       },
     });
   }
-
-  if (sinavTarihi) {
-    const toplamKalan = sinavGunKalan(sinavTarihi);
-    if (toplamKalan != null && toplamKalan >= 0) {
-      const gunSayisi = Math.min(toplamKalan, MAX_GUN);
-
-      for (let i = 0; i <= gunSayisi; i++) {
-        const kalan = toplamKalan - i;
-        const tetik = new Date(simdi);
-        tetik.setDate(simdi.getDate() + i);
-        tetik.setHours(SINAV_BILDIRIM_SAAT, SINAV_BILDIRIM_DAKIKA, 0, 0);
-
-        if (tetik.getTime() <= Date.now() + 30_000) continue;
-
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            title: "Ehliyet Ustası",
-            body: kalanMesaj(kalan),
-            sound: false,
-            ...(Platform.OS === "android" ? { channelId: "sinav-geri-sayim" } : {}),
-          },
-          trigger: {
-            type: Notifications.SchedulableTriggerInputTypes.DATE,
-            date: tetik,
-          },
-        });
-      }
+  for (const eski of eskiler) {
+    await Notifications.cancelScheduledNotificationAsync(eski.identifier);
+  }
+  sonKurulanImza = imza;
+  } finally {
+    isScheduling = false;
+    const sonraki = bekleyenIstek;
+    bekleyenIstek = null;
+    if (sonraki) {
+      tumBildirimleriKur(sonraki.sinavTarihi, { izinIste: sonraki.izinIste }).catch((e) =>
+        console.warn("[bildirim] bekleyen kurulum yapılamadı:", String(e))
+      );
     }
   }
 }

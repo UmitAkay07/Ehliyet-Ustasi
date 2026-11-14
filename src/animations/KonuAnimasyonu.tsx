@@ -243,20 +243,7 @@ function TydAnim() {
         <SvgText x={220} y={55} fill="#fff" fontSize={18} textAnchor="middle" fontWeight="bold">2</SvgText>
         <SvgText x={220} y={72} fill="#DBEAFE" fontSize={11} textAnchor="middle">suni solunum</SvgText>
       </Svg>
-      <Animated.View
-        style={[
-          {
-            position: "absolute",
-            top: 68,
-            left: 55,
-            width: 50,
-            height: 12,
-            borderRadius: 6,
-            backgroundColor: "#FCA5A5",
-          },
-          basi,
-        ]}
-      />
+
     </KonuFrame>
   );
 }

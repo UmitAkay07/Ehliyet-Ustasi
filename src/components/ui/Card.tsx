@@ -31,15 +31,6 @@ export function Card({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: colors.border,
     padding: padded ? spacing.lg : 0,
-    ...(elevated
-      ? {
-          shadowColor: colors.shadow,
-          shadowOpacity: 0.18,
-          shadowRadius: 16,
-          shadowOffset: { width: 0, height: 8 },
-          elevation: 6,
-        }
-      : {}),
   };
 
   if (onPress) {

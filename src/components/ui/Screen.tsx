@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView, StyleProp, View, ViewStyle } from "react-native";
 import { SafeAreaView, Edge, useSafeAreaInsets } from "react-native-safe-area-context";
-import { useTheme } from "@/theme";
+import { useTheme, ICERIK_MAX_GENISLIK } from "@/theme";
 
 interface ScreenProps {
   children: React.ReactNode;
@@ -41,7 +41,7 @@ export function Screen({
   return (
     <SafeAreaView
       edges={edges}
-      style={{ flex: 1, backgroundColor: colors.background }}
+      style={{ flex: 1, width: "100%", maxWidth: ICERIK_MAX_GENISLIK, alignSelf: "center", backgroundColor: colors.background }}
     >
       {scroll ? (
         <ScrollView

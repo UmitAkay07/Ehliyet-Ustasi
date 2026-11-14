@@ -74,39 +74,48 @@ export default function DireksiyonDetayScreen() {
       </View>
 
       {/* İpuçları */}
-      <Card style={{ backgroundColor: colors.successSoft, borderColor: colors.success + "44" }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm, marginBottom: spacing.md }}>
-          <Ionicons name="bulb" size={20} color={colors.success} />
-          <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.bold }}>
+      <View style={{ borderTopWidth: 1, borderTopColor: colors.border, paddingTop: spacing.lg, gap: spacing.md }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
+          <Ionicons name="bulb" size={18} color={colors.warning} />
+          <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.extrabold }}>
             İpuçları
           </Text>
         </View>
         <View style={{ gap: spacing.sm }}>
           {ders.ipuclari.map((ipucu, i) => (
             <View key={i} style={{ flexDirection: "row", gap: spacing.sm }}>
-              <Ionicons name="star" size={16} color={colors.success} style={{ marginTop: 2 }} />
+              <Ionicons name="star" size={15} color={colors.success} style={{ marginTop: 3 }} />
               <Text style={{ color: colors.text, fontSize: fontSize.sm, lineHeight: 21, flex: 1 }}>
                 {ipucu}
               </Text>
             </View>
           ))}
         </View>
-      </Card>
+      </View>
 
       {/* Hata kriterleri */}
       <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.bold }}>
         Sınavda Dikkat Edilecek Hatalar
       </Text>
-      <View style={{ gap: spacing.md }}>
-        {(["kirmizi", "sari", "mavi"] as const).map((seviye) => {
+      <View>
+        {(["kirmizi", "sari", "mavi"] as const).map((seviye, gi) => {
           const grup = gruplananHatalar[seviye];
           if (!grup || grup.length === 0) return null;
           const meta = hataRenkleri[seviye];
           return (
-            <Card key={seviye} style={{ borderLeftWidth: 4, borderLeftColor: meta.renk }}>
-              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm, marginBottom: spacing.sm }}>
-                <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: meta.renk }} />
-                <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.bold }}>
+            <View
+              key={seviye}
+              style={{
+                gap: spacing.sm,
+                paddingVertical: spacing.md,
+                borderTopWidth: gi === 0 ? 1 : 0,
+                borderBottomWidth: 1,
+                borderColor: colors.border,
+              }}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
+                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: meta.renk }} />
+                <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.extrabold }}>
                   {meta.ad}
                 </Text>
                 <Text style={{ color: colors.textFaint, fontSize: fontSize.xs }}>· {meta.aciklama}</Text>
@@ -114,14 +123,14 @@ export default function DireksiyonDetayScreen() {
               <View style={{ gap: 6 }}>
                 {grup.map((h, i) => (
                   <View key={i} style={{ flexDirection: "row", gap: spacing.sm }}>
-                    <Ionicons name="alert-circle" size={15} color={meta.renk} style={{ marginTop: 2 }} />
+                    <Ionicons name="alert-circle-outline" size={15} color={meta.renk} style={{ marginTop: 2 }} />
                     <Text style={{ color: colors.text, fontSize: fontSize.sm, lineHeight: 20, flex: 1 }}>
                       {h.metin}
                     </Text>
                   </View>
                 ))}
               </View>
-            </Card>
+            </View>
           );
         })}
       </View>

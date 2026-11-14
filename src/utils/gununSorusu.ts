@@ -1,6 +1,7 @@
 import { SORULAR } from "@/data/sorular";
 import type { Soru } from "@/types";
 import { bugunAnahtar } from "@/store/useAppStore";
+import { kalanGunHesapla } from "@/utils/tekrar";
 
 /** Gün bazlı deterministik soru seçimi (aynı gün aynı soru) */
 export function gununSorusunuAl(tarih = new Date()): Soru {
@@ -13,16 +14,9 @@ export function gununSorusunuAl(tarih = new Date()): Soru {
   return SORULAR[index];
 }
 
-/** YYYY-MM-DD veya null → kalan gün sayısı */
+/** YYYY-MM-DD veya null → kalan gün sayısı (hesap utils/tekrar.ts ile ortaktır) */
 export function sinavGunKalan(sinavTarihi: string | null | undefined): number | null {
-  if (!sinavTarihi) return null;
-  const bugun = new Date();
-  bugun.setHours(0, 0, 0, 0);
-  const datePart = sinavTarihi.split("T")[0];
-  const [y, m, d] = datePart.split("-").map(Number);
-  if (!y || !m || !d) return null;
-  const hedef = new Date(y, m - 1, d);
-  return Math.round((hedef.getTime() - bugun.getTime()) / (1000 * 60 * 60 * 24));
+  return kalanGunHesapla(sinavTarihi, Date.now());
 }
 
 export function tarihGoster(isoGun: string): string {

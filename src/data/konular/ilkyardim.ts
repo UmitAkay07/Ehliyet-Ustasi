@@ -191,7 +191,6 @@ export const ILKYARDIM_KONULARI: Konu[] = [
         baslik: "Heimlich manevrası (yetişkin ve büyük çocuk)",
         metin:
           "Bilinci açık, ayakta duran bir kişide tam tıkanma durumunda uygulama sırası:\n1. Kişinin arkasına geçilir ve bel hizasından sarılır.\n2. Bir el yumruk yapılır, göbek deliği ile göğüs kemiği (sternum) arasına, orta hatta yerleştirilir.\n3. Diğer el yumruğun üzerine kapatılır.\n4. İçe ve yukarı doğru, hızlı ve kuvvetli şekilde bastırılır (5 kez).\n5. Cisim çıkana veya kişi bilincini kaybedene kadar bu bası tekrarlanır.\nKişi bilincini kaybederse hemen yere yatırılır ve TYD (göğüs basısı) başlatılır; her bası döngüsü öncesinde ağız içi kontrol edilerek görünen cisim çıkarılmaya çalışılır.",
-        gorsel: "heimlich",
       },
       {
         baslik: "Hamile ve obez bireylerde farklı uygulama",
@@ -258,7 +257,6 @@ export const ILKYARDIM_KONULARI: Konu[] = [
         baslik: "Şok pozisyonu ve bakımı",
         metin:
           "Şok bulguları olan hastaya şu bakım uygulanır:\n1. Hasta sırtüstü düz bir yere yatırılır.\n2. Ayaklar kalp seviyesinden yaklaşık 30 cm yukarı kaldırılır (şok pozisyonu); bu, beyne ve hayati organlara kan akışını artırır.\n3. Sıkan giysiler (kemer, yaka) gevşetilir.\n4. Hasta battaniye ile örtülerek ısı kaybı önlenir.\n5. Bilinç, solunum ve nabız düzenli aralıklarla izlenir.\nBaş, boyun veya bacak yaralanması şüphesi varsa ayaklar kaldırılmaz; hasta olduğu pozisyonda desteklenir.",
-        gorsel: "sok-pozisyonu",
       },
       {
         baslik: "Ağızdan bir şey verilmemesi ilkesi",
@@ -351,7 +349,6 @@ export const ILKYARDIM_KONULARI: Konu[] = [
         baslik: "Koma (yarı yüzükoyun/yan yatış) pozisyonu",
         metin:
           "Bilinci kapalı ancak kendiliğinden solunumu ve nabzı olan bir hastaya koma pozisyonu (yan yatış pozisyonu) verilir. Bu pozisyonun amacı, dilin geriye kaçarak hava yolunu tıkamasını ve olası kusmuk/salgının akciğerlere kaçarak boğulmaya (aspirasyon) yol açmasını önlemektir. Uygulama: hasta yan çevrilir, alttaki kol öne uzatılır, üstteki el yanağın altına yerleştirilerek baş desteklenir, üstteki bacak dizden bükülerek öne yerleştirilir; baş hafifçe arkaya ve aşağıya bakacak şekilde konumlandırılır.",
-        gorsel: "koma-pozisyonu",
       },
       {
         baslik: "Koma pozisyonunun uygulanamayacağı durumlar",

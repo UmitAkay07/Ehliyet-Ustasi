@@ -1,12 +1,27 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import { View, Text, Pressable } from "react-native";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { Screen, ScreenHeader, Card, Button, ProgressBar } from "@/components/ui";
+import { Screen, ScreenHeader, Card, Button } from "@/components/ui";
 import { useTheme } from "@/theme";
 import * as Speech from "expo-speech";
 import { ManevraAnimasyonu } from "@/animations/ManevraAnimasyonu";
+import { usePuanIstegiTetikle } from "@/store/usePuanIstegi";
+import { useSimSesi } from "@/store/useSimSesi";
+import { simSes } from "@/services/simSes";
+import { seslendir, seslendirmeHazirla } from "@/services/seslendirme";
+import { useEkranUyanik } from "@/services/ekranUyanik";
+import { enGecOkumaBitisMs, tahminiOkumaMs } from "@/utils/okumaSuresi";
 import type { ManevraTipi } from "@/types";
+
+/** Anons tonunun (ding-dong) ikinci notası duyulduktan sonra komut okunmaya başlar */
+const ANONS_SURESI_MS = 900;
+/** Anlatım bitip manevra en az bir kez tamamlanınca sonraki manevraya geçmeden önceki ara */
+const GECIS_ARASI_MS = 1500;
+/** Seslendirme hata verdikten sonra sonraki komuta geçmeden önce en az bu kadar beklenir */
+const HATA_SONRASI_EN_AZ_MS = 1500;
+const EN_KISA_TUR_MS = 2000;
+const OKUMA_HIZI = 0.9;
 
 interface SinavAdimi {
   tip: ManevraTipi;
@@ -23,7 +38,7 @@ const SINAV_ADIMLARI: SinavAdimi[] = [
   { 
     tip: "lPark", 
     baslik: "2. L Park", 
-    metin: "Sıradaki istasyonumuz L park alanı. Sağ sinyalinizi vererek yanaşın. Çizgilere ve dubalara çarpmadan geri geri dik şekilde parkı tamamlayın." 
+    metin: "Sıradaki istasyonumuz L park alanı. Sağ sinyalinizi vererek yanaşın. Çizgilere ve dubalara çarpmadan geri geri dik şekilde parkı tamamlayın. Parktan çıkarken sağ sinyalinizi vererek çıkış yapın." 
   },
   { 
     tip: "paralelPark", 
@@ -43,7 +58,7 @@ const SINAV_ADIMLARI: SinavAdimi[] = [
   { 
     tip: "geriManevra", 
     baslik: "6. 25 Metre Geri Gelme", 
-    metin: "Şimdi şeridinizi bozmadan ve sağ sinyaliniz açıkken 25 metre düz bir hatta geri geri gelin. Manevra bittikten sonra sol sinyalinizi vererek kalkışınızı yapın." 
+    metin: "Şimdi şeridinizi bozmadan sağ sinyal ile yanaşın ve sağ sinyaliniz açıkken 25 metre düz bir hatta geri geri gelin. Manevra bittikten sonra sol sinyalinizi vererek kalkışınızı yapın." 
   },
   { 
     tip: "rampaKalkis", 
@@ -55,76 +70,149 @@ const SINAV_ADIMLARI: SinavAdimi[] = [
 export default function PratikSinavSimulasyonuScreen() {
   const { colors, fontSize, fontFamily, spacing, radius } = useTheme();
   const [oynuyor, setOynuyor] = useState(false);
+  const [duraklatildi, setDuraklatildi] = useState(false);
   const [adimIndex, setAdimIndex] = useState(0);
+  /** Her adım başlarken artar; manevra animasyonu baştan başlar */
+  const [turAnahtari, setTurAnahtari] = useState(0);
   const [bitti, setBitti] = useState(false);
   const durdurulduRef = useRef(false);
+  const zamanlayicilar = useRef<ReturnType<typeof setTimeout>[]>([]);
+  /** Aktif adımda anlatım bitti mi, manevra en az bir kez tamamlandı mı */
+  const adimDurumu = useRef({ index: -1, baslangic: 0, anlatimBitti: false, turBitti: false, gecildi: false });
+  const { sesAcik, sesDegistir } = useSimSesi();
+  const sesAcikRef = useRef(sesAcik);
+  sesAcikRef.current = sesAcik;
+  usePuanIstegiTetikle(bitti);
+  // Sınav sürerken ekran kararmasın (duraklatınca ya da bitince telefon yine kendi süresinde uyur)
+  useEkranUyanik(oynuyor, "sinav-simulasyonu");
 
   const aktifAdim = SINAV_ADIMLARI[adimIndex];
-  const ilerlemeOrani = (adimIndex + 1) / SINAV_ADIMLARI.length;
 
-  const adimiOynat = async (index: number) => {
-    if (durdurulduRef.current || index >= SINAV_ADIMLARI.length) {
-      if (index >= SINAV_ADIMLARI.length) {
-        setOynuyor(false);
-        setBitti(true);
-      }
+  const zamanla = (is: () => void, ms: number) => {
+    zamanlayicilar.current.push(setTimeout(is, ms));
+  };
+  const zamanlayicilariTemizle = () => {
+    zamanlayicilar.current.forEach(clearTimeout);
+    zamanlayicilar.current = [];
+  };
+
+  /** Anlatım bitti ve manevra en az bir tur döndüyse sonraki manevraya geçilir */
+  const gecisiDene = () => {
+    const d = adimDurumu.current;
+    if (durdurulduRef.current || d.gecildi || !d.anlatimBitti || !d.turBitti) return;
+    d.gecildi = true;
+    const sonraki = d.index + 1;
+    zamanla(() => adimiOynat(sonraki), GECIS_ARASI_MS);
+  };
+
+  const adimiOynat = (index: number) => {
+    if (durdurulduRef.current) return;
+    if (index >= SINAV_ADIMLARI.length) {
+      setOynuyor(false);
+      setBitti(true);
+      simSes.sustur();
+      simSes.efekt("basari");
       return;
     }
 
+    adimDurumu.current = { index, baslangic: Date.now(), anlatimBitti: false, turBitti: false, gecildi: false };
     setAdimIndex(index);
+    setTurAnahtari((k) => k + 1);
     const adim = SINAV_ADIMLARI[index];
 
-    Speech.speak(adim.metin, {
-      language: "tr", // "tr-TR" bazen Android'de desteklenmiyor olabilir, "tr" daha güvenli
-      rate: 0.9,
+    // Sınav anonsu: ding-dong, ardından komut. Manevra anlatım boyunca başa dönerek tekrarlanır.
+    if (sesAcikRef.current) simSes.efekt("duyuru");
+    zamanla(() => komutuOku(adim, index), sesAcikRef.current ? ANONS_SURESI_MS : 0);
+  };
+
+  const anlatimBitti = (index: number) => {
+    if (durdurulduRef.current || adimDurumu.current.index !== index) return;
+    adimDurumu.current.anlatimBitti = true;
+    gecisiDene();
+  };
+
+  const komutuOku = (adim: SinavAdimi, index: number) => {
+    if (durdurulduRef.current) return;
+    // Önceki komut hâlâ okunuyorsa (motor yavaşsa) kesilir; komutlar üst üste binmez
+    Speech.stop();
+    // Motor hiç cevap vermezse (ses verisi eksik, motor takıldı) sınav bu adımda sonsuza dek beklemesin
+    zamanla(() => anlatimBitti(index), enGecOkumaBitisMs(adim.metin, OKUMA_HIZI));
+    const okumaBitisi = Date.now() + tahminiOkumaMs(adim.metin, OKUMA_HIZI);
+    seslendir(adim.metin, {
+      rate: OKUMA_HIZI,
       pitch: 1.0,
-      onDone: () => {
-        if (!durdurulduRef.current) {
-          // Seslendirme bitince 1.5 saniye bekle ve diğer manevraya geç
-          setTimeout(() => adimiOynat(index + 1), 1500);
-        }
-      },
-      onStopped: () => {
-        setOynuyor(false);
-      },
+      onDone: () => anlatimBitti(index),
       onError: (e) => {
-        console.warn("Speech Error:", e);
-        // Hata olursa yine de devam etsin
-        setTimeout(() => adimiOynat(index + 1), 2000);
-      }
+        console.warn("[simulasyon] seslendirme hatası:", String(e));
+        // Motor yarıda hata verse de ses çoğu zaman çalmaya devam ediyor (zayıf ağda internet sesi);
+        // sonraki komut onu kesmesin diye metnin normal okunma süresi beklenir. Hiç ses yoksa
+        // kullanıcı bu sürede ekrandaki metni okur.
+        zamanla(() => anlatimBitti(index), Math.max(HATA_SONRASI_EN_AZ_MS, okumaBitisi - Date.now()));
+      },
     });
+  };
+
+  const turBitti = () => {
+    const d = adimDurumu.current;
+    // Önceki manevranın geç gelen tur sonu bildirimi sayılmaz (en kısa manevra 4 saniye)
+    if (!oynuyor || Date.now() - d.baslangic < EN_KISA_TUR_MS) return;
+    d.turBitti = true;
+    gecisiDene();
   };
 
   const baslat = () => {
     durdurulduRef.current = false;
+    zamanlayicilariTemizle();
     setOynuyor(true);
-    setBitti(false);
-    
-    // Baştan başlıyorsa
-    if (adimIndex === 0 || bitti) {
-      setAdimIndex(0);
+    setDuraklatildi(false);
+    if (bitti) {
+      setBitti(false);
       adimiOynat(0);
     } else {
-      // Kaldığı yerden devam
-      adimiOynat(adimIndex);
+      // Baştan ya da kaldığı manevranın başından. Manevra bitmiş ve sonrakine geçilirken duraklatıldıysa
+      // aynı manevra tekrar oynatılmaz, sonrakiyle devam edilir.
+      const d = adimDurumu.current;
+      adimiOynat(d.index === adimIndex && d.gecildi ? adimIndex + 1 : adimIndex);
     }
   };
 
   const durdur = () => {
     durdurulduRef.current = true;
+    zamanlayicilariTemizle();
     setOynuyor(false);
+    setDuraklatildi(true);
     Speech.stop();
+    simSes.sustur();
   };
 
   const bastanSifirla = () => {
     durdur();
+    setDuraklatildi(false);
     setAdimIndex(0);
+    setTurAnahtari((k) => k + 1);
     setBitti(false);
   };
 
+  // Geri tuşuyla çıkılırken anlatım ve sesler geçiş animasyonunu beklemeden kesilir
+  useFocusEffect(
+    useCallback(
+      () => () => {
+        durdurulduRef.current = true;
+        zamanlayicilar.current.forEach(clearTimeout);
+        zamanlayicilar.current = [];
+        Speech.stop();
+        simSes.sustur();
+      },
+      []
+    )
+  );
+
   useEffect(() => {
+    // Seslendirme motoru ilk komutta uyanınca anlatım saniyelerce gecikiyordu; ekran açılırken hazırlanır
+    seslendirmeHazirla();
     return () => {
       durdurulduRef.current = true;
+      zamanlayicilariTemizle();
       Speech.stop();
     };
   }, []);
@@ -142,40 +230,75 @@ export default function PratikSinavSimulasyonuScreen() {
         </Text>
       </View>
 
-      <Card elevated style={{ backgroundColor: colors.surfaceAlt, marginBottom: spacing.md, paddingBottom: spacing.lg }}>
+      <Card style={{ marginBottom: spacing.md, paddingBottom: spacing.lg }}>
         
         <View style={{ marginBottom: spacing.md }}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 6 }}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
             <Text style={{ color: colors.primary, fontSize: fontSize.xs, fontFamily: fontFamily.bold }}>
               Manevra {adimIndex + 1} / {SINAV_ADIMLARI.length}
             </Text>
-            {bitti && (
-               <Text style={{ color: colors.success, fontSize: fontSize.xs, fontFamily: fontFamily.bold }}>
-                 Sınav Tamamlandı
-               </Text>
-            )}
+            <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
+              {bitti && (
+                <Text style={{ color: colors.success, fontSize: fontSize.xs, fontFamily: fontFamily.bold }}>
+                  Sınav Tamamlandı
+                </Text>
+              )}
+              <Pressable
+                onPress={sesDegistir}
+                accessibilityRole="button"
+                accessibilityLabel={sesAcik ? "Ses efektlerini kapat" : "Ses efektlerini aç"}
+                hitSlop={8}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 4,
+                  paddingHorizontal: 10,
+                  paddingVertical: 4,
+                  borderRadius: radius.pill,
+                  backgroundColor: sesAcik ? colors.primarySoft : colors.surfaceAlt,
+                }}
+              >
+                <Ionicons name={sesAcik ? "volume-high" : "volume-mute"} size={14} color={sesAcik ? colors.primary : colors.textMuted} />
+                <Text style={{ color: sesAcik ? colors.primary : colors.textMuted, fontSize: fontSize.xs, fontFamily: fontFamily.bold }}>
+                  {sesAcik ? "Efektler açık" : "Efektler kapalı"}
+                </Text>
+              </Pressable>
+            </View>
           </View>
-          <ProgressBar progress={bitti ? 1 : ilerlemeOrani} color={colors.primary} height={6} />
+          <View style={{ flexDirection: "row", gap: 4 }}>
+            {SINAV_ADIMLARI.map((adim, i) => (
+              <View
+                key={adim.baslik}
+                style={{
+                  flex: 1,
+                  height: 6,
+                  borderRadius: 3,
+                  backgroundColor: bitti || i < adimIndex ? colors.primary : i === adimIndex ? colors.primarySoft : colors.surfaceAlt,
+                  borderWidth: i === adimIndex && !bitti ? 1 : 0,
+                  borderColor: colors.primary,
+                }}
+              />
+            ))}
+          </View>
         </View>
 
         <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.extrabold, textAlign: "center", marginBottom: spacing.md }}>
           {aktifAdim.baslik}
         </Text>
 
-        <View style={{ 
-          backgroundColor: colors.surface, 
-          borderRadius: radius.lg, 
-          overflow: "hidden", 
-          borderWidth: 1, 
-          borderColor: colors.border,
-          height: 230,
-          justifyContent: "center",
-          alignItems: "center"
-        }}>
-          <ManevraAnimasyonu tip={aktifAdim.tip} />
+        <View style={{ borderRadius: radius.lg, overflow: "hidden", borderWidth: 1, borderColor: colors.border }}>
+          {/* Başlamadan önce ve sınav bitince sessiz önizleme olarak döner; duraklatınca durur */}
+          <ManevraAnimasyonu
+            tip={aktifAdim.tip}
+            oynuyor={!duraklatildi}
+            sesli={oynuyor && sesAcik}
+            yenidenBaslat={turAnahtari}
+            onTurBitti={turBitti}
+          />
         </View>
 
-        <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 22, marginTop: spacing.md, textAlign: "center", fontStyle: "italic" }}>
+        {/* En uzun komut kadar yer ayrılır; adım değişince Duraklat düğmesi yerinden oynamaz */}
+        <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 22, minHeight: 22 * 4, marginTop: spacing.md, textAlign: "center", fontStyle: "italic" }}>
           "{aktifAdim.metin}"
         </Text>
       </Card>

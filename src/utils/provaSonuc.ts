@@ -18,5 +18,10 @@ export function provaDetayKaydet(detay: ProvaDetay) {
 }
 
 export function provaDetayAl(): ProvaDetay | null {
-  return useAppStore.getState().sonProvaDetayi;
+  const detay: unknown = useAppStore.getState().sonProvaDetayi;
+  // Eski ya da bozuk kayıtta sonuç ekranı çökmesin: beklenen biçimde değilse yok sayılır
+  if (!detay || typeof detay !== "object") return null;
+  const { sorular, cevaplar } = detay as Partial<ProvaDetay>;
+  if (!Array.isArray(sorular) || !Array.isArray(cevaplar)) return null;
+  return detay as ProvaDetay;
 }

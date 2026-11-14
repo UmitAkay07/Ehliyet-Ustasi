@@ -56,7 +56,7 @@ export const ADAB_SORULARI: Soru[] = [
     dersId: "adab",
     konuId: "ad-kaza-davranis",
     metin: "Aracının arıza yapması nedeniyle yolda kalmış ve trafiği aksatmış bir sürücüye, oradan geçen diğer bir sürücünün durup yardım etmesi aşağıdaki değerlerden hangisiyle açıklanır?",
-    secenekler: ["Bencillik", "Diğerkamlık (Yardımlaşma ve feragat)", "Sorumsuzluk", "İnatlaşma"],
+    secenekler: ["Bencillik (Kendi çıkarını ön planda tutma)", "Diğerkamlık (Yardımlaşma ve feragat)", "Sorumsuzluk (Çevreye karşı duyarsız kalma)", "İnatlaşma (Diğer sürücülerle çekişme yaşama)"],
     dogruIndex: 1,
     aciklama: "Diğerkamlık, başkalarının yararını gözetme, onlara yardım etme duygusudur. Trafikte yardımlaşmak, trafik adabının en güzel örneklerinden biridir.",
     zorluk: "orta"
@@ -76,7 +76,7 @@ export const ADAB_SORULARI: Soru[] = [
     dersId: "adab",
     konuId: "ad-temel-degerler",
     metin: "Aşağıdakilerden hangisi trafikte sürücüler arasında 'dezavantajlı gruplar' olarak adlandırılan ve daha fazla dikkat/hoşgörü gösterilmesi gereken kişilerden biri DEĞİLDİR?",
-    secenekler: ["Çocuklar ve yaşlılar", "Hamile kadınlar", "Engelli bireyler", "Genç ve spor otomobil kullanan sürücüler"],
+    secenekler: ["Çocuklar ve hareket kabiliyeti kısıtlı yaşlılar", "Hamile veya kucağında bebek bulunan kadınlar", "Bedensel veya zihinsel engeli olan bireyler", "Genç ve spor otomobil kullanan sürücüler"],
     dogruIndex: 3,
     aciklama: "Çocuklar, yaşlılar, hamileler ve engelliler trafikte fiziksel olarak dezavantajlıdır ve onlara karşı ekstra sabırlı ve dikkatli olunmalıdır.",
     zorluk: "kolay"
@@ -106,7 +106,7 @@ export const ADAB_SORULARI: Soru[] = [
     dersId: "adab",
     konuId: "ad-temel-degerler",
     metin: "Bir sürücünün aracındaki çöpü camdan yola atması, trafik adabı açısından değerlendirildiğinde aşağıdakilerden hangisiyle ifade edilebilir?",
-    secenekler: ["Yardımlaşma", "Çevreye karşı saygısızlık ve sorumsuzluk", "Pratik zeka", "Özdenetim"],
+    secenekler: ["Sürücüler arası yardımlaşma ve anlayış", "Çevreye karşı saygısızlık ve sorumsuzluk", "Pratik zeka ve zaman tasarrufu sağlama", "Kişisel özdenetim ve kurallara bağlılık"],
     dogruIndex: 1,
     aciklama: "Çevreyi kirletmek, diğer sürücüler ve yayalar için risk oluşturmanın yanı sıra çevreye ve topluma karşı büyük bir saygısızlıktır.",
     zorluk: "kolay"
@@ -116,7 +116,7 @@ export const ADAB_SORULARI: Soru[] = [
     dersId: "adab",
     konuId: "ad-ofke-stres",
     metin: "Trafik sıkışıklığı nedeniyle uzun süre beklemek zorunda kalan bir sürücünün, stresini azaltmak için sakinleştirici müzik dinlemesi veya derin nefes alması hangi becerisini kullandığını gösterir?",
-    secenekler: ["Stresle başa çıkma ve öfke yönetimi", "İletişim becerisi", "Sürüş tekniği", "Zaman yönetimi"],
+    secenekler: ["Stresle başa çıkma ve öfke yönetimi", "Etkili iletişim ve empati kurma becerisi", "Güvenli sürüş tekniği ve araç kontrolü", "Planlı zaman yönetimi ve güzergah seçimi"],
     dogruIndex: 0,
     aciklama: "Trafikte oluşan stresli anlarda kendini sakinleştirecek yöntemler (müzik, derin nefes) kullanmak başarılı bir stres yönetimidir.",
     zorluk: "orta"
@@ -156,7 +156,7 @@ export const ADAB_SORULARI: Soru[] = [
     dersId: "adab",
     konuId: "ad-takip-mesafesi",
     metin: "Trafikte öndeki aracı sürekli olarak çok yakından (tampon tampona) takip etmek, hangi trafik adabı ve kuralına aykırıdır?",
-    secenekler: ["Hız limitlerine", "Takip mesafesi kuralına ve saygıya", "Geçiş üstünlüğüne", "Duraklama kurallarına"],
+    secenekler: ["Azami hız limitlerine ve şerit kuralına", "Takip mesafesi kuralına ve saygıya", "Geçiş üstünlüğü kuralına ve hakkına", "Duraklama ve park etme kurallarına"],
     dogruIndex: 1,
     aciklama: "Öndeki aracı yakından takip etmek hem takip mesafesi kuralını ihlal eder hem de öndeki sürücüyü taciz edip strese soktuğu için saygısızlıktır.",
     zorluk: "kolay"

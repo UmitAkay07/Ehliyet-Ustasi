@@ -40,19 +40,17 @@ export function ScreenHeader({
       {showBack && (
         <Pressable
           onPress={handleBack}
-          hitSlop={10}
-          style={{
-            width: 42,
-            height: 42,
-            borderRadius: radius.md,
-            backgroundColor: colors.surface,
-            borderWidth: 1,
-            borderColor: colors.border,
+          hitSlop={12}
+          style={({ pressed }) => ({
+            width: 32,
+            height: 32,
             alignItems: "center",
             justifyContent: "center",
-          }}
+            marginLeft: -6,
+            opacity: pressed ? 0.5 : 1,
+          })}
         >
-          <Ionicons name="chevron-back" size={22} color={colors.text} />
+          <Ionicons name="chevron-back" size={24} color={colors.text} />
         </Pressable>
       )}
       <View style={{ flex: 1 }}>

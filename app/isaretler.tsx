@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, TextInput, View } from "react-native";
-import { Screen, ScreenHeader, Card } from "@/components/ui";
+import { Screen, ScreenHeader } from "@/components/ui";
 import { IsaretGorseli } from "@/components/IsaretGorseli";
 import { useTheme } from "@/theme";
 import { ISARET_KATEGORILERI, TRAFIK_ISARETLERI } from "@/data/isaretler";
@@ -54,30 +54,28 @@ export default function IsaretlerScreen() {
   };
 
   const renderItem = ({ item: isaret }: { item: TrafikIsareti }) => (
-    <Card>
-      <View style={{ flexDirection: "row", gap: spacing.md, alignItems: "center" }}>
-        <View
-          style={{
-            width: 60,
-            height: 60,
-            borderRadius: 12,
-            backgroundColor: colors.surfaceAlt,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <IsaretGorseli isaretId={isaret.id} kategori={isaret.kategori} boyut={44} />
-        </View>
-        <View style={{ flex: 1, gap: 2 }}>
-          <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.semibold }}>
-            {isaret.ad}
-          </Text>
-          <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>
-            {isaret.anlam}
-          </Text>
-        </View>
+    <View style={{ flexDirection: "row", gap: spacing.md, alignItems: "center", paddingVertical: spacing.sm }}>
+      <View
+        style={{
+          width: 52,
+          height: 52,
+          borderRadius: radius.md,
+          backgroundColor: colors.surfaceAlt,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <IsaretGorseli isaretId={isaret.id} kategori={isaret.kategori} boyut={40} />
       </View>
-    </Card>
+      <View style={{ flex: 1, gap: 2 }}>
+        <Text style={{ color: colors.text, fontSize: fontSize.md, fontFamily: fontFamily.bold }}>
+          {isaret.ad}
+        </Text>
+        <Text style={{ color: colors.textMuted, fontSize: fontSize.sm, lineHeight: 20 }}>
+          {isaret.anlam}
+        </Text>
+      </View>
+    </View>
   );
 
   return (
@@ -120,10 +118,9 @@ export default function IsaretlerScreen() {
         contentContainerStyle={{
           padding: spacing.lg,
           paddingTop: spacing.sm,
-          gap: spacing.md,
           paddingBottom: 48,
         }}
-        ItemSeparatorComponent={() => <View style={{ height: spacing.md }} />}
+        ItemSeparatorComponent={() => <View style={{ height: 1, backgroundColor: colors.border }} />}
         ListEmptyComponent={
           <Text style={{ color: colors.textMuted, textAlign: "center", marginTop: spacing.xl }}>
             Sonuç bulunamadı.

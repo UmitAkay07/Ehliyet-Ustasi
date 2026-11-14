@@ -5,6 +5,10 @@ import { useTheme } from "@/theme";
 import type { Soru } from "@/types";
 import { TRAFIK_ISARETLERI } from "@/data/isaretler";
 import { IsaretGorseli } from "@/components/IsaretGorseli";
+import { SenaryoSahnesi } from "@/animations/SenaryoSahnesi";
+import { SENARYO_SAHNELERI } from "@/data/senaryolar";
+import type { Sahne } from "@/animations/sahne";
+import { gorunenNot } from "@/data/tuzakNotlari";
 
 
 interface SoruBileseniProps {
@@ -15,6 +19,8 @@ interface SoruBileseniProps {
   onSecim: (index: number) => void;
   siraNo?: number;
   toplam?: number;
+  /** Senaryo sahnesi kendiliğinden oynasın mı (uzun listelerde kapalı: dokununca oynar) */
+  sahneOtomatik?: boolean;
 }
 
 const SIKLAR = ["A", "B", "C", "D", "E"];
@@ -27,11 +33,18 @@ export function SoruBileseni({
   onSecim,
   siraNo,
   toplam,
+  sahneOtomatik = true,
 }: SoruBileseniProps) {
   const { colors, fontSize, fontWeight, fontFamily, spacing, radius } = useTheme();
   const gorselIsaret = soru.gorselIsaretId
     ? TRAFIK_ISARETLERI.find((i) => i.id === soru.gorselIsaretId)
     : undefined;
+  // Senaryo sorularında (sen-xx) soru metninin anlattığı durumu gösteren animasyonlu sahne
+  const sahne: Sahne | undefined = SENARYO_SAHNELERI[soru.id];
+  // Yalnızca onaylı (doğrulanmış) tuzak notları gösterilir
+  const tuzak = gorunenNot(soru.id);
+  const yanlisNedeni =
+    tuzak && secilenIndex != null && secilenIndex !== soru.dogruIndex ? tuzak.yanlis?.[secilenIndex] : undefined;
 
   const { shift, L, uiSecenekler, uiDogruIndex, uiSecilenIndex } = useMemo(() => {
     // Soru ID'sinden matematiksel bir hash (kaydırma miktarı) üretiyoruz
@@ -88,6 +101,8 @@ export function SoruBileseni({
             <Text style={{ color: colors.textFaint, fontSize: fontSize.xs }}>Trafik işareti</Text>
           </View>
         )}
+
+        {sahne ? <SenaryoSahnesi key={soru.id} sahne={sahne} otomatikOynat={sahneOtomatik} /> : null}
 
         <Text style={{ color: colors.text, fontSize: fontSize.lg, fontFamily: fontFamily.semibold, lineHeight: 26 }}>
           {soru.metin}
@@ -194,6 +209,48 @@ export function SoruBileseni({
           </View>
         </View>
       )}
+
+      {cevaplandi && geriBildirimGoster && yanlisNedeni ? (
+        <View
+          style={{
+            backgroundColor: colors.dangerSoft,
+            borderRadius: radius.md,
+            borderWidth: 1,
+            borderColor: colors.danger + "55",
+            padding: spacing.md,
+            flexDirection: "row",
+            gap: spacing.sm,
+          }}
+        >
+          <Ionicons name="alert-circle" size={20} color={colors.danger} style={{ marginTop: 2 }} />
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: colors.text, fontFamily: fontFamily.bold, marginBottom: 4 }}>
+              Seçtiğin şık neden yanlış?
+            </Text>
+            <Text style={{ color: colors.text, fontSize: fontSize.sm, lineHeight: 21 }}>{yanlisNedeni}</Text>
+          </View>
+        </View>
+      ) : null}
+
+      {cevaplandi && geriBildirimGoster && tuzak?.ipucu ? (
+        <View
+          style={{
+            backgroundColor: colors.warningSoft,
+            borderRadius: radius.md,
+            borderWidth: 1,
+            borderColor: colors.warning + "55",
+            padding: spacing.md,
+            flexDirection: "row",
+            gap: spacing.sm,
+          }}
+        >
+          <Ionicons name="key" size={20} color={colors.warning} style={{ marginTop: 2 }} />
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: colors.text, fontFamily: fontFamily.bold, marginBottom: 4 }}>Akılda kalsın</Text>
+            <Text style={{ color: colors.text, fontSize: fontSize.sm, lineHeight: 21 }}>{tuzak.ipucu}</Text>
+          </View>
+        </View>
+      ) : null}
     </View>
   );
 }
